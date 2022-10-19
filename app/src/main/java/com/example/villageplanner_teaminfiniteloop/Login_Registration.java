@@ -5,8 +5,7 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
 public class Login_Registration {
-
-
+    // https://www.geeksforgeeks.org/how-to-save-data-to-the-firebase-realtime-database-in-android/
     static public void Register(String email, String password, String name, Image photo) throws Exception{
 
     }
@@ -39,13 +38,15 @@ public class Login_Registration {
         return "";  //Error
     }
 
+    // Get the email and talk to the firebase to see email has been already registered
     static private boolean checkValidRegistration(String email) {
 
         return true;
     }
 
-    static private boolean checkPasswordCorrect(String email, String password){
-
+    // Get the email and password and talk to the firebase to see email and password are matched
+    static private boolean checkValidLogin(String email, String password){
+        //use hash function here to hash the password raw value
         return true;
     }
 }
