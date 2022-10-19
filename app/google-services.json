@@ -1,6 +1,7 @@
 {
   "project_info": {
     "project_number": "310505282338",
+    "firebase_url": "https://csci201pa2-default-rtdb.firebaseio.com",
     "project_id": "csci201pa2",
     "storage_bucket": "csci201pa2.appspot.com"
   },
