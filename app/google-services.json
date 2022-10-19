@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "310505282338",
+    "project_id": "csci201pa2",
+    "storage_bucket": "csci201pa2.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:310505282338:android:dfbc729e5dacd07f98e37b",
+        "android_client_info": {
+          "package_name": "com.example.villageplanner_teaminfiniteloop"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "310505282338-fiph1icmvrbten2f6vja4mednd57e594.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDrxKeguW_6EMj8DHZLjipM94qAyBZwD1w"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "310505282338-fiph1icmvrbten2f6vja4mednd57e594.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
