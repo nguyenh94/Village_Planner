@@ -3,12 +3,12 @@ package com.example.villageplanner_teaminfiniteloop;
 import java.sql.Time;
 
 public class Reminder {
-    String title;
-    Time reminderTime;
-    Time travelTime;
-    Time queueTime;
-    String restaurantId;
-    String reminderId;
+    private String title;
+    private Time reminderTime;
+    private Time travelTime;
+    private Time queueTime;
+    private String restaurantId;
+    private String reminderId;
 
     public Reminder(String title, String id)
     {
@@ -27,6 +27,10 @@ public class Reminder {
     public String getResId()
     {
         return this.restaurantId;
+    }
+    public String getReminderId()
+    {
+        return this.reminderId;
     }
     public Time getQueueTime()
     {

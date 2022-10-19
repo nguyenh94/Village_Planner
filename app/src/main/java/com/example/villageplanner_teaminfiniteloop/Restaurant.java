@@ -3,9 +3,9 @@ package com.example.villageplanner_teaminfiniteloop;
 import android.location.Location;
 
 public class Restaurant {
-    String id;
-    String name;
-    Location resCoordinate;
+    private String id;
+    private String name;
+    private Location resCoordinate;
 
     public Restaurant(String resId, String name, Location coordinate)
     {
