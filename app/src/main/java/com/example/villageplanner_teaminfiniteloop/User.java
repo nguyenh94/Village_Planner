@@ -13,46 +13,46 @@ public class User {
     public ArrayList<Reminder> reminders;
     private Location userCoordinate;
 
-    public User(String initId, String initEmail, Image initPhoto, String initPass, ArrayList<Reminder> initReminders) {
-        id = initId;
-        email = initEmail;
-        photo = initPhoto;
-        password = initPass;
-        reminders = initReminders;
+    public User(String id, String email, Image photo, String password, ArrayList<Reminder> reminders) {
+        this.id = id;
+        this.email = email;
+        this.photo = photo;
+        this.password = password;
+        this.reminders = reminders;
     }
 
     public String getId() {
-        return id;
+        return this.id;
     }
 
     public String getEmail() {
-        return email;
+        return this.email;
     }
 
     public Image getPhoto() {
-        return photo;
+        return this.photo;
     }
 
     public Location getCurrLocation() {
         /*Call API to get the user's
         location and return coordinate*/
-        return userCoordinate;
+        return this.userCoordinate;
     }
 
     public void setId(String newId) {
-        id = newId;
+        this.id = newId;
     }
 
     public void setEmail(String newEmail) {
-        email = newEmail;
+        this.email = newEmail;
     }
 
     public void setPass(String newPassword) {
-        password = newPassword;
+        this.password = newPassword;
     }
 
     public void setPhoto(Image newPhoto) {
-        photo = newPhoto;
+        this.photo = newPhoto;
     }
 
 }
