@@ -21,6 +21,13 @@ public class MainActivity extends AppCompatActivity {
         // Write a message to the database
         root = FirebaseDatabase.getInstance();
         reference = root.getReference("message");
-        reference.setValue("May the Force be with you");
+        reference.setValue("Works on macbook");
+
+        Login_Registration registration = new Login_Registration();
+        try {
+            registration.Register("test@gmail.com", "12345", "Huong", null);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }

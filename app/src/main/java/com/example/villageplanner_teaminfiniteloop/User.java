@@ -9,16 +9,18 @@ public class User {
     private String id;
     private String email;
     private Image photo;
+    private String name;
     private String password;
     public ArrayList<Reminder> reminders;
     private Location userCoordinate;
 
-    public User(String id, String email, Image photo, String password, ArrayList<Reminder> reminders) {
+    public User(String id, String email, String name, Image photo, String password, ArrayList<Reminder> reminders) {
         this.id = id;
         this.email = email;
         this.photo = photo;
         this.password = password;
         this.reminders = reminders;
+        this.name = name;
     }
 
     public String getId() {
