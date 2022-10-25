@@ -31,45 +31,13 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        // Write a message to the database
-//        root = FirebaseDatabase.getInstance();
-//        reference = root.getReference("message");
-//        reference.setValue("Works on macbook");
-        FirebaseFirestore db = FirebaseFirestore.getInstance();
 
-        CollectionReference users = db.collection("users");
-
-        Map<String, Object> user = new HashMap<>();
-        user.put("first", "Ada");
-        user.put("last", "Lovelace");
-        user.put("born", 1815);
-        users.document("Ada").set(user);
-
-        DocumentReference docRef = db.collection("users").document("Ada");
-        docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                if (task.isSuccessful()) {
-                    DocumentSnapshot document = task.getResult();
-                    if (document.exists()) {
-                        Log.d("getting user", "DocumentSnapshot data: " + document.getData());
-                    } else {
-                        Log.d("getting user", "No such document");
-                    }
-                } else {
-                    Log.d("getting user", "get failed with ", task.getException());
-                }
-            }
-        });
-
-
-
-//        Login_Registration registration = new Login_Registration();
-//        try {
-//            registration.Register("danialatest@gmail.com", "12345", "Huong", null);
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
+        Login_Registration registration = new Login_Registration();
+        try {
+            registration.Register("danialatest@gmail.com", "12345", "danial", null);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
     }
 }
