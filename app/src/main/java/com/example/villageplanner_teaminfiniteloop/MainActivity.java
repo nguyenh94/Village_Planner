@@ -3,8 +3,10 @@ package com.example.villageplanner_teaminfiniteloop;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -31,13 +33,11 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        Login_Registration registration = new Login_Registration();
-        try {
-            registration.Register("danialatest@gmail.com", "12345", "danial", null);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
     }
+
+    public void goToRegisterActivity(View view) {
+        Intent intent = new Intent(this, RegisterActivity.class);
+        startActivity(intent);
+    }
+
 }
