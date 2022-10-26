@@ -14,6 +14,8 @@ public class User {
     public ArrayList<Reminder> reminders;
     private Location userCoordinate;
 
+    public User() {}
+
     public User(String id, String email, String name, Image photo, String password, ArrayList<Reminder> reminders) {
         this.id = id;
         this.email = email;
@@ -30,6 +32,8 @@ public class User {
     public String getEmail() {
         return this.email;
     }
+
+    public String getPassword() { return this.password; }
 
     public Image getPhoto() {
         return this.photo;

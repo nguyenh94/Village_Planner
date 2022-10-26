@@ -53,7 +53,7 @@ public class RegisterActivity extends AppCompatActivity {
             userInfo.put("password", hashedPass);
             userInfo.put("photo", photo);
 
-            users.document(uniqueId).set(userInfo);
+            users.document(email).set(userInfo);
         } else {
             Toast.makeText(view.getContext(), "Email already registered.", Toast.LENGTH_LONG).show();
         }
