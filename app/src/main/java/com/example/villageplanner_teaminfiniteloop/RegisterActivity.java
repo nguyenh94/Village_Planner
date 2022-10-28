@@ -3,6 +3,8 @@ package com.example.villageplanner_teaminfiniteloop;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.pm.PackageManager;
+import android.location.Location;
 import android.media.Image;
 import android.os.Bundle;
 import android.util.Log;

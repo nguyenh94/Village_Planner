@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">Village Planner</string>
+    <string name="title_activity_tab_bar">TabBarActivity</string>
+    <string name="title_home">Home</string>
+    <string name="title_dashboard">Dashboard</string>
+    <string name="title_notifications">Notifications</string>
+    <string name="title_activity_main_map">MainMapActivity</string>
 </resources>

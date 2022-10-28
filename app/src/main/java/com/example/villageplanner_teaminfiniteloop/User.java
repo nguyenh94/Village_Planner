@@ -1,11 +1,33 @@
 package com.example.villageplanner_teaminfiniteloop;
 
+import android.Manifest;
+import android.annotation.SuppressLint;
+import android.app.Activity;
+import android.content.Context;
+import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.location.Location;
+import android.location.LocationManager;
 import android.media.Image;
+import android.os.Looper;
+import android.provider.Settings;
+import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.core.app.ActivityCompat;
+
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationCallback;
+import com.google.android.gms.location.LocationRequest;
+import com.google.android.gms.location.LocationResult;
+import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 
 import java.util.ArrayList;
 
 public class User {
+    public static int PERMISSION_ID = 44;
     private String id;
     private String email;
     private Image photo;
@@ -14,7 +36,14 @@ public class User {
     public ArrayList<Reminder> reminders;
     private Location userCoordinate;
 
-    public User() {}
+    public User() {
+        this.id = "";
+        this.email = "";
+        this.photo = null;
+        this.password = "";
+        this.reminders = null;
+        this.name = "";
+    }
 
     public User(String id, String email, String name, Image photo, String password, ArrayList<Reminder> reminders) {
         this.id = id;
@@ -39,11 +68,6 @@ public class User {
         return this.photo;
     }
 
-    public Location getCurrLocation() {
-        /*Call API to get the user's
-        location and return coordinate*/
-        return this.userCoordinate;
-    }
 
     public void setId(String newId) {
         this.id = newId;
