@@ -1,28 +1,7 @@
 package com.example.villageplanner_teaminfiniteloop;
 
-import android.Manifest;
-import android.annotation.SuppressLint;
-import android.app.Activity;
-import android.content.Context;
-import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.location.Location;
-import android.location.LocationManager;
 import android.media.Image;
-import android.os.Looper;
-import android.provider.Settings;
-import android.widget.Toast;
-
-import androidx.annotation.NonNull;
-import androidx.core.app.ActivityCompat;
-
-import com.google.android.gms.location.FusedLocationProviderClient;
-import com.google.android.gms.location.LocationCallback;
-import com.google.android.gms.location.LocationRequest;
-import com.google.android.gms.location.LocationResult;
-import com.google.android.gms.location.LocationServices;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 
 import java.util.ArrayList;
 
@@ -33,7 +12,7 @@ public class User {
     private Image photo;
     private String name;
     private String password;
-    public ArrayList<Reminder> reminders;
+    public ArrayList<ReminderActivity> reminders;
     private Location userCoordinate;
 
     public User() {
@@ -45,7 +24,7 @@ public class User {
         this.name = "";
     }
 
-    public User(String id, String email, String name, Image photo, String password, ArrayList<Reminder> reminders) {
+    public User(String id, String email, String name, Image photo, String password, ArrayList<ReminderActivity> reminders) {
         this.id = id;
         this.email = email;
         this.photo = photo;

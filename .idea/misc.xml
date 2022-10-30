@@ -4,12 +4,15 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/Users/nguye/Documents/USC/Fall22/cs310/VillagePlannerTeamInfiniteLoop/app/src/main/res/layout/activity_main.xml" value="0.2682291666666667" />
+        <entry key="app/src/main/res/drawable/noti_icon.xml" value="0.205" />
         <entry key="app/src/main/res/drawable/notification_icon.xml" value="0.2345" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.2427536231884058" />
         <entry key="app/src/main/res/layout/activity_main_map.xml" value="0.2427536231884058" />
         <entry key="app/src/main/res/layout/activity_register.xml" value="0.2427536231884058" />
         <entry key="app/src/main/res/layout/activity_reminder.xml" value="0.2427536231884058" />
         <entry key="app/src/main/res/layout/activity_tab_bar.xml" value="0.2427536231884058" />
+        <entry key="app/src/main/res/layout/reminder_input.xml" value="0.2256838905775076" />
+        <entry key="app/src/main/res/layout/row.xml" value="0.2256838905775076" />
       </map>
     </option>
   </component>

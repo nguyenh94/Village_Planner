@@ -5,4 +5,7 @@
     <string name="title_dashboard">Dashboard</string>
     <string name="title_notifications">Notifications</string>
     <string name="title_activity_main_map">MainMapActivity</string>
+    <string name="channel_name">reminderChannel</string>
+    <string name="channel_description">sendingReminders</string>
+    <string name="hello_world">hi</string>
 </resources>
