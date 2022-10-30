@@ -17,16 +17,10 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
-import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
-
-import java.util.HashMap;
-import java.util.Map;
 
 public class LoginActivity extends AppCompatActivity {
     public static final int MY_PERMISSIONS_REQUEST_LOCATION = 99;
@@ -42,7 +36,7 @@ public class LoginActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_login);
 
         checkLocationPermission();
 
@@ -65,8 +59,11 @@ public class LoginActivity extends AppCompatActivity {
             // check password by hashing current password and compare to user's stored password
             String hashedPass = login_helper.hashPassword(unhashedPass);
             if (password.equals(hashedPass)) {
-                // TODO START ACTIVITY THAT MOVES TO HOME PAGE (MAP UI)
                 Toast.makeText(view.getContext(), "Login Successful.", Toast.LENGTH_LONG).show();
+
+                //Move to home
+                Intent intent = new Intent(LoginActivity.this, TabBarActivity.class);
+                startActivity(intent);
             } else {  // if password is incorrect
                 Toast.makeText(view.getContext(), "Incorrect password.", Toast.LENGTH_LONG).show();
             }
@@ -75,7 +72,7 @@ public class LoginActivity extends AppCompatActivity {
         }
     }
 
-    public void login(View view) {
+    public void loginButtonPressed(View view) {
         TextView passwordEntered = (TextView) findViewById(R.id.password);
         TextView emailEntered = (TextView) findViewById(R.id.email);
 
