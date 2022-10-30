@@ -4,12 +4,16 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/Users/nguye/Documents/USC/Fall22/cs310/VillagePlannerTeamInfiniteLoop/app/src/main/res/layout/activity_main.xml" value="0.2682291666666667" />
-        <entry key="app/src/main/res/drawable/notification_icon.xml" value="0.2345" />
-        <entry key="app/src/main/res/layout/activity_main.xml" value="0.2427536231884058" />
-        <entry key="app/src/main/res/layout/activity_main_map.xml" value="0.2427536231884058" />
-        <entry key="app/src/main/res/layout/activity_register.xml" value="0.2427536231884058" />
-        <entry key="app/src/main/res/layout/activity_reminder.xml" value="0.2427536231884058" />
-        <entry key="app/src/main/res/layout/activity_tab_bar.xml" value="0.2427536231884058" />
+        <entry key="app/src/main/res/drawable/ic_baseline_person_24.xml" value="0.1955" />
+        <entry key="app/src/main/res/layout/activity_login.xml" value="0.21822916666666667" />
+        <entry key="app/src/main/res/layout/activity_main.xml" value="0.4036458333333333" />
+        <entry key="app/src/main/res/layout/activity_main_map.xml" value="0.4036458333333333" />
+        <entry key="app/src/main/res/layout/activity_register.xml" value="0.4036458333333333" />
+        <entry key="app/src/main/res/layout/activity_tab_bar.xml" value="0.21822916666666667" />
+        <entry key="app/src/main/res/layout/fragment_dashboard.xml" value="0.21822916666666667" />
+        <entry key="app/src/main/res/layout/fragment_home.xml" value="0.30648148148148147" />
+        <entry key="app/src/main/res/layout/fragment_map.xml" value="0.21822916666666667" />
+        <entry key="app/src/main/res/menu/bottom_nav_menu.xml" value="0.21822916666666667" />
       </map>
     </option>
   </component>
