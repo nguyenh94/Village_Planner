@@ -1,6 +1,7 @@
 package com.example.villageplanner_teaminfiniteloop;
 import static android.provider.Settings.System.getString;
 
+import android.app.Activity;
 import android.app.AlarmManager ;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
@@ -51,9 +52,9 @@ public class Reminder {
 //            notificationManager.createNotificationChannel(channel);
 //        }
 //    }
-//    public void registerNotification(String title, Time reminderTime)
+//    public void registerNotification(String title, Time reminderTime, Activity activity)
 //    {
-//        NotificationCompat.Builder builder = new NotificationCompat.Builder(this, CHANNEL_ID)
+//        NotificationCompat.Builder builder = new NotificationCompat.Builder(activity, CHANNEL_ID)
 //                .setSmallIcon(R.drawable.notification_icon)
 //                .setContentTitle("Notification")
 //                .setContentText("context text")
