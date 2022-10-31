@@ -1,4 +1,4 @@
-package com.example.villageplanner_teaminfiniteloop.ui.home;
+package com.example.villageplanner_teaminfiniteloop.ui.map;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -10,18 +10,18 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
-import com.example.villageplanner_teaminfiniteloop.databinding.FragmentHomeBinding;
+import com.example.villageplanner_teaminfiniteloop.databinding.FragmentMapBinding;
 
-public class HomeFragment extends Fragment {
+public class MapFragment extends Fragment {
 
-    private FragmentHomeBinding binding;
+    private FragmentMapBinding binding;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        HomeViewModel homeViewModel =
-                new ViewModelProvider(this).get(HomeViewModel.class);
+        MapViewModel homeViewModel =
+                new ViewModelProvider(this).get(MapViewModel.class);
 
-        binding = FragmentHomeBinding.inflate(inflater, container, false);
+        binding = FragmentMapBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
         final TextView textView = binding.textHome;
