@@ -1,4 +1,4 @@
-package com.example.villageplanner_teaminfiniteloop.ui.dashboard;
+package com.example.villageplanner_teaminfiniteloop.ui.reminders;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -10,18 +10,18 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
-import com.example.villageplanner_teaminfiniteloop.databinding.FragmentDashboardBinding;
+import com.example.villageplanner_teaminfiniteloop.databinding.FragmentRemindersBinding;
 
-public class DashboardFragment extends Fragment {
+public class RemindersFragment extends Fragment {
 
-    private FragmentDashboardBinding binding;
+    private FragmentRemindersBinding binding;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        DashboardViewModel dashboardViewModel =
-                new ViewModelProvider(this).get(DashboardViewModel.class);
+        RemindersViewModel dashboardViewModel =
+                new ViewModelProvider(this).get(RemindersViewModel.class);
 
-        binding = FragmentDashboardBinding.inflate(inflater, container, false);
+        binding = FragmentRemindersBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
         final TextView textView = binding.textDashboard;
