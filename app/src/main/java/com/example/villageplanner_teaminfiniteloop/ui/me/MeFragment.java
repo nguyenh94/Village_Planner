@@ -1,4 +1,4 @@
-package com.example.villageplanner_teaminfiniteloop.ui.notifications;
+package com.example.villageplanner_teaminfiniteloop.ui.me;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -10,18 +10,18 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
-import com.example.villageplanner_teaminfiniteloop.databinding.FragmentNotificationsBinding;
+import com.example.villageplanner_teaminfiniteloop.databinding.FragmentMeBinding;
 
-public class NotificationsFragment extends Fragment {
+public class MeFragment extends Fragment {
 
-    private FragmentNotificationsBinding binding;
+    private FragmentMeBinding binding;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        NotificationsViewModel notificationsViewModel =
-                new ViewModelProvider(this).get(NotificationsViewModel.class);
+        MeViewModel notificationsViewModel =
+                new ViewModelProvider(this).get(MeViewModel.class);
 
-        binding = FragmentNotificationsBinding.inflate(inflater, container, false);
+        binding = FragmentMeBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
         final TextView textView = binding.textNotifications;
