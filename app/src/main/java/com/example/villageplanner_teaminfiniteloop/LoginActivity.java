@@ -65,6 +65,7 @@ public class LoginActivity extends AppCompatActivity {
             // check password by hashing current password and compare to user's stored password
             String hashedPass = login_helper.hashPassword(unhashedPass);
             if (password.equals(hashedPass)) {
+                // TODO RETRIEVE AND STORE USER'S LOCATION
                 // TODO START ACTIVITY THAT MOVES TO HOME PAGE (MAP UI)
                 Toast.makeText(view.getContext(), "Login Successful.", Toast.LENGTH_LONG).show();
             } else {  // if password is incorrect

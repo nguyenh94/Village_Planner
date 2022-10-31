@@ -45,7 +45,7 @@ public class User {
         this.name = "";
     }
 
-    public User(String id, String email, String name, Image photo, String password, ArrayList<Reminder> reminders) {
+    public User(String id, String email, String name, Image photo, String password, Location userCoordinate, ArrayList<Reminder> reminders) {
         this.id = id;
         this.email = email;
         this.photo = photo;
