@@ -71,4 +71,15 @@ public class Restaurant {
     public ArrayList<String> restaurantNameCallBack(ArrayList<String> allResNames) {
         return allResNames;
     }
+
+    // helper function to parse the coordinate string and convert them to double long and lat
+    public ArrayList<Double> stringToDouble(String coordinate) {
+        ArrayList<Double> resCoordinate = new ArrayList<Double>();
+        String[] split = coordinate.split(", ");
+        Double latitude = Double.parseDouble(split[0]);
+        Double longitude = Double.parseDouble(split[1]);
+        resCoordinate.add(latitude);
+        resCoordinate.add(longitude);
+        return resCoordinate;
+    }
 }
