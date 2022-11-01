@@ -3,6 +3,8 @@ package com.example.villageplanner_teaminfiniteloop;
 import android.location.Location;
 import android.media.Image;
 
+import org.checkerframework.checker.units.qual.A;
+
 import java.util.ArrayList;
 
 public class User {
@@ -12,7 +14,7 @@ public class User {
     private Image photo;
     private String name;
     private String password;
-    public ArrayList<ReminderActivity> reminders;
+    public ArrayList<Reminder> reminders;
     private Location userCoordinate;
 
     public User() {
@@ -20,11 +22,11 @@ public class User {
         this.email = "";
         this.photo = null;
         this.password = "";
-        this.reminders = null;
+        this.reminders = new ArrayList<Reminder>();
         this.name = "";
     }
 
-    public User(String id, String email, String name, Image photo, String password, ArrayList<ReminderActivity> reminders) {
+    public User(String id, String email, String name, Image photo, String password, ArrayList<Reminder> reminders) {
         this.id = id;
         this.email = email;
         this.photo = photo;
@@ -47,6 +49,14 @@ public class User {
         return this.photo;
     }
 
+    public ArrayList<Reminder> getReminders() {
+        return this.reminders;
+    }
+
+
+    public void setReminders(ArrayList<Reminder> reminders) {
+        this.reminders = reminders;
+    }
 
     public void setId(String newId) {
         this.id = newId;

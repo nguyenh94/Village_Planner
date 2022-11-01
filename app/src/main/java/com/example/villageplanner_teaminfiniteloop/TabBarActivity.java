@@ -1,5 +1,7 @@
 package com.example.villageplanner_teaminfiniteloop;
 
+import static com.example.villageplanner_teaminfiniteloop.R.id.navigation_dashboard;
+
 import android.os.Bundle;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <item name="textin" type="id" />
+    <item name="reminderDescription" type="id" />
     <item name="add" type="id" />
 </resources>

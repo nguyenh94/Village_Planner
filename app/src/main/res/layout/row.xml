@@ -8,10 +8,16 @@
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
         android:text="Remove"/>
-    <TextView
+    <EditText
         android:id="@+id/textout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_toLeftOf="@id/remove"/>
+<!--    <TextView-->
+<!--        android:id="@+id/textout"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_alignParentLeft="true"-->
+<!--        android:layout_toLeftOf="@id/remove"/>-->
 </RelativeLayout>
