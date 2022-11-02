@@ -38,11 +38,13 @@ import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Source;
 
 import java.sql.Array;
 import java.sql.Time;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class RemindersFragment extends Fragment {
@@ -94,9 +96,10 @@ public class RemindersFragment extends Fragment {
                 ((EditText) root.findViewById(R.id.reminderDescription)).setText("");
                 Integer Hours = tp.getCurrentHour();
                 Integer Minutes = tp.getCurrentMinute();
-                String createdReminder = "Title=" + reminderTitle + "?Hours=" + Hours + "?Minutes=" + Minutes;
+                String createdReminder = reminderTitle + "?" + Hours + "?" + Minutes;
                 FirebaseFirestore db = FirebaseFirestore.getInstance();
                 String userEmail = "test7gmail.com";
+                final List<String>[] usersReminders = new List[0];
                 DocumentReference docRef = db.collection("users").document(userEmail);
                 docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
                     @Override
@@ -105,7 +108,6 @@ public class RemindersFragment extends Fragment {
                             DocumentSnapshot document = task.getResult();
                             if (document.exists()) {  // if email exists
                                 docRef.update("reminders", FieldValue.arrayUnion(createdReminder));
-
                                 Toast.makeText(root.getContext(), "Reminder Creation Successful.", Toast.LENGTH_LONG).show();
                             } else {  // if email doesn't exists how are they logged in
 
@@ -115,6 +117,21 @@ public class RemindersFragment extends Fragment {
                         }
                     }
                 });
+                DocumentReference docRefSecond = db.collection("users").document(userEmail);
+                docRefSecond.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                        @Override
+                        public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                            if (task.isSuccessful()) {
+                                DocumentSnapshot document = task.getResult();
+                                if (document.exists()) {  // if email exists
+                                    usersReminders[0] = (List<String>) document.get("reminders");
+                                }
+                            } else {
+                                Log.d("getting user", "get failed with ", task.getException());
+                            }
+                        }
+                    });
+                ArrayList<Reminder> allReminders = translateReminders(usersReminders[0]);
                 //Move back home
 //                Intent intent = new Intent(LoginActivity.this, TabBarActivity.class);
 //                startActivity(intent);
@@ -128,6 +145,17 @@ public class RemindersFragment extends Fragment {
         long tenSeconds = 1000 * 10;
         long _triggerReminder = _currentTime + tenSeconds; //triggers a reminder after 10 seconds.
         _notificationUtils.setReminder(_triggerReminder);
+    }
+
+    public ArrayList<Reminder> translateReminders(List<String> reminders) {
+        ArrayList<Reminder> usersReminders = new ArrayList<Reminder>();
+        for (String reminder : reminders) {
+            String[] reminderComponents = reminder.split("\\?");
+            Reminder newReminder = new Reminder();
+            newReminder.setReminderTitle(reminderComponents[0]);
+            newReminder.setReminderTime(Integer.parseInt(reminderComponents[1]),Integer.parseInt(reminderComponents[2]));
+        }
+        return usersReminders;
     }
 
     public void edit(String title, String id, Time travelTime, Time queueTime)
