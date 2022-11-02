@@ -3,6 +3,7 @@ package com.example.villageplanner_teaminfiniteloop;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.media.Image;
@@ -38,6 +39,9 @@ public class RegisterActivity extends AppCompatActivity {
         // if email has not been registered before
         if(validReg) {
             Login_Registration reg_helper = new Login_Registration();
+
+            // TODO RETRIEVE AND STORE USER'S LOCATION IN DATABASE
+
             // generate new ID for user
             String uniqueId = UUID.randomUUID().toString();
 
@@ -58,6 +62,9 @@ public class RegisterActivity extends AppCompatActivity {
             userInfo.put("reminders", reminders);
 
             users.document(email).set(userInfo);
+
+            Intent intent = new Intent(this, MainMapActivity.class);
+            startActivity(intent);
         } else {
             Toast.makeText(view.getContext(), "Email already registered.", Toast.LENGTH_LONG).show();
         }
