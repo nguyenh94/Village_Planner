@@ -39,6 +39,7 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
 
+import java.sql.Array;
 import java.sql.Time;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -91,11 +92,9 @@ public class RemindersFragment extends Fragment {
                 String reminderTitle = title.getText().toString();
                 final TimePicker tp = (TimePicker) root.findViewById(R.id.reminderTimePicker);
                 ((EditText) root.findViewById(R.id.reminderDescription)).setText("");
-                Reminder createdReminder = new Reminder();
-                createdReminder.setReminderTitle(reminderTitle);
                 Integer Hours = tp.getCurrentHour();
                 Integer Minutes = tp.getCurrentMinute();
-                createdReminder.setReminderTime(Hours, Minutes);
+                String createdReminder = "Title=" + reminderTitle + "?Hours=" + Hours + "?Minutes=" + Minutes;
                 FirebaseFirestore db = FirebaseFirestore.getInstance();
                 String userEmail = "test7gmail.com";
                 DocumentReference docRef = db.collection("users").document(userEmail);
@@ -105,11 +104,8 @@ public class RemindersFragment extends Fragment {
                         if (task.isSuccessful()) {
                             DocumentSnapshot document = task.getResult();
                             if (document.exists()) {  // if email exists
-//                                User user = document.toObject(User.class);
-//                                ArrayList<Reminder> usersReminders = user.getReminders();
-//                                usersReminders.add(createdReminder);
-//                                user.setReminders(usersReminders);
-                                db.collection("users").document(userEmail).update("reminders", FieldValue.arrayUnion(createdReminder));
+                                docRef.update("reminders", FieldValue.arrayUnion(createdReminder));
+
                                 Toast.makeText(root.getContext(), "Reminder Creation Successful.", Toast.LENGTH_LONG).show();
                             } else {  // if email doesn't exists how are they logged in
 
