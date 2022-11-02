@@ -11,6 +11,7 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.example.villageplanner_teaminfiniteloop.databinding.ActivityMainMapBinding;
+//import com.google.android.libraries.maps.GoogleMap;
 
 public class MainMapActivity extends FragmentActivity implements OnMapReadyCallback {
 
