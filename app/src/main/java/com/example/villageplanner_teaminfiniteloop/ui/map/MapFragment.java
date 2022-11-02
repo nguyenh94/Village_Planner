@@ -9,10 +9,12 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.example.villageplanner_teaminfiniteloop.R;
 import com.example.villageplanner_teaminfiniteloop.databinding.FragmentMapBinding;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
@@ -26,16 +28,20 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
 
     private FragmentMapBinding binding;
 
-    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        MapViewModel homeViewModel = new ViewModelProvider(this).get(MapViewModel.class);
-        binding = FragmentMapBinding.inflate(inflater, container, false);
-        View root = binding.getRoot();
-        mapView = (MapView) binding.mapView;
-
+    @Nullable
+    @Override
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.fragment_map, container, false);
+        mapView = (MapView) view.findViewById(R.id.mapView);
+        //super.onCreateView(inflater, container, savedInstanceState);
+        //MapViewModel homeViewModel = new ViewModelProvider(this).get(MapViewModel.class);
+        //binding = FragmentMapBinding.inflate(inflater, container, false);
+        //View root = binding.getRoot();
         initGoogleMap(savedInstanceState);
+
 //        final TextView textView = binding.textHome;
 //        homeViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
-        return root;
+        return view;
     }
 
     private void initGoogleMap(Bundle savedInstanceState) {
