@@ -16,7 +16,7 @@ import android.widget.LinearLayout;
 
 import java.sql.Time;
 
-public class Reminder extends Activity{
+public class Reminder{
     //TODO
     private static final String CHANNEL_ID = "channelID";
     private String title;
@@ -26,24 +26,24 @@ public class Reminder extends Activity{
     private String restaurantId;
     private String reminderId;
 
-    EditText textIn;
-    Button buttonAdd;
-    Button buttonCreateReminder;
-    LinearLayout container;
+//    EditText textIn;
+//    Button buttonAdd;
+//    Button buttonCreateReminder;
+//    LinearLayout container;
 
-   @Override
-    protected void onCreate(Bundle savedInstanceState) {
-       super.onCreate(savedInstanceState);
+//   @Override
+//    protected void onCreate(Bundle savedInstanceState) {
+//       super.onCreate(savedInstanceState);
 //        createNotificationChannel();
 //        registerNotification("notif1", reminderTime ,this);
        //TODO https://stackoverflow.com/questions/34517520/how-to-give-notifications-on-android-on-specific-time
 //       reminderNotification();
 //       setContentView(R.layout.reminder_input);
        //TODO http://android-er.blogspot.com/2013/05/add-and-remove-view-dynamically.html
-       textIn = (EditText)findViewById(R.id.reminderDescription);
-       buttonAdd = (Button)findViewById(R.id.add);
-       container = (LinearLayout)findViewById(R.id.container);
-       buttonCreateReminder = (Button)findViewById(R.id.createReminder);
+//       textIn = (EditText)findViewById(R.id.reminderDescription);
+//       buttonAdd = (Button)findViewById(R.id.add);
+//       container = (LinearLayout)findViewById(R.id.container);
+//       buttonCreateReminder = (Button)findViewById(R.id.createReminder);
 
 //       buttonAdd.setOnClickListener(new View.OnClickListener(){
 //           @Override
@@ -63,7 +63,7 @@ public class Reminder extends Activity{
 //
 //               container.addView(addView);
 //           }});
-   }
+//   }
 //    public void reminderNotification()
 //    {
 //        NotificationUtils _notificationUtils = new NotificationUtils(this);
@@ -112,7 +112,7 @@ public class Reminder extends Activity{
 //                .setPriority(NotificationCompat.PRIORITY_DEFAULT);
 //    }
 
-    public String getResId()
+    public String getRestaurantIdId()
     {
         return this.restaurantId;
     }

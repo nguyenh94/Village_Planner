@@ -52,14 +52,12 @@ public class RegisterActivity extends AppCompatActivity {
             FirebaseFirestore db = FirebaseFirestore.getInstance();
 
             CollectionReference users = db.collection("users");
-            ArrayList<Reminder> reminders = new ArrayList<Reminder>();
             Map<String, Object> userInfo = new HashMap<>();
             userInfo.put("uniqueId", uniqueId);
             userInfo.put("name", name);
             userInfo.put("email", email);
             userInfo.put("password", hashedPass);
             userInfo.put("photo", photo);
-            userInfo.put("reminders", reminders);
 
             users.document(email).set(userInfo);
 

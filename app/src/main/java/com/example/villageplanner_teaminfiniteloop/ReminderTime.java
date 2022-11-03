@@ -23,7 +23,7 @@ public class ReminderTime {
     }
 
     public void setMinutes(Integer minutes) {
-        this.Hours = minutes;
+        this.Minutes = minutes;
     }
 }
 

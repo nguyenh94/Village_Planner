@@ -33,7 +33,7 @@ public class User {
     private Image photo;
     private String name;
     private String password;
-    public ArrayList<Reminder> reminders;
+    public ArrayList<String> reminders;
     private Location userCoordinate;
 
     public User() {
@@ -45,7 +45,7 @@ public class User {
         this.name = "";
     }
 
-    public User(String id, String email, String name, Image photo, String password, ArrayList<Reminder> reminders) {
+    public User(String id, String email, String name, Image photo, String password, ArrayList<String> reminders) {
         this.id = id;
         this.email = email;
         this.photo = photo;
@@ -68,6 +68,9 @@ public class User {
         return this.photo;
     }
 
+    public ArrayList<String> getReminders() {
+        return this.reminders;
+    }
 
     public void setId(String newId) {
         this.id = newId;

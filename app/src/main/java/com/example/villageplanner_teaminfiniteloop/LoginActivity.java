@@ -81,14 +81,14 @@ public class LoginActivity extends AppCompatActivity {
 
         // check if query to the database to get email and password
         FirebaseFirestore db = FirebaseFirestore.getInstance();
-        DocumentReference docRef = db.collection("users").document(userEmail);
-        docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+        DocumentReference userDocRef = db.collection("users").document(userEmail);
+        userDocRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
             public void onComplete(@NonNull Task<DocumentSnapshot> task) {
                 if (task.isSuccessful()) {
-                    DocumentSnapshot document = task.getResult();
-                    if (document.exists()) {  // if email exists
-                        User user = document.toObject(User.class);
+                    DocumentSnapshot userDocument = task.getResult();
+                    if (userDocument.exists()) {  // if email exists
+                        User user = userDocument.toObject(User.class);
                         loginCallBack(view, true, user.getEmail(), user.getPassword());
                     } else {  // if email doesn't exists
                         loginCallBack(view, false, userEmail, password);

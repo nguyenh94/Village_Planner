@@ -30,36 +30,44 @@
 <!--            android:layout_toLeftOf="@id/add"/>-->
     </RelativeLayout>
 
-    <LinearLayout
-        android:id="@+id/container"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
+<!--    <LinearLayout-->
+<!--        android:id="@+id/container"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:orientation="vertical">-->
 
-        <TextView
-            android:id="@+id/reminderTitleOfPage"
+<!--        <TextView-->
+<!--            android:id="@+id/reminderTitleOfPage"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="match_parent"-->
+<!--            android:text="Enter your reminder description and pick a time "-->
+<!--            android:textSize="20sp" />-->
+
+<!--        <EditText-->
+<!--            android:id="@+id/reminderDescription"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="match_parent"-->
+<!--            android:text=""-->
+<!--            android:textSize="20sp" />-->
+
+<!--        <TimePicker-->
+<!--            android:id="@+id/reminderTimePicker"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="351dp" />-->
+
+<!--        <Button-->
+<!--            android:id="@+id/createReminder"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="38dp"-->
+<!--            android:text="Submit" />-->
+<!--    </LinearLayout>-->
+
+        <ListView android:id="@+id/listView1"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:text="Enter your reminder description and pick a time "
-            android:textSize="20sp" />
-
-        <EditText
-            android:id="@+id/reminderDescription"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:text=""
-            android:textSize="20sp" />
-
-        <TimePicker
-            android:id="@+id/reminderTimePicker"
-            android:layout_width="match_parent"
-            android:layout_height="351dp" />
-
-        <Button
-            android:id="@+id/createReminder"
-            android:layout_width="wrap_content"
-            android:layout_height="38dp"
-            android:text="Submit" />
+            android:layout_height="wrap_content"
+            android:animationCache="false"
+            android:scrollingCache="false"
+            android:smoothScrollbar="true" >
+        </ListView>
     </LinearLayout>
 
-</LinearLayout>

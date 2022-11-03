@@ -16,6 +16,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
@@ -25,6 +26,7 @@ import androidx.core.app.NotificationCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.example.villageplanner_teaminfiniteloop.ListviewAdapter;
 import com.example.villageplanner_teaminfiniteloop.LoginActivity;
 import com.example.villageplanner_teaminfiniteloop.NotificationUtils;
 import com.example.villageplanner_teaminfiniteloop.R;
@@ -55,97 +57,50 @@ public class RemindersFragment extends Fragment {
     Button buttonCreateReminder;
     LinearLayout container;
     private static final String CHANNEL_ID = "channelID";
+    private ListView listView;
+    private List list;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
+        //TODO Adapt this tutorial to our data
         RemindersViewModel dashboardViewModel =
                 new ViewModelProvider(this).get(RemindersViewModel.class);
         reminderNotification();
         binding = FragmentRemindersBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
-        textIn = (EditText)root.findViewById(R.id.reminderDescription);
-        buttonAdd = (Button)root.findViewById(R.id.createReminder);
-        container = (LinearLayout)root.findViewById(R.id.container);
-        buttonCreateReminder = (Button)root.findViewById(R.id.createReminder);
+        ListView lv = (ListView) root.findViewById(R.id.listView1);
+        lv.setItemsCanFocus(true);
+        list = new ArrayList<Integer>();
+//        for(int i=0;i<30;i++){
+//            list.add(i);
+//        }
 
-        ViewGroup finalContainer = container;
-        buttonAdd.setOnClickListener(new View.OnClickListener(){
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        String userEmail = "test1@gmail.com";
+        final ArrayList<String>[] usersReminders = new ArrayList[]{new ArrayList<String>()};
+        DocumentReference docRefSecond = db.collection("users").document(userEmail);
+        docRefSecond.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
-            public void onClick(View arg0) {
-                LayoutInflater layoutInflater =
-                        (LayoutInflater) getActivity().getBaseContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-                final View addView = layoutInflater.inflate(R.layout.row, null);
-                TextView textOut = (TextView)addView.findViewById(R.id.textout);
-                textOut.setText(textIn.getText().toString());
-                Button buttonRemove = (Button)addView.findViewById(R.id.remove);
-                buttonRemove.setOnClickListener(new View.OnClickListener(){
-
-                    @Override
-                    public void onClick(View v) {
-                        ((LinearLayout)addView.getParent()).removeView(addView);
-                    }});
-               finalContainer.addView(addView);
-            }});
-
-        buttonCreateReminder.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View arg0) {
-                EditText title = (EditText) root.findViewById(R.id.reminderDescription);
-                String reminderTitle = title.getText().toString();
-                final TimePicker tp = (TimePicker) root.findViewById(R.id.reminderTimePicker);
-                ((EditText) root.findViewById(R.id.reminderDescription)).setText("");
-                Integer Hours = tp.getCurrentHour();
-                Integer Minutes = tp.getCurrentMinute();
-                String createdReminder = reminderTitle + "?" + Hours + "?" + Minutes;
-                FirebaseFirestore db = FirebaseFirestore.getInstance();
-                String userEmail = "test7gmail.com";
-                final List<String>[] usersReminders = new List[0];
-                DocumentReference docRef = db.collection("users").document(userEmail);
-                docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                        if (task.isSuccessful()) {
-                            DocumentSnapshot document = task.getResult();
-                            if (document.exists()) {  // if email exists
-                                docRef.update("reminders", FieldValue.arrayUnion(createdReminder));
-                                Toast.makeText(root.getContext(), "Reminder Creation Successful.", Toast.LENGTH_LONG).show();
-                            } else {  // if email doesn't exists how are they logged in
-
-                            }
-                        } else {
-                            Log.d("getting user", "get failed with ", task.getException());
-                        }
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                if (task.isSuccessful()) {
+                    DocumentSnapshot document = task.getResult();
+                    if (document.exists()) {  // if email exists
+                        User user = document.toObject(User.class);
+//                        adpter=new ListviewAdapter(this,translateReminders(user.getReminders()));
+//                        listView.setAdapter(adpter);
+                        list = translateReminderTimes(user.getReminders());
+                        ListviewAdapter adpter = new ListviewAdapter(root.getContext(), list);
+                        lv.setAdapter(adpter);
                     }
-                });
-                DocumentReference docRefSecond = db.collection("users").document(userEmail);
-                docRefSecond.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-                        @Override
-                        public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                            if (task.isSuccessful()) {
-                                DocumentSnapshot document = task.getResult();
-                                if (document.exists()) {  // if email exists
-                                    usersReminders[0] = (List<String>) document.get("reminders");
-                                }
-                            } else {
-                                Log.d("getting user", "get failed with ", task.getException());
-                            }
-                        }
-                    });
-                ArrayList<Reminder> allReminders = translateReminders(usersReminders[0]);
-                //Move back home
-//                Intent intent = new Intent(LoginActivity.this, TabBarActivity.class);
-//                startActivity(intent);
-            }});
+                } else {
+                    Log.d("getting user", "get failed with ", task.getException());
+                }
+            }
+        });
+//        ArrayList<Reminder> allReminders = translateReminders(usersReminders[0]);
         return root;
     }
-    public void reminderNotification()
-    {
-        NotificationUtils _notificationUtils = new NotificationUtils(getActivity());
-        long _currentTime = System.currentTimeMillis();
-        long tenSeconds = 1000 * 10;
-        long _triggerReminder = _currentTime + tenSeconds; //triggers a reminder after 10 seconds.
-        _notificationUtils.setReminder(_triggerReminder);
-    }
+
 
     public ArrayList<Reminder> translateReminders(List<String> reminders) {
         ArrayList<Reminder> usersReminders = new ArrayList<Reminder>();
@@ -154,9 +109,32 @@ public class RemindersFragment extends Fragment {
             Reminder newReminder = new Reminder();
             newReminder.setReminderTitle(reminderComponents[0]);
             newReminder.setReminderTime(Integer.parseInt(reminderComponents[1]),Integer.parseInt(reminderComponents[2]));
+            usersReminders.add(newReminder);
         }
         return usersReminders;
     }
+
+    public List<Integer> translateReminderTimes(List<String> reminders) {
+        ArrayList<Integer> usersHours = new ArrayList<Integer>();
+        for (String reminder : reminders) {
+            String[] reminderComponents = reminder.split("\\?");
+//            Reminder newReminder = new Reminder();
+//            newReminder.setReminderTitle(reminderComponents[0]);
+//            newReminder.setReminderTime(Integer.parseInt(reminderComponents[1]),Integer.parseInt(reminderComponents[2]));
+            usersHours.add(Integer.parseInt(reminderComponents[1]));
+        }
+        return usersHours;
+    }
+
+    public void reminderNotification()
+        {
+            NotificationUtils _notificationUtils = new NotificationUtils(getActivity());
+            long _currentTime = System.currentTimeMillis();
+            long tenSeconds = 1000 * 10;
+            long _triggerReminder = _currentTime + tenSeconds; //triggers a reminder after 10 seconds.
+            _notificationUtils.setReminder(_triggerReminder);
+        }
+
 
     public void edit(String title, String id, Time travelTime, Time queueTime)
     {
