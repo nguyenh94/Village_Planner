@@ -35,6 +35,7 @@ public class User {
     private String password;
     public ArrayList<Reminder> reminders;
     private String location;
+    public static Location currentLocation;
 
     public User() {
         this.id = "";
