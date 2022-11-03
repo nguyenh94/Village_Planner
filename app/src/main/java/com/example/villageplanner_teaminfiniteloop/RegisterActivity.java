@@ -39,8 +39,6 @@ public class RegisterActivity extends AppCompatActivity {
         if(validReg) {
             Login_Registration reg_helper = new Login_Registration();
 
-            // TODO RETRIEVE AND STORE USER'S LOCATION IN DATABASE
-
             // generate new ID for user
             String uniqueId = UUID.randomUUID().toString();
 
@@ -58,6 +56,7 @@ public class RegisterActivity extends AppCompatActivity {
             userInfo.put("email", email);
             userInfo.put("password", hashedPass);
             userInfo.put("photo", photo);
+            userInfo.put("location", LoginActivity.coordinate);
 
             users.document(email).set(userInfo);
 
