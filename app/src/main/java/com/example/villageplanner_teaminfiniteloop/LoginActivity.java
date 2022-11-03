@@ -21,6 +21,10 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
+
+import java.util.ArrayList;
 
 public class LoginActivity extends AppCompatActivity {
     public static final int MY_PERMISSIONS_REQUEST_LOCATION = 99;
@@ -42,6 +46,19 @@ public class LoginActivity extends AppCompatActivity {
 
         MyLocation myLocation = new MyLocation();
         myLocation.getLocation(this, locationResult);
+
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        db.collection("restaurants").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                if (task.isSuccessful()) {
+                    for(QueryDocumentSnapshot document: task.getResult()) {
+                        Restaurant restaurant = document.toObject(Restaurant.class);
+                        Queue.restaurants.add(restaurant);
+                    }
+                }
+            }
+        });
     }
 
     public void goToRegisterActivity(View view) {

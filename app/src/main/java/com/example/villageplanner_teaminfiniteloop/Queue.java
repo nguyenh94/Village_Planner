@@ -17,6 +17,7 @@ import com.google.firebase.firestore.QuerySnapshot;
 import java.util.ArrayList;
 
 public class Queue {
+    static public ArrayList<Restaurant> restaurants = new ArrayList<Restaurant>();
 
     public void calculateQueueTimeCallBack(ArrayList<String> allUserLocation) {
         // TODO RETRIEVE THE RESTAURANT COORDINATES TO USE IN CALCULATION

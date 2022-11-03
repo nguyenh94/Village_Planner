@@ -1,32 +1,45 @@
 package com.example.villageplanner_teaminfiniteloop.ui.map;
 
 import android.Manifest;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.ViewModelProvider;
 
+import com.example.villageplanner_teaminfiniteloop.Queue;
 import com.example.villageplanner_teaminfiniteloop.R;
+import com.example.villageplanner_teaminfiniteloop.Restaurant;
+import com.example.villageplanner_teaminfiniteloop.RestaurantDetail;
 import com.example.villageplanner_teaminfiniteloop.databinding.FragmentMapBinding;
+import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 
-public class MapFragment extends Fragment implements OnMapReadyCallback {
+import java.util.ArrayList;
+
+public class MapFragment extends Fragment implements OnMapReadyCallback, GoogleMap.OnInfoWindowClickListener {
     private static final String MAPVIEW_BUNDLE_KEY = "MapViewBundleKey";
     private MapView mapView;
-
+    private GoogleMap googleMap;
     private FragmentMapBinding binding;
+    private ArrayList<Restaurant> restaurants = Queue.restaurants;
 
     @Nullable
     @Override
@@ -38,7 +51,6 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
         //binding = FragmentMapBinding.inflate(inflater, container, false);
         //View root = binding.getRoot();
         initGoogleMap(savedInstanceState);
-
 //        final TextView textView = binding.textHome;
 //        homeViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
         return view;
@@ -93,10 +105,27 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
     @Override
     public void onMapReady(GoogleMap map) {
         //map.addMarker(new MarkerOptions().position(new LatLng(0, 0)).title("Marker"));
+        this.googleMap = map;
+        googleMap.setMinZoomPreference(14.0f);
+        googleMap.setMaxZoomPreference(20.0f);
         if (ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             return;
         }
-        map.setMyLocationEnabled(true);
+        googleMap.setMyLocationEnabled(true);
+        for (Restaurant r: restaurants) {
+            String rLocation = r.getLocation();
+            ArrayList<Double> arr = Restaurant.stringToDouble(rLocation);
+            Double la = arr.get(0);
+            Double lo = arr.get(1);
+            LatLng latLng = new LatLng(la, lo);
+            Marker newMarker = googleMap.addMarker(new MarkerOptions()
+                    .position(latLng)
+                    .title(r.getName()));
+            newMarker.setTag(r);
+        }
+
+        googleMap.setOnInfoWindowClickListener(this);
+        googleMap.moveCamera(CameraUpdateFactory.newLatLng(new LatLng(34.0256, -118.2850)));
     }
 
     @Override
@@ -115,5 +144,14 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
     public void onLowMemory() {
         super.onLowMemory();
         mapView.onLowMemory();
+    }
+
+    @Override
+    public void onInfoWindowClick(@NonNull Marker marker) {
+        Restaurant r = (Restaurant) marker.getTag();
+        Intent myIntent = new Intent(getActivity(), RestaurantDetail.class);
+        myIntent.putExtra("name", r.getName()); //Optional parameters
+        myIntent.putExtra("location", r.getLocation());
+        MapFragment.this.startActivity(myIntent);
     }
 }

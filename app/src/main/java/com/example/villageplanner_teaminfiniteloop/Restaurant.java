@@ -13,15 +13,20 @@ import com.google.firebase.firestore.QuerySnapshot;
 import java.util.ArrayList;
 
 public class Restaurant {
-    private String id;
-    private String name;
+//    private String id;
     private String location;
+    private String name;
 
-    public Restaurant(String resId, String name, String coordinate)
+    public Restaurant(){
+        this.location = "";
+        this.name = "";
+    }
+
+    public Restaurant(String name, String coordinate)
     {
-        this.id = resId;
-        this.name = name;
+//        this.id = resId;
         this.location = coordinate;
+        this.name = name;
     }
 
     public void findDirectionToStore(Location userLocation, Location resLocation)
@@ -29,51 +34,59 @@ public class Restaurant {
 
     }
 
-    public String getId()
-    {
-        return this.id;
-    }
+//    public String getId()
+//    {
+//        return this.id;
+//    }
 
-    public String getResName()
+    public String getName()
     {
         return this.name;
     }
 
     public String getLocation() { return this.location; }
 
-    public void getAllResLocation()
-    {
-        FirebaseFirestore db = FirebaseFirestore.getInstance();
-        db.collection("restaurants").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                if (task.isSuccessful()) {
-                    ArrayList<String> allResLocation = new ArrayList<String>();
-                    ArrayList<String> allResNames = new ArrayList<String>();
-                    for(QueryDocumentSnapshot document: task.getResult()) {
-                        Restaurant restaurant = document.toObject(Restaurant.class);
-                        String resLocation = restaurant.getLocation();
-                        String resName = restaurant.getResName();
-                        allResLocation.add(resLocation);
-                        allResNames.add(resName);
-                    }
-                    restaurantLocationCallBack(allResLocation);
-                    restaurantNameCallBack(allResNames);
-                }
-            }
-        });
+    public void setLocation(String location) {
+        this.location = location;
     }
 
-    public ArrayList<String> restaurantLocationCallBack(ArrayList<String> allResLocation) {
-        return allResLocation;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public ArrayList<String> restaurantNameCallBack(ArrayList<String> allResNames) {
-        return allResNames;
-    }
+//    public static void getAllResLocation()
+//    {
+//        FirebaseFirestore db = FirebaseFirestore.getInstance();
+//        db.collection("restaurants").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+//            @Override
+//            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+//                if (task.isSuccessful()) {
+//                    ArrayList<String> allResLocation = new ArrayList<String>();
+//                    ArrayList<String> allResNames = new ArrayList<String>();
+//                    for(QueryDocumentSnapshot document: task.getResult()) {
+//                        Restaurant restaurant = document.toObject(Restaurant.class);
+//                        String resLocation = restaurant.getLocation();
+//                        String resName = restaurant.getResName();
+//                        allResLocation.add(resLocation);
+//                        allResNames.add(resName);
+//                    }
+//                    restaurantLocationCallBack(allResLocation);
+//                    restaurantNameCallBack(allResNames);
+//                }
+//            }
+//        });
+//    }
+//
+//    public static ArrayList<String> restaurantLocationCallBack(ArrayList<String> allResLocation) {
+//        return allResLocation;
+//    }
+//
+//    public static ArrayList<String> restaurantNameCallBack(ArrayList<String> allResNames) {
+//        return allResNames;
+//    }
 
     // helper function to parse the coordinate string and convert them to double long and lat
-    public ArrayList<Double> stringToDouble(String coordinate) {
+    static public ArrayList<Double> stringToDouble(String coordinate) {
         ArrayList<Double> resCoordinate = new ArrayList<Double>();
         String[] split = coordinate.split(", ");
         Double latitude = Double.parseDouble(split[0]);
