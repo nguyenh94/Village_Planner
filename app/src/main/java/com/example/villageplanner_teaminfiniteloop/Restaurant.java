@@ -95,4 +95,14 @@ public class Restaurant {
         resCoordinate.add(longitude);
         return resCoordinate;
     }
+
+    static public Location toLocation(String coordinate){
+        ArrayList<Double> arr = Restaurant.stringToDouble(coordinate);
+        Double la = arr.get(0);
+        Double lo = arr.get(1);
+        Location result = new Location("");
+        result.setLatitude(la);
+        result.setLongitude(lo);
+        return result;
+    }
 }

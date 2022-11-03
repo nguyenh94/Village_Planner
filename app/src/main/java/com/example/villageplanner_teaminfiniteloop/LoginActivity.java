@@ -41,6 +41,7 @@ public class LoginActivity extends AppCompatActivity {
             double latitude = location.getLatitude();
             double longitude = location.getLongitude();
             coordinate = String.format("%f, %f", latitude, longitude);
+            User.currentLocation = location;
         }
     };
 

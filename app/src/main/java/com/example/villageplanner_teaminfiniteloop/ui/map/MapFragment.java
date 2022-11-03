@@ -46,13 +46,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, GoogleM
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_map, container, false);
         mapView = (MapView) view.findViewById(R.id.mapView);
-        //super.onCreateView(inflater, container, savedInstanceState);
-        //MapViewModel homeViewModel = new ViewModelProvider(this).get(MapViewModel.class);
-        //binding = FragmentMapBinding.inflate(inflater, container, false);
-        //View root = binding.getRoot();
         initGoogleMap(savedInstanceState);
-//        final TextView textView = binding.textHome;
-//        homeViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
         return view;
     }
 
@@ -104,8 +98,8 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, GoogleM
 
     @Override
     public void onMapReady(GoogleMap map) {
-        //map.addMarker(new MarkerOptions().position(new LatLng(0, 0)).title("Marker"));
         this.googleMap = map;
+        // draw map routes: https://www.digitalocean.com/community/tutorials/android-google-map-drawing-route-two-points
         googleMap.setMinZoomPreference(14.0f);
         googleMap.setMaxZoomPreference(20.0f);
         if (ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
@@ -150,7 +144,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, GoogleM
     public void onInfoWindowClick(@NonNull Marker marker) {
         Restaurant r = (Restaurant) marker.getTag();
         Intent myIntent = new Intent(getActivity(), RestaurantDetail.class);
-        myIntent.putExtra("name", r.getName()); //Optional parameters
+        myIntent.putExtra("name", r.getName());
         myIntent.putExtra("location", r.getLocation());
         MapFragment.this.startActivity(myIntent);
     }
