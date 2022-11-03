@@ -76,6 +76,13 @@ public class RegisterActivity extends AppCompatActivity {
         String password = passwordEntered.getText().toString();
         String userEmail = emailEntered.getText().toString();
 
+        // check if email is valid format
+        boolean validEmailFormat = Login_Registration.checkEmailFormat(userEmail);
+        if (!validEmailFormat) {
+            Toast.makeText(view.getContext(), "Please enter a valid email.", Toast.LENGTH_LONG).show();
+            return;
+        }
+
         // check if email is already registered
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         DocumentReference docRef = db.collection("users").document(userEmail);

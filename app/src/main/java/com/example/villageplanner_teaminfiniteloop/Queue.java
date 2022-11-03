@@ -18,8 +18,10 @@ import java.util.ArrayList;
 
 public class Queue {
     static public ArrayList<Restaurant> restaurants = new ArrayList<Restaurant>();
+    private ArrayList<String> allUserLocation = new ArrayList<String>();
+    private int queueTime;
 
-    public void calculateQueueTimeCallBack(ArrayList<String> allUserLocation) {
+    public void calculateQueueTimeCallBack() {
         // TODO RETRIEVE THE RESTAURANT COORDINATES TO USE IN CALCULATION
         double restLat = 0;
         double resLong = 0;
@@ -27,7 +29,9 @@ public class Queue {
         int userInRadius = 0;
 
         // go through all the locations and if it's within bound,
-
+        for (int i=0; i<allUserLocation.size(); i++) {
+            // if within radius of .0000#
+        }
         // use it to calculate queue time
         // filter the location coordinates by PRECISE radius within the restaurant coordinate
         // count how many users are in the area at the time --> n
@@ -42,15 +46,16 @@ public class Queue {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
                 if (task.isSuccessful()) {
-                    ArrayList<String> allUserLocation = new ArrayList<String>();
                     for(QueryDocumentSnapshot document: task.getResult()) {
                         User user = document.toObject(User.class);
                         String userLocation = user.getLocation();
                         allUserLocation.add(userLocation);
                     }
-                    calculateQueueTimeCallBack(allUserLocation);
+                    calculateQueueTimeCallBack();
                 }
             }
         });
     }
+
+    public int getQueueTime() { return this.queueTime; }
 }
