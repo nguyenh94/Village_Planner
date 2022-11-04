@@ -15,4 +15,89 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <RadioGroup
+        android:id="@+id/radioGroup"
+        android:layout_width="362dp"
+        android:layout_height="100dp"
+        android:layout_centerInParent="true"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toTopOf="@+id/text_view_travelTimeLabel"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/restaurantLabel">
+
+        <RadioButton
+            android:id="@+id/radio_drive"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:checked="true"
+            android:onClick="checkButton"
+            android:text="Driving" />
+
+        <RadioButton
+            android:id="@+id/radio_walking"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="checkButton"
+            android:text="Walking" />
+
+        <RadioButton
+            android:id="@+id/radio_cycling"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="checkButton"
+            android:text="Bicycling" />
+
+        <RadioButton
+            android:id="@+id/radio_transit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:onClick="checkButton"
+            android:text="Transit" />
+
+    </RadioGroup>
+
+    <TextView
+        android:id="@+id/text_view_travelTimeLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/radioGroup"
+        android:layout_centerHorizontal="true"
+        android:text="Estimated Travel Time:"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toTopOf="@+id/button_directionButton"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/radioGroup" />
+
+    <Button
+        android:id="@+id/button_directionButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/text_view_travelTimeLabel"
+        android:layout_centerHorizontal="true"
+        android:text="Get Direction"
+        app:layout_constraintBottom_toTopOf="@+id/button_setReminderButton"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/text_view_travelTimeLabel" />
+
+    <Button
+        android:id="@+id/button_setReminderButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/text_view_travelTimeLabel"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="119dp"
+        android:text="Set Reminder"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/button_directionButton" />
 </androidx.constraintlayout.widget.ConstraintLayout>
