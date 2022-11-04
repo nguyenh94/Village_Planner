@@ -58,7 +58,9 @@ public class RemindersFragment extends Fragment {
     LinearLayout container;
     private static final String CHANNEL_ID = "channelID";
     private ListView listView;
-    private List list;
+    private List hourList;
+    private List minuteList;
+    private List reminderList;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -70,10 +72,10 @@ public class RemindersFragment extends Fragment {
         View root = binding.getRoot();
         ListView lv = (ListView) root.findViewById(R.id.listView1);
         lv.setItemsCanFocus(true);
-        list = new ArrayList<Integer>();
-//        for(int i=0;i<30;i++){
-//            list.add(i);
-//        }
+        hourList = new ArrayList<Integer>();
+        minuteList = new ArrayList<Integer>();
+        reminderList = new ArrayList<String>();
+
 
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         String userEmail = "test1@gmail.com";
@@ -88,8 +90,12 @@ public class RemindersFragment extends Fragment {
                         User user = document.toObject(User.class);
 //                        adpter=new ListviewAdapter(this,translateReminders(user.getReminders()));
 //                        listView.setAdapter(adpter);
-                        list = translateReminderTimes(user.getReminders());
-                        ListviewAdapter adpter = new ListviewAdapter(root.getContext(), list);
+
+                        hourList = translateReminderHours(user.getReminders());
+                        minuteList = translateReminderMinutes(user.getReminders());
+                        reminderList = translateReminderTitles(user.getReminders());
+
+                        ListviewAdapter adpter = new ListviewAdapter(root.getContext(), hourList, minuteList, reminderList);
                         lv.setAdapter(adpter);
                     }
                 } else {
@@ -114,7 +120,7 @@ public class RemindersFragment extends Fragment {
         return usersReminders;
     }
 
-    public List<Integer> translateReminderTimes(List<String> reminders) {
+    public List<Integer> translateReminderHours(List<String> reminders) {
         ArrayList<Integer> usersHours = new ArrayList<Integer>();
         for (String reminder : reminders) {
             String[] reminderComponents = reminder.split("\\?");
@@ -124,6 +130,22 @@ public class RemindersFragment extends Fragment {
             usersHours.add(Integer.parseInt(reminderComponents[1]));
         }
         return usersHours;
+    }
+    public List<Integer> translateReminderMinutes(List<String> reminders) {
+        ArrayList<Integer> usersMinutes = new ArrayList<Integer>();
+        for (String reminder : reminders) {
+            String[] reminderComponents = reminder.split("\\?");
+            usersMinutes.add(Integer.parseInt(reminderComponents[2]));
+        }
+        return usersMinutes;
+    }
+    public List<String> translateReminderTitles(List<String> reminders) {
+        ArrayList<String> usersReminders = new ArrayList<String>();
+        for (String reminder : reminders) {
+            String[] reminderComponents = reminder.split("\\?");
+            usersReminders.add(reminderComponents[0]);
+        }
+        return usersReminders;
     }
 
     public void reminderNotification()

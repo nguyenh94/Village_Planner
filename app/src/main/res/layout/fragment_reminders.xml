@@ -69,5 +69,10 @@
             android:scrollingCache="false"
             android:smoothScrollbar="true" >
         </ListView>
+        <Button
+            android:id="@+id/editAReminder"
+            android:layout_width="wrap_content"
+            android:layout_height="38dp"
+            android:text="Submit Change" />
     </LinearLayout>
 

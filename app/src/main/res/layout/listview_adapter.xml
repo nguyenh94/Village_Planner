@@ -5,16 +5,24 @@
     android:orientation="horizontal"
     android:padding="5dp">
 
-    <TextView
+    <EditText
         android:id="@+id/editReminderName"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:inputType="text"
-        android:gravity="center_vertical"
-        android:layout_weight="0.5" />
+        android:inputType="number"
+        android:layout_weight="1.5"
+        android:ems="10" />
 
     <EditText
-        android:id="@+id/number"
+        android:id="@+id/editMinutes"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="0.5"
+        android:gravity="center_vertical"
+        android:inputType="text" />
+
+    <EditText
+        android:id="@+id/editHours"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:inputType="number"
