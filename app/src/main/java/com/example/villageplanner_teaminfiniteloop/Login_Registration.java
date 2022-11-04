@@ -13,6 +13,8 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.UUID;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class Login_Registration {
     // https://www.geeksforgeeks.org/how-to-save-data-to-the-firebase-realtime-database-in-android/
@@ -46,5 +48,15 @@ public class Login_Registration {
             e.printStackTrace();
         }
         return "";  //Error
+    }
+
+    static public Boolean checkEmailFormat(String email) {
+        String regex = "^(.+)@(.+)$";
+        Pattern pattern = Pattern.compile(regex);
+        Matcher matcher = pattern.matcher(email);
+        if (matcher.matches()) {
+            return true;
+        }
+        return false;
     }
 }
