@@ -18,18 +18,30 @@ import android.widget.TextView;
 import android.widget.Toast;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
+
+import java.util.ArrayList;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class LoginActivity extends AppCompatActivity {
     public static final int MY_PERMISSIONS_REQUEST_LOCATION = 99;
+    static String coordinate;
 
     MyLocation.LocationResult locationResult = new MyLocation.LocationResult(){
         @Override
         public void gotLocation(Location location){
-            System.out.println(location.toString());
-            //Got the location!
+            // store the user's location in the database
+            double latitude = location.getLatitude();
+            double longitude = location.getLongitude();
+            coordinate = String.format("%f, %f", latitude, longitude);
+            User.currentLocation = location;
         }
     };
 
@@ -42,6 +54,19 @@ public class LoginActivity extends AppCompatActivity {
 
         MyLocation myLocation = new MyLocation();
         myLocation.getLocation(this, locationResult);
+
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        db.collection("restaurants").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                if (task.isSuccessful()) {
+                    for(QueryDocumentSnapshot document: task.getResult()) {
+                        Restaurant restaurant = document.toObject(Restaurant.class);
+                        Queue.restaurants.add(restaurant);
+                    }
+                }
+            }
+        });
     }
 
     public void goToRegisterActivity(View view) {
@@ -59,6 +84,11 @@ public class LoginActivity extends AppCompatActivity {
             // check password by hashing current password and compare to user's stored password
             String hashedPass = login_helper.hashPassword(unhashedPass);
             if (password.equals(hashedPass)) {
+                // update the user's location whenever logs in
+                FirebaseFirestore db = FirebaseFirestore.getInstance();
+                CollectionReference users = db.collection("users");
+                users.document(email).update("location", coordinate);
+
                 Toast.makeText(view.getContext(), "Login Successful.", Toast.LENGTH_LONG).show();
 
                 //Move to home
@@ -78,6 +108,13 @@ public class LoginActivity extends AppCompatActivity {
 
         String password = passwordEntered.getText().toString();
         String userEmail = emailEntered.getText().toString();
+
+        // check if email is valid format
+        boolean validEmailFormat = Login_Registration.checkEmailFormat(userEmail);
+        if (!validEmailFormat) {
+            Toast.makeText(view.getContext(), "Please enter a valid email.", Toast.LENGTH_LONG).show();
+            return;
+        }
 
         // check if query to the database to get email and password
         FirebaseFirestore db = FirebaseFirestore.getInstance();

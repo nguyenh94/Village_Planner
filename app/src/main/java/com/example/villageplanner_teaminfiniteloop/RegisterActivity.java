@@ -40,8 +40,6 @@ public class RegisterActivity extends AppCompatActivity {
         if(validReg) {
             Login_Registration reg_helper = new Login_Registration();
 
-            // TODO RETRIEVE AND STORE USER'S LOCATION IN DATABASE
-
             // generate new ID for user
             String uniqueId = UUID.randomUUID().toString();
 
@@ -58,6 +56,7 @@ public class RegisterActivity extends AppCompatActivity {
             userInfo.put("email", email);
             userInfo.put("password", hashedPass);
             userInfo.put("photo", photo);
+            userInfo.put("location", LoginActivity.coordinate);
 
             users.document(email).set(userInfo);
 
@@ -76,6 +75,13 @@ public class RegisterActivity extends AppCompatActivity {
         String userName = nameEntered.getText().toString();
         String password = passwordEntered.getText().toString();
         String userEmail = emailEntered.getText().toString();
+
+        // check if email is valid format
+        boolean validEmailFormat = Login_Registration.checkEmailFormat(userEmail);
+        if (!validEmailFormat) {
+            Toast.makeText(view.getContext(), "Please enter a valid email.", Toast.LENGTH_LONG).show();
+            return;
+        }
 
         // check if email is already registered
         FirebaseFirestore db = FirebaseFirestore.getInstance();

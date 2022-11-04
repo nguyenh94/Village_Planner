@@ -33,8 +33,8 @@ public class User {
     private Image photo;
     private String name;
     private String password;
-    public ArrayList<String> reminders;
-    private Location userCoordinate;
+    public ArrayList<Reminder> reminders;
+    private String location;
 
     public User() {
         this.id = "";
@@ -43,15 +43,17 @@ public class User {
         this.password = "";
         this.reminders = null;
         this.name = "";
+        this.location = "";
     }
 
-    public User(String id, String email, String name, Image photo, String password, ArrayList<String> reminders) {
+    public User(String id, String email, String name, Image photo, String password, String location, ArrayList<Reminder> reminders) {
         this.id = id;
         this.email = email;
         this.photo = photo;
         this.password = password;
         this.reminders = reminders;
         this.name = name;
+        this.location = location;
     }
 
     public String getId() {
@@ -68,9 +70,8 @@ public class User {
         return this.photo;
     }
 
-    public ArrayList<String> getReminders() {
-        return this.reminders;
-    }
+    public String getLocation() { return this.location; }
+
 
     public void setId(String newId) {
         this.id = newId;
