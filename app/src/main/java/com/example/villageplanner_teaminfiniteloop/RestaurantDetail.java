@@ -26,7 +26,7 @@ public class RestaurantDetail extends AppCompatActivity {
         Intent intent = getIntent();
         name = intent.getStringExtra("name");
         location = intent.getStringExtra("location");
-        destination = Restaurant.toLocation(location);
+        destination = Queue.toLocation(location);
         TextView restaurantLabel = (TextView) findViewById(R.id.restaurantLabel);
         restaurantLabel.setText(name);
 

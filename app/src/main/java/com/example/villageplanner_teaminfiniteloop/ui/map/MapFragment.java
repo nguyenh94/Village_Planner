@@ -108,7 +108,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, GoogleM
         googleMap.setMyLocationEnabled(true);
         for (Restaurant r: restaurants) {
             String rLocation = r.getLocation();
-            ArrayList<Double> arr = Restaurant.stringToDouble(rLocation);
+            ArrayList<Double> arr = Queue.stringToDouble(rLocation);
             Double la = arr.get(0);
             Double lo = arr.get(1);
             LatLng latLng = new LatLng(la, lo);
