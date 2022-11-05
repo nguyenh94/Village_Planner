@@ -25,6 +25,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class User {
     public static int PERMISSION_ID = 44;
@@ -33,8 +34,9 @@ public class User {
     private Image photo;
     private String name;
     private String password;
-    public ArrayList<Reminder> reminders;
+    public ArrayList<String> reminders;
     private String location;
+    public static Location currentLocation;
 
     public User() {
         this.id = "";
@@ -46,7 +48,7 @@ public class User {
         this.location = "";
     }
 
-    public User(String id, String email, String name, Image photo, String password, String location, ArrayList<Reminder> reminders) {
+    public User(String id, String email, String name, Image photo, String password, String location, ArrayList<String> reminders) {
         this.id = id;
         this.email = email;
         this.photo = photo;
@@ -89,4 +91,8 @@ public class User {
         this.photo = newPhoto;
     }
 
+    public ArrayList<String> getReminders() {
+        return this.reminders;
+    }
 }
+

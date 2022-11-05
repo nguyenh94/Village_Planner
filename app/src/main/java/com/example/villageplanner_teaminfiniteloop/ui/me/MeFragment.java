@@ -37,8 +37,8 @@ public class MeFragment extends Fragment {
         binding = FragmentMeBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
-        final TextView textView = binding.textNotifications;
-        notificationsViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
+//        final TextView textView = binding.textNotifications;
+//        notificationsViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         String userEmail = "test1@gmail.com";
 //        final List<String>[] usersReminders = new List[0];

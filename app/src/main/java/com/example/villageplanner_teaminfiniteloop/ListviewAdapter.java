@@ -58,34 +58,34 @@ public class ListviewAdapter extends BaseAdapter {
         return arg0;
     }
 
-    public ArrayList<String> combineText(List<Integer> hourList, List<Integer> minuteList, List reminderList)
-    {
-        ArrayList<String> remindersInString = new ArrayList<String>();
-        for(Integer i=0;i<reminderList.size();i++)
-        {
-            remindersInString.add(reminderList.get(0) +"?"+String.valueOf(hourList.get(1))+String.valueOf(minuteList.get(1)));
-        }
-        return remindersInString;
-    }
+//    public ArrayList<String> combineText(List<Integer> hourList, List<Integer> minuteList, List reminderList)
+//    {
+//        ArrayList<String> remindersInString = new ArrayList<String>();
+//        for(Integer i=0;i<reminderList.size();i++)
+//        {
+//            remindersInString.add(reminderList.get(i) +"?"+String.valueOf(hourList.get(i)) +"?" + String.valueOf(minuteList.get(i)));
+//        }
+//        return remindersInString;
+//    }
 
-    public void onSubmit() {
-        ArrayList<String> newReminders = combineText(hourList, minuteList, reminderList);
-        FirebaseFirestore db = FirebaseFirestore.getInstance();
-        DocumentReference docRef = db.collection("users").document(userEmail);
-        docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                if (task.isSuccessful()) {
-                    DocumentSnapshot document = task.getResult();
-                    if (document.exists()) {  // if email exists
-                        docRef.update("reminders", newReminders);
-                    } else {  // if email doesn't exists how are they logged in
-
-                    }
-                }
-            }
-        });
-    }
+//    public void onSubmit() {
+//        ArrayList<String> newReminders = combineText(hourList, minuteList, reminderList);
+//        FirebaseFirestore db = FirebaseFirestore.getInstance();
+//        DocumentReference docRef = db.collection("users").document(userEmail);
+//        docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+//            @Override
+//            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+//                if (task.isSuccessful()) {
+//                    DocumentSnapshot document = task.getResult();
+//                    if (document.exists()) {  // if email exists
+//                        docRef.update("reminders", newReminders);
+//                    } else {  // if email doesn't exists how are they logged in
+//
+//                    }
+//                }
+//            }
+//        });
+//    }
 
     @Override
     public View getView(int position, View convertView, ViewGroup arg2) {

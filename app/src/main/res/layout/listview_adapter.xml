@@ -10,16 +10,8 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:inputType="number"
-        android:layout_weight="1.5"
-        android:ems="10" />
-
-    <EditText
-        android:id="@+id/editMinutes"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
         android:layout_weight="0.5"
-        android:gravity="center_vertical"
-        android:inputType="text" />
+        android:ems="10" />
 
     <EditText
         android:id="@+id/editHours"
@@ -28,5 +20,13 @@
         android:inputType="number"
         android:layout_weight="1.5"
         android:ems="10" />
+
+    <EditText
+        android:id="@+id/editMinutes"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1.5"
+        android:gravity="center_vertical"
+        android:inputType="text" />
 </LinearLayout>
 

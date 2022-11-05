@@ -45,8 +45,8 @@ public class RegisterActivity extends AppCompatActivity {
 
             // hash password
             String hashedPass = reg_helper.hashPassword(password);
-
-            User user = new User(uniqueId, email, name, photo, password, null);
+            ArrayList<String> reminders = new ArrayList<String>();
+            User user = new User(uniqueId, email, name, photo, password, null, reminders);
             FirebaseFirestore db = FirebaseFirestore.getInstance();
 
             CollectionReference users = db.collection("users");

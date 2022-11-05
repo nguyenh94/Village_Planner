@@ -61,18 +61,19 @@
 <!--            android:layout_height="38dp"-->
 <!--            android:text="Submit" />-->
 <!--    </LinearLayout>-->
+    <Button
+        android:id="@+id/editAReminder"
+        android:layout_width="wrap_content"
+        android:layout_height="38dp"
+        android:text="Submit Change" />
 
-        <ListView android:id="@+id/listView1"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:animationCache="false"
-            android:scrollingCache="false"
-            android:smoothScrollbar="true" >
-        </ListView>
-        <Button
-            android:id="@+id/editAReminder"
-            android:layout_width="wrap_content"
-            android:layout_height="38dp"
-            android:text="Submit Change" />
+    <ListView
+        android:id="@+id/listView1"
+        android:layout_width="match_parent"
+        android:layout_height="661dp"
+        android:animationCache="false"
+        android:scrollingCache="false"
+        android:smoothScrollbar="true"></ListView>
+
     </LinearLayout>
 
