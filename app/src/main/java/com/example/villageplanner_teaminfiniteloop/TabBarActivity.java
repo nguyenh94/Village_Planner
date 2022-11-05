@@ -25,6 +25,7 @@ public class TabBarActivity extends AppCompatActivity implements NavigationBarVi
     private ActivityTabBarBinding binding;
     double lat = 0.0;
     double lon = 0.0;
+    String mode = "";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -35,9 +36,11 @@ public class TabBarActivity extends AppCompatActivity implements NavigationBarVi
         Intent intent = getIntent();
         lat = intent.getDoubleExtra("destinationLat", 0.0);
         lon = intent.getDoubleExtra("destinationLong", 0.0);
+        mode = intent.getStringExtra("travelMode");
         Bundle bundle = new Bundle();
         bundle.putDouble("destinationLat", lat);
         bundle.putDouble("destinationLong", lon);
+        bundle.putString("travelMode", mode);
         MapFragment mapFragment = new MapFragment();
         mapFragment.setArguments(bundle);
 
@@ -78,6 +81,7 @@ public class TabBarActivity extends AppCompatActivity implements NavigationBarVi
                 Bundle bundle = new Bundle();
                 bundle.putDouble("destinationLat", lat);
                 bundle.putDouble("destinationLong", lon);
+                bundle.putString("travelMode", mode);
                 MapFragment mapFragment = new MapFragment();
                 mapFragment.setArguments(bundle);
                 fragment = mapFragment;

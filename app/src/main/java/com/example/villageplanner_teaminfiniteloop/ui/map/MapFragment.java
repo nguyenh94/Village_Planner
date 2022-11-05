@@ -54,6 +54,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, GoogleM
     private ArrayList<Restaurant> restaurants = Queue.restaurants;
     private LatLng currentLocation = new LatLng(User.currentLocation.getLatitude(), User.currentLocation.getLongitude());
     private LatLng destination;
+    private String travelMode;
 
     @Nullable
     @Override
@@ -65,6 +66,8 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, GoogleM
         if ( getArguments().getDouble("destinationLat") != 0.0) {    //returned from Get Direction
             double lat = getArguments().getDouble("destinationLat");
             double lon = getArguments().getDouble("destinationLong");
+            travelMode = getArguments().getString("travelMode");
+            System.out.println("Travel Mode is " + travelMode);
             destination = new LatLng(lat, lon);
 
             // Getting URL to the Google Directions API
@@ -289,7 +292,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, GoogleM
 
         // Sensor enabled
         String sensor = "sensor=false";
-        String mode = "mode=walking";
+        String mode = "mode="+travelMode;
 
         // Building the parameters to the web service
         String parameters = str_origin + "&" + str_dest + "&" + sensor + "&" + mode + "&" + "key=AIzaSyAk2zt_F2hY2v76do6CwRUvjA_RZhHpM1Q";
