@@ -11,10 +11,10 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
-import android.media.Image;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -43,9 +43,6 @@ public class LoginActivity extends AppCompatActivity {
             double longitude = location.getLongitude();
             coordinate = String.format("%f, %f", latitude, longitude);
             User.currentLocation = location;
-
-            Queue testingQueue = new Queue();
-            testingQueue.calculateDistance(34.02508232272889, -118.28451643015963, 34.025084271502244, -118.28453136955459);
         }
     };
 
@@ -78,7 +75,7 @@ public class LoginActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-    public void loginCallBack(View view, boolean emailValid, String userName, Image userPhoto, String email, String password) {
+    public void loginCallBack(View view, boolean emailValid, String email, String password) {
         TextView passwordEntered = (TextView) findViewById(R.id.password);
         String unhashedPass = passwordEntered.getText().toString();
 
@@ -92,11 +89,9 @@ public class LoginActivity extends AppCompatActivity {
                 FirebaseFirestore db = FirebaseFirestore.getInstance();
                 CollectionReference users = db.collection("users");
                 users.document(email).update("location", coordinate);
-                User.userName = userName;
-                User.userEmail = email;
-                User.userPhoto = userPhoto;
 
                 Toast.makeText(view.getContext(), "Login Successful.", Toast.LENGTH_LONG).show();
+                User.currentUserEmail = email;
 
                 //Move to home
                 Intent intent = new Intent(LoginActivity.this, TabBarActivity.class);
@@ -125,17 +120,17 @@ public class LoginActivity extends AppCompatActivity {
 
         // check if query to the database to get email and password
         FirebaseFirestore db = FirebaseFirestore.getInstance();
-        DocumentReference docRef = db.collection("users").document(userEmail);
-        docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+        DocumentReference userDocRef = db.collection("users").document(userEmail);
+        userDocRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
             public void onComplete(@NonNull Task<DocumentSnapshot> task) {
                 if (task.isSuccessful()) {
-                    DocumentSnapshot document = task.getResult();
-                    if (document.exists()) {  // if email exists
-                        User user = document.toObject(User.class);
-                        loginCallBack(view, true, user.getName(), user.getPhoto(), user.getEmail(), user.getPassword());
+                    DocumentSnapshot userDocument = task.getResult();
+                    if (userDocument.exists()) {  // if email exists
+                        User user = userDocument.toObject(User.class);
+                        loginCallBack(view, true, user.getEmail(), user.getPassword());
                     } else {  // if email doesn't exists
-                        loginCallBack(view, false, null, null, userEmail, password);
+                        loginCallBack(view, false, userEmail, password);
                     }
                 } else {
                     Log.d("getting user", "get failed with ", task.getException());

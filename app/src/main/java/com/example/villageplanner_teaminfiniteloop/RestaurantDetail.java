@@ -57,10 +57,23 @@ public class RestaurantDetail extends AppCompatActivity {
             public void onClick(View v) {
                 int radioId = radioGroup.getCheckedRadioButtonId();
                 radioButton = findViewById(radioId);
-
                 Intent myIntent = new Intent(RestaurantDetail.this, TabBarActivity.class);
                 myIntent.putExtra("destinationLat", destination.getLatitude());
                 myIntent.putExtra("destinationLong", destination.getLongitude());
+                switch (travelMode) {
+                    case Drive:
+                        myIntent.putExtra("travelMode", "driving");
+                        break;
+                    case Walking:
+                        myIntent.putExtra("travelMode", "walking");
+                        break;
+                    case Cycling:
+                        myIntent.putExtra("travelMode", "bicycling");
+                        break;
+                    case Transit:
+                        myIntent.putExtra("travelMode", "transit");
+                        break;
+                }
                 RestaurantDetail.this.startActivity(myIntent);
             }
         });

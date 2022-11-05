@@ -1,9 +1,31 @@
 package com.example.villageplanner_teaminfiniteloop;
 
+import android.Manifest;
+import android.annotation.SuppressLint;
+import android.app.Activity;
+import android.content.Context;
+import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.location.Location;
+import android.location.LocationManager;
 import android.media.Image;
+import android.os.Looper;
+import android.provider.Settings;
+import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.core.app.ActivityCompat;
+
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationCallback;
+import com.google.android.gms.location.LocationRequest;
+import com.google.android.gms.location.LocationResult;
+import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class User {
     public static int PERMISSION_ID = 44;
@@ -12,12 +34,10 @@ public class User {
     private Image photo;
     private String name;
     private String password;
-    public ArrayList<Reminder> reminders;
+    public ArrayList<String> reminders;
     private String location;
     public static Location currentLocation;
-    public static String userName;
-    public static String userEmail;
-    public static Image userPhoto;
+    public static String currentUserEmail;
 
     public User() {
         this.id = "";
@@ -29,7 +49,7 @@ public class User {
         this.location = "";
     }
 
-    public User(String id, String email, String name, Image photo, String password, String location, ArrayList<Reminder> reminders) {
+    public User(String id, String email, String name, Image photo, String password, String location, ArrayList<String> reminders) {
         this.id = id;
         this.email = email;
         this.photo = photo;
@@ -42,8 +62,6 @@ public class User {
     public String getId() {
         return this.id;
     }
-
-    public String getName() { return this.name; }
 
     public String getEmail() {
         return this.email;
@@ -74,4 +92,8 @@ public class User {
         this.photo = newPhoto;
     }
 
+    public ArrayList<String> getReminders() {
+        return this.reminders;
+    }
 }
+

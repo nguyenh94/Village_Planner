@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="60dp"
+    android:orientation="horizontal"
+    android:padding="5dp">
+
+    <EditText
+        android:id="@+id/editReminderName"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:inputType="number"
+        android:layout_weight="0.5"
+        android:ems="10" />
+
+    <EditText
+        android:id="@+id/editHours"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:inputType="number"
+        android:layout_weight="1.5"
+        android:ems="10" />
+
+    <EditText
+        android:id="@+id/editMinutes"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1.5"
+        android:gravity="center_vertical"
+        android:inputType="text" />
+</LinearLayout>
+
