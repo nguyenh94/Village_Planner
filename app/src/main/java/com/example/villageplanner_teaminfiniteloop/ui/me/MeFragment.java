@@ -12,7 +12,10 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.example.villageplanner_teaminfiniteloop.R;
+import com.example.villageplanner_teaminfiniteloop.User;
 import com.example.villageplanner_teaminfiniteloop.databinding.FragmentMeBinding;
+
+import org.w3c.dom.Text;
 
 public class MeFragment extends Fragment {
     @Nullable
@@ -22,7 +25,12 @@ public class MeFragment extends Fragment {
         //with the fragment you want to inflate
         //like if the class is HomeFragment it should have R.layout.home_fragment
         //if it is DashboardFragment it should have R.layout.fragment_dashboard
+        View view = inflater.inflate(R.layout.fragment_me, null);
+        TextView userNameTextView = (TextView) view.findViewById(R.id.userName);
+        TextView userEmailTextView = (TextView) view.findViewById(R.id.userEmail);
 
-        return inflater.inflate(R.layout.fragment_me, null);
+        userNameTextView.setText(User.userName);
+        userEmailTextView.setText(User.userEmail);
+        return view;
     }
 }

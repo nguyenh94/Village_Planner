@@ -25,6 +25,7 @@ public class Queue {
     private int queueTime;
 
     public void calculateQueueTimeCallBack() {
+        // resCoordinate is retrieved in MapFragment when user chooses a restaurant
         Location resLoc = toLocation(resCoordinate);
         double resLat = resLoc.getLatitude();
         double resLong = resLoc.getLongitude();
@@ -41,6 +42,9 @@ public class Queue {
                 userInRadius++;    // count how many users are in the area at the time --> n
             }
         }
+
+        // each user will take 2 minutes
+        queueTime = 2 * userInRadius;
     }
 
     public double convertToRad(double deg) {
@@ -57,7 +61,7 @@ public class Queue {
         return distance;
     }
 
-    public void calculateQueueTime(String restaurantId)
+    public void calculateQueueTime()
     {
         // get the user's location from the database
         FirebaseFirestore db = FirebaseFirestore.getInstance();
@@ -66,9 +70,13 @@ public class Queue {
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
                 if (task.isSuccessful()) {
                     for(QueryDocumentSnapshot document: task.getResult()) {
-                        User user = document.toObject(User.class);
-                        String userLocation = user.getLocation();
-                        allUserLocation.add(userLocation);
+                        try {
+                            User user = document.toObject(User.class);
+                            String userLocation = user.getLocation();
+                            allUserLocation.add(userLocation);
+                        } catch (Exception e) {
+                            System.out.println(e);
+                        }
                     }
                     calculateQueueTimeCallBack();
                 }

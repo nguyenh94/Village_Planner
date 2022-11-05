@@ -11,6 +11,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
+import android.media.Image;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -77,7 +78,7 @@ public class LoginActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-    public void loginCallBack(View view, boolean emailValid, String email, String password) {
+    public void loginCallBack(View view, boolean emailValid, String userName, Image userPhoto, String email, String password) {
         TextView passwordEntered = (TextView) findViewById(R.id.password);
         String unhashedPass = passwordEntered.getText().toString();
 
@@ -91,6 +92,9 @@ public class LoginActivity extends AppCompatActivity {
                 FirebaseFirestore db = FirebaseFirestore.getInstance();
                 CollectionReference users = db.collection("users");
                 users.document(email).update("location", coordinate);
+                User.userName = userName;
+                User.userEmail = email;
+                User.userPhoto = userPhoto;
 
                 Toast.makeText(view.getContext(), "Login Successful.", Toast.LENGTH_LONG).show();
 
@@ -129,9 +133,9 @@ public class LoginActivity extends AppCompatActivity {
                     DocumentSnapshot document = task.getResult();
                     if (document.exists()) {  // if email exists
                         User user = document.toObject(User.class);
-                        loginCallBack(view, true, user.getEmail(), user.getPassword());
+                        loginCallBack(view, true, user.getName(), user.getPhoto(), user.getEmail(), user.getPassword());
                     } else {  // if email doesn't exists
-                        loginCallBack(view, false, userEmail, password);
+                        loginCallBack(view, false, null, null, userEmail, password);
                     }
                 } else {
                     Log.d("getting user", "get failed with ", task.getException());

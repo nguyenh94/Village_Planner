@@ -170,11 +170,15 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, GoogleM
 
     @Override
     public void onInfoWindowClick(@NonNull Marker marker) {
+        Queue queueTime = new Queue();
         Restaurant r = (Restaurant) marker.getTag();
+        // calculate the queue time for this restaurant
+        Queue.resCoordinate = r.getLocation();
+        queueTime.calculateQueueTime();
         Intent myIntent = new Intent(getActivity(), RestaurantDetail.class);
         myIntent.putExtra("name", r.getName());
         myIntent.putExtra("location", r.getLocation());
-        Queue.resCoordinate = r.getLocation();
+        myIntent.putExtra("queue", queueTime.getQueueTime());
         MapFragment.this.startActivity(myIntent);
     }
 
