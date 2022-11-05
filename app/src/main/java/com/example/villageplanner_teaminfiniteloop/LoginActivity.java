@@ -11,6 +11,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
+import android.media.Image;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -75,7 +76,7 @@ public class LoginActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-    public void loginCallBack(View view, boolean emailValid, String email, String password) {
+    public void loginCallBack(View view, boolean emailValid, String name, Image photo, String email, String password) {
         TextView passwordEntered = (TextView) findViewById(R.id.password);
         String unhashedPass = passwordEntered.getText().toString();
 
@@ -92,6 +93,8 @@ public class LoginActivity extends AppCompatActivity {
 
                 Toast.makeText(view.getContext(), "Login Successful.", Toast.LENGTH_LONG).show();
                 User.currentUserEmail = email;
+                User.currentUserName = name;
+                User.currentUserPhoto = String.valueOf(photo);
 
                 //Move to home
                 Intent intent = new Intent(LoginActivity.this, TabBarActivity.class);
@@ -128,9 +131,9 @@ public class LoginActivity extends AppCompatActivity {
                     DocumentSnapshot userDocument = task.getResult();
                     if (userDocument.exists()) {  // if email exists
                         User user = userDocument.toObject(User.class);
-                        loginCallBack(view, true, user.getEmail(), user.getPassword());
+                        loginCallBack(view, true, user.getName(), user.getPhoto(), user.getEmail(), user.getPassword());
                     } else {  // if email doesn't exists
-                        loginCallBack(view, false, userEmail, password);
+                        loginCallBack(view, false, null, null, userEmail, password);
                     }
                 } else {
                     Log.d("getting user", "get failed with ", task.getException());

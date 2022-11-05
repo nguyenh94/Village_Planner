@@ -29,8 +29,8 @@ public class MeFragment extends Fragment {
         TextView userNameTextView = (TextView) view.findViewById(R.id.userName);
         TextView userEmailTextView = (TextView) view.findViewById(R.id.userEmail);
 
-        userNameTextView.setText(User.userName);
-        userEmailTextView.setText(User.userEmail);
+        userNameTextView.setText(User.currentUserName);
+        userEmailTextView.setText(User.currentUserEmail);
         return view;
     }
 }

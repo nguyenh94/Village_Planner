@@ -38,6 +38,8 @@ public class User {
     private String location;
     public static Location currentLocation;
     public static String currentUserEmail;
+    public static String currentUserName;
+    public static String currentUserPhoto;
 
     public User() {
         this.id = "";
@@ -65,6 +67,10 @@ public class User {
 
     public String getEmail() {
         return this.email;
+    }
+
+    public String getName() {
+        return this.name;
     }
 
     public String getPassword() { return this.password; }
