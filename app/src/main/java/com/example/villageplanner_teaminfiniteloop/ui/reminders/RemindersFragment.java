@@ -57,7 +57,6 @@ public class RemindersFragment extends Fragment {
     private List hourList;
     private List minuteList;
     private List reminderList;
-    String userEmail = "test1@gmail.com";
     Button submitButton;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -75,6 +74,7 @@ public class RemindersFragment extends Fragment {
         reminderList = new ArrayList<String>();
 
         submitButton = (Button)root.findViewById(R.id.editAReminder);
+        String userEmail = User.currentUserEmail;
         submitButton.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
@@ -98,7 +98,6 @@ public class RemindersFragment extends Fragment {
         );
 
         FirebaseFirestore db = FirebaseFirestore.getInstance();
-        String userEmail = "test1@gmail.com";
         DocumentReference docRefSecond = db.collection("users").document(userEmail);
         docRefSecond.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
@@ -136,25 +135,40 @@ public class RemindersFragment extends Fragment {
 
     public List<Integer> translateReminderHours(List<String> reminders) {
         ArrayList<Integer> usersHours = new ArrayList<Integer>();
-        for (String reminder : reminders) {
-            String[] reminderComponents = reminder.split("\\?");
-            usersHours.add(Integer.parseInt(reminderComponents[1]));
+        try{
+            for (String reminder : reminders) {
+                String[] reminderComponents = reminder.split("\\?");
+                usersHours.add(Integer.parseInt(reminderComponents[1]));
+            }
+        }
+        catch (Exception e) {
+            return usersHours;
         }
         return usersHours;
     }
     public List<Integer> translateReminderMinutes(List<String> reminders) {
         ArrayList<Integer> usersMinutes = new ArrayList<Integer>();
-        for (String reminder : reminders) {
-            String[] reminderComponents = reminder.split("\\?");
-            usersMinutes.add(Integer.parseInt(reminderComponents[2]));
+        try {
+            for (String reminder : reminders) {
+                String[] reminderComponents = reminder.split("\\?");
+                usersMinutes.add(Integer.parseInt(reminderComponents[2]));
+            }
+        }
+        catch (Exception e) {
+            return usersMinutes;
         }
         return usersMinutes;
     }
     public List<String> translateReminderTitles(List<String> reminders) {
         ArrayList<String> usersReminders = new ArrayList<String>();
-        for (String reminder : reminders) {
-            String[] reminderComponents = reminder.split("\\?");
-            usersReminders.add(reminderComponents[0]);
+        try{
+            for (String reminder : reminders) {
+                String[] reminderComponents = reminder.split("\\?");
+                usersReminders.add(reminderComponents[0]);
+            }
+        }
+        catch(Exception e) {
+            return usersReminders;
         }
         return usersReminders;
     }

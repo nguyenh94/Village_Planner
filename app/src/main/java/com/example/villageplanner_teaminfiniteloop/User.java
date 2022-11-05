@@ -37,6 +37,7 @@ public class User {
     public ArrayList<String> reminders;
     private String location;
     public static Location currentLocation;
+    public static String currentUserEmail;
 
     public User() {
         this.id = "";
