@@ -80,6 +80,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/text_view_travelTimeLabel"
         android:layout_centerHorizontal="true"
+        android:onClick="getDirectionButtonClicked"
         android:text="Get Direction"
         app:layout_constraintBottom_toTopOf="@+id/button_setReminderButton"
         app:layout_constraintEnd_toEndOf="parent"
