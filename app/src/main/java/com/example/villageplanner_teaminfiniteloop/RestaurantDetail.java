@@ -99,6 +99,14 @@ public class RestaurantDetail extends AppCompatActivity {
         getEstimatedTravelTime();
     }
 
+    public void setReminderButtonClicked(View v) {
+        Intent myIntent = new Intent(this, ReminderCreatorActivity.class);
+        myIntent.putExtra("restaurantName", name);
+        myIntent.putExtra("travelTime", travelTime);
+        myIntent.putExtra("waitingTime", 0);
+        this.startActivity(myIntent);
+    }
+
     public void getDirectionButtonClicked(View v){
 
     }

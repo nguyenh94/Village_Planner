@@ -95,6 +95,7 @@
         android:layout_below="@+id/text_view_travelTimeLabel"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="119dp"
+        android:onClick="setReminderButtonClicked"
         android:text="Set Reminder"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

@@ -43,6 +43,10 @@
             android:exported="true"></service>
 
         <activity
+            android:name=".ReminderCreatorActivity"
+            android:exported="false"
+            android:label="@string/title_activity_reminder_creator_activity" />
+        <activity
             android:name=".MainMapActivity"
             android:exported="false"
             android:label="@string/title_activity_main_map" />
