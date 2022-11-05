@@ -22,6 +22,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 
 import org.w3c.dom.Text;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
@@ -44,12 +45,11 @@ public class RegisterActivity extends AppCompatActivity {
 
             // hash password
             String hashedPass = reg_helper.hashPassword(password);
-
-            User user = new User(uniqueId, email, name, photo, password, null, null);
+            ArrayList<String> reminders = new ArrayList<String>();
+            User user = new User(uniqueId, email, name, photo, password, null, reminders);
             FirebaseFirestore db = FirebaseFirestore.getInstance();
 
             CollectionReference users = db.collection("users");
-
             Map<String, Object> userInfo = new HashMap<>();
             userInfo.put("uniqueId", uniqueId);
             userInfo.put("name", name);
