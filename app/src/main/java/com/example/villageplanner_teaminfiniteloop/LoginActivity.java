@@ -42,6 +42,9 @@ public class LoginActivity extends AppCompatActivity {
             double longitude = location.getLongitude();
             coordinate = String.format("%f, %f", latitude, longitude);
             User.currentLocation = location;
+
+            Queue testingQueue = new Queue();
+            testingQueue.calculateDistance(34.02508232272889, -118.28451643015963, 34.025084271502244, -118.28453136955459);
         }
     };
 

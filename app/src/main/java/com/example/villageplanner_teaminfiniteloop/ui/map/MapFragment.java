@@ -146,6 +146,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, GoogleM
         Intent myIntent = new Intent(getActivity(), RestaurantDetail.class);
         myIntent.putExtra("name", r.getName());
         myIntent.putExtra("location", r.getLocation());
+        Queue.resCoordinate = r.getLocation();
         MapFragment.this.startActivity(myIntent);
     }
 }

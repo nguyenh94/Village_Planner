@@ -19,34 +19,42 @@ import java.util.ArrayList;
 
 public class Queue {
     static public ArrayList<Restaurant> restaurants = new ArrayList<Restaurant>();
+    static public String resCoordinate;
     private ArrayList<String> allUserLocation = new ArrayList<String>();
+    private int userInRadius = 0;
     private int queueTime;
 
     public void calculateQueueTimeCallBack() {
-        // TODO RETRIEVE THE RESTAURANT COORDINATES TO USE IN CALCULATION
-        double restLat = 0;
-        double resLong = 0;
-
-        int userInRadius = 0;
+        Location resLoc = toLocation(resCoordinate);
+        double resLat = resLoc.getLatitude();
+        double resLong = resLoc.getLongitude();
 
         // go through all the locations and if it's within bound,
         for (int i=0; i<allUserLocation.size(); i++) {
             // if within radius of .0000# (up to 5 decimal decisions) for
             // both long and lat then in radius
-            ArrayList<Double> arr = Queue.stringToDouble(allUserLocation.get(i));
-            Double la = arr.get(0);
-            Double lo = arr.get(1);
-            String latCutOffFormat = String.format("%.5f", la);
-            String loCutOffFormat = String.format("%.5f", lo);
-            Double latCutOff = Double.parseDouble(latCutOffFormat);
-            Double loCutOff = Double.parseDouble(loCutOffFormat);
-//            LatLng latLng = new LatLng(la, lo);
-
+            Location userLoc = toLocation(allUserLocation.get(i));
+            double userLat = userLoc.getLatitude();
+            double userLong = userLoc.getLongitude();
+            double userToResDistance = calculateDistance(resLat, resLong, userLat, userLong);
+            if (userToResDistance < 0.0094697) {     // radius = 50 feet = 0.0094697 miles
+                userInRadius++;    // count how many users are in the area at the time --> n
+            }
         }
-        // use it to calculate queue time
-        // filter the location coordinates by PRECISE radius within the restaurant coordinate
-        // count how many users are in the area at the time --> n
-        // queue time: n * 0.5
+    }
+
+    public double convertToRad(double deg) {
+        return (deg * Math.PI) / 1800;
+    }
+
+    public double calculateDistance(double resLat, double resLong, double userLat, double userLong) {
+        // haversine formula a = sin²(Δφ/2) + cos φ1 ⋅ cos φ2 ⋅ sin²(Δλ/2)
+        double theta = userLong - resLong;
+        double distance = Math.sin(convertToRad(resLat)) * Math.sin(convertToRad(userLat))
+                + Math.cos(convertToRad(resLat)) * Math.cos(convertToRad(userLat)) * Math.cos(convertToRad(theta));
+        distance = Math.acos(distance) * 3963.0;  // get distance between coordinates in miles
+        System.out.println("Testing distance is " + distance);
+        return distance;
     }
 
     public void calculateQueueTime(String restaurantId)
