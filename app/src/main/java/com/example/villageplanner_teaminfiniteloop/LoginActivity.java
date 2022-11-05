@@ -14,6 +14,7 @@ import android.location.Location;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -90,6 +91,7 @@ public class LoginActivity extends AppCompatActivity {
                 users.document(email).update("location", coordinate);
 
                 Toast.makeText(view.getContext(), "Login Successful.", Toast.LENGTH_LONG).show();
+                User.currentUserEmail = email;
 
                 //Move to home
                 Intent intent = new Intent(LoginActivity.this, TabBarActivity.class);

@@ -81,7 +81,7 @@ public class ReminderCreatorActivity extends AppCompatActivity {
                 Integer Minutes = tp.getCurrentMinute();
                 String createdReminder = reminderTitle + "?" + Hours + "?" + Minutes;
                 FirebaseFirestore db = FirebaseFirestore.getInstance();
-                String userEmail = "test1@gmail.com";
+                String userEmail = User.currentUserEmail;
                 final List<String>[] usersReminders = new List[0];
                 DocumentReference docRef = db.collection("users").document(userEmail);
                 docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
@@ -101,7 +101,7 @@ public class ReminderCreatorActivity extends AppCompatActivity {
                     }
                 });
                 //Move back home
-//                Intent intent = new Intent(LoginActivity.this, TabBarActivity.class);
+//                Intent intent = new Intent(MainMapActivity.this, TabBarActivity.class);
 //                startActivity(intent);
             }});
         return root;
