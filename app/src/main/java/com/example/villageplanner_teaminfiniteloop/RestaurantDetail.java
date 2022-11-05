@@ -19,11 +19,13 @@ import com.example.villageplanner_teaminfiniteloop.ui.map.MapFragment;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.w3c.dom.Text;
 
 public class RestaurantDetail extends AppCompatActivity {
     String name;
     String location;
     String travelTime;
+    String queueTime;
     Location currentLocation = User.currentLocation;
     Location destination;
     TravelMode travelMode = TravelMode.Drive;
@@ -39,9 +41,12 @@ public class RestaurantDetail extends AppCompatActivity {
         Intent intent = getIntent();
         name = intent.getStringExtra("name");
         location = intent.getStringExtra("location");
-        destination = Restaurant.toLocation(location);
+        queueTime = intent.getStringExtra("queue");
+        destination = Queue.toLocation(location);
         TextView restaurantLabel = (TextView) findViewById(R.id.restaurantLabel);
         restaurantLabel.setText(name);
+        TextView queueTimeDisplay = (TextView) findViewById(R.id.text_view_queueTime);
+        queueTimeDisplay.setText("Estimated Queue Time: " + queueTime);
 
         radioGroup = findViewById(R.id.radioGroup);
         travelTimeTextView = findViewById(R.id.text_view_travelTimeLabel);

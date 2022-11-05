@@ -61,6 +61,21 @@
     </RadioGroup>
 
     <TextView
+        android:id="@+id/text_view_queueTime"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/radioGroup"
+        android:layout_centerHorizontal="true"
+        android:text="Estimated Queue Time:"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toTopOf="@+id/button_directionButton"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.507"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/radioGroup"
+        app:layout_constraintVertical_bias="0.133" />
+
+    <TextView
         android:id="@+id/text_view_travelTimeLabel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

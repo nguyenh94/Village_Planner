@@ -139,7 +139,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, GoogleM
         googleMap.setMyLocationEnabled(true);
         for (Restaurant r: restaurants) {
             String rLocation = r.getLocation();
-            ArrayList<Double> arr = Restaurant.stringToDouble(rLocation);
+            ArrayList<Double> arr = Queue.stringToDouble(rLocation);
             Double la = arr.get(0);
             Double lo = arr.get(1);
             LatLng latLng = new LatLng(la, lo);
@@ -173,10 +173,15 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, GoogleM
 
     @Override
     public void onInfoWindowClick(@NonNull Marker marker) {
+        Queue queueTime = new Queue();
         Restaurant r = (Restaurant) marker.getTag();
+        // calculate the queue time for this restaurant
+        Queue.resCoordinate = r.getLocation();
+        queueTime.calculateQueueTime();
         Intent myIntent = new Intent(getActivity(), RestaurantDetail.class);
         myIntent.putExtra("name", r.getName());
         myIntent.putExtra("location", r.getLocation());
+        myIntent.putExtra("queue", queueTime.getQueueTime());
         MapFragment.this.startActivity(myIntent);
     }
 

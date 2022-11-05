@@ -89,25 +89,4 @@ public class Restaurant {
 //    public static ArrayList<String> restaurantNameCallBack(ArrayList<String> allResNames) {
 //        return allResNames;
 //    }
-
-    // helper function to parse the coordinate string and convert them to double long and lat
-    static public ArrayList<Double> stringToDouble(String coordinate) {
-        ArrayList<Double> resCoordinate = new ArrayList<Double>();
-        String[] split = coordinate.split(", ");
-        Double latitude = Double.parseDouble(split[0]);
-        Double longitude = Double.parseDouble(split[1]);
-        resCoordinate.add(latitude);
-        resCoordinate.add(longitude);
-        return resCoordinate;
-    }
-
-    static public Location toLocation(String coordinate){
-        ArrayList<Double> arr = Restaurant.stringToDouble(coordinate);
-        Double la = arr.get(0);
-        Double lo = arr.get(1);
-        Location result = new Location("");
-        result.setLatitude(la);
-        result.setLongitude(lo);
-        return result;
-    }
 }
