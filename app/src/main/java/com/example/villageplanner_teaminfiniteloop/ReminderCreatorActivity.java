@@ -58,25 +58,22 @@ public class ReminderCreatorActivity extends AppCompatActivity {
     LinearLayout container;
     private static final String CHANNEL_ID = "channelID";
 
-    public View onCreateView(@NonNull LayoutInflater inflater,
-                             ViewGroup container, Bundle savedInstanceState) {
-        RemindersViewModel dashboardViewModel =
-                new ViewModelProvider(this).get(RemindersViewModel.class);
-        binding = FragmentRemindersBinding.inflate(inflater, container, false);
-        View root = binding.getRoot();
-        textIn = (EditText)root.findViewById(R.id.reminderDescription);
-        container = (LinearLayout)root.findViewById(R.id.container);
-        buttonCreateReminder = (Button)root.findViewById(R.id.createReminder);
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.create_reminder);
+        textIn = (EditText)findViewById(R.id.reminderDescription);
+        container = (LinearLayout)findViewById(R.id.container);
+        buttonCreateReminder = (Button)findViewById(R.id.createReminder);
 
         ViewGroup finalContainer = container;
 
         buttonCreateReminder.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View arg0) {
-                EditText title = (EditText) root.findViewById(R.id.reminderDescription);
+                EditText title = (EditText) findViewById(R.id.reminderDescription);
                 String reminderTitle = title.getText().toString();
-                final TimePicker tp = (TimePicker) root.findViewById(R.id.reminderTimePicker);
-                ((EditText) root.findViewById(R.id.reminderDescription)).setText("");
+                final TimePicker tp = (TimePicker) findViewById(R.id.reminderTimePicker);
+                ((EditText) findViewById(R.id.reminderDescription)).setText("");
                 Integer Hours = tp.getCurrentHour();
                 Integer Minutes = tp.getCurrentMinute();
                 String createdReminder = reminderTitle + "?" + Hours + "?" + Minutes;
@@ -91,7 +88,7 @@ public class ReminderCreatorActivity extends AppCompatActivity {
                             DocumentSnapshot document = task.getResult();
                             if (document.exists()) {  // if email exists
                                 docRef.update("reminders", FieldValue.arrayUnion(createdReminder));
-                                Toast.makeText(root.getContext(), "Reminder Creation Successful.", Toast.LENGTH_LONG).show();
+                                Toast.makeText(getApplicationContext(), "Reminder Creation Successful.", Toast.LENGTH_LONG).show();
                             } else {  // if email doesn't exists how are they logged in
 
                             }
@@ -100,11 +97,10 @@ public class ReminderCreatorActivity extends AppCompatActivity {
                         }
                     }
                 });
-                //Move back home
-//                Intent intent = new Intent(MainMapActivity.this, TabBarActivity.class);
-//                startActivity(intent);
+
+                Intent intent = new Intent(ReminderCreatorActivity.this, TabBarActivity.class);
+                startActivity(intent);
             }});
-        return root;
     }
 
 }

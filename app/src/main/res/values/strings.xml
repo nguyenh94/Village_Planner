@@ -9,4 +9,5 @@
     <string name="channel_description">sendingReminders</string>
     <string name="hello_world">My Reminders</string>
     <string name="reminderTitle">Description of Reminder</string>
+    <string name="title_activity_reminder_creator_activity">ReminderCreatorActivity</string>
 </resources>
