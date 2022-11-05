@@ -1,5 +1,6 @@
 package com.example.villageplanner_teaminfiniteloop;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 
@@ -22,7 +23,8 @@ import com.google.android.material.navigation.NavigationBarView;
 public class TabBarActivity extends AppCompatActivity implements NavigationBarView.OnItemSelectedListener{
 
     private ActivityTabBarBinding binding;
-
+    double lat = 0.0;
+    double lon = 0.0;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -30,8 +32,17 @@ public class TabBarActivity extends AppCompatActivity implements NavigationBarVi
         setContentView(binding.getRoot());
         BottomNavigationView navView = findViewById(R.id.nav_view);
 
+        Intent intent = getIntent();
+        lat = intent.getDoubleExtra("destinationLat", 0.0);
+        lon = intent.getDoubleExtra("destinationLong", 0.0);
+        Bundle bundle = new Bundle();
+        bundle.putDouble("destinationLat", lat);
+        bundle.putDouble("destinationLong", lon);
+        MapFragment mapFragment = new MapFragment();
+        mapFragment.setArguments(bundle);
+
         //loading the default fragment
-        loadFragment(new MapFragment());
+        loadFragment(mapFragment);
 
         //getting bottom navigation view and attaching the listener
         navView.setOnItemSelectedListener(this);
@@ -64,7 +75,12 @@ public class TabBarActivity extends AppCompatActivity implements NavigationBarVi
 
         switch (item.getItemId()) {
             case R.id.navigation_home:
-                fragment = new MapFragment();
+                Bundle bundle = new Bundle();
+                bundle.putDouble("destinationLat", lat);
+                bundle.putDouble("destinationLong", lon);
+                MapFragment mapFragment = new MapFragment();
+                mapFragment.setArguments(bundle);
+                fragment = mapFragment;
                 break;
 
             case R.id.navigation_dashboard:
