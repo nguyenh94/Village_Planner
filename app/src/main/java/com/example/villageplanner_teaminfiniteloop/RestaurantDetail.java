@@ -14,6 +14,7 @@ import com.androidnetworking.AndroidNetworking;
 import com.androidnetworking.common.Priority;
 import com.androidnetworking.error.ANError;
 import com.androidnetworking.interfaces.JSONObjectRequestListener;
+import com.example.villageplanner_teaminfiniteloop.ui.map.MapFragment;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -51,7 +52,11 @@ public class RestaurantDetail extends AppCompatActivity {
             public void onClick(View v) {
                 int radioId = radioGroup.getCheckedRadioButtonId();
                 radioButton = findViewById(radioId);
-                // TODO: call the direction API when direction button clicked!
+
+                Intent myIntent = new Intent(RestaurantDetail.this, TabBarActivity.class);
+                myIntent.putExtra("destinationLat", destination.getLatitude());
+                myIntent.putExtra("destinationLong", destination.getLongitude());
+                RestaurantDetail.this.startActivity(myIntent);
             }
         });
 
@@ -80,6 +85,11 @@ public class RestaurantDetail extends AppCompatActivity {
         }
         getEstimatedTravelTime();
     }
+
+    public void getDirectionButtonClicked(View v){
+
+    }
+
 
     private void getEstimatedTravelTime(){
         String mode = "driving";
