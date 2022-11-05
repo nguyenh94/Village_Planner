@@ -33,6 +33,11 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.PolylineOptions;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import org.json.JSONObject;
 
@@ -177,12 +182,53 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, GoogleM
         Restaurant r = (Restaurant) marker.getTag();
         // calculate the queue time for this restaurant
         Queue.resCoordinate = r.getLocation();
-        queueTime.calculateQueueTime();
-        Intent myIntent = new Intent(getActivity(), RestaurantDetail.class);
-        myIntent.putExtra("name", r.getName());
-        myIntent.putExtra("location", r.getLocation());
-        myIntent.putExtra("queue", queueTime.getQueueTime());
-        MapFragment.this.startActivity(myIntent);
+        // get the user's location from the database
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        db.collection("users").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                if (task.isSuccessful()) {
+                    for(QueryDocumentSnapshot document: task.getResult()) {
+                        try {
+                            User user = document.toObject(User.class);
+                            String userLocation = user.getLocation();
+                            System.out.println("user location line 77 queue.java is " + userLocation);
+                            Queue.allUserLocation.add(userLocation);
+                            System.out.println("line79 allUserLocation is " + Queue.allUserLocation);
+                        } catch (Exception e) {
+                            System.out.println("line81");
+                            System.out.println(e);
+                        }
+                    }
+//                    calculateQueueTimeCallBack();
+                    // resCoordinate is retrieved in MapFragment when user chooses a restaurant
+                    Location resLoc = Queue.toLocation(Queue.resCoordinate);
+                    double resLat = resLoc.getLatitude();
+                    double resLong = resLoc.getLongitude();
+
+                    // go through all the locations and if it's within bound,
+                    for (int i=0; i<Queue.allUserLocation.size(); i++) {
+                        // if within radius of .0000# (up to 5 decimal decisions) for
+                        // both long and lat then in radius
+                        System.out.println(Queue.allUserLocation);
+                        Location userLoc = Queue.toLocation(Queue.allUserLocation.get(i));
+                        double userLat = userLoc.getLatitude();
+                        double userLong = userLoc.getLongitude();
+                        double userToResDistance = Queue.calculateDistance(resLat, resLong, userLat, userLong);
+                        if (userToResDistance < 0.0094697) {     // radius = 50 feet = 0.0094697 miles
+                            Queue.userInRadius++;    // count how many users are in the area at the time --> n
+                        }
+                    }
+
+                    // each user will take 2 minutes
+                    Queue.queueTime = 2 * Queue.userInRadius;
+                    Intent myIntent = new Intent(getActivity(), RestaurantDetail.class);
+                    myIntent.putExtra("name", r.getName());
+                    myIntent.putExtra("location", r.getLocation());
+                    MapFragment.this.startActivity(myIntent);
+                }
+            }
+        });
     }
 
     // MARK: Handle draw lines

@@ -25,7 +25,6 @@ public class RestaurantDetail extends AppCompatActivity {
     String name;
     String location;
     String travelTime;
-    String queueTime;
     Location currentLocation = User.currentLocation;
     Location destination;
     TravelMode travelMode = TravelMode.Drive;
@@ -41,12 +40,11 @@ public class RestaurantDetail extends AppCompatActivity {
         Intent intent = getIntent();
         name = intent.getStringExtra("name");
         location = intent.getStringExtra("location");
-        queueTime = intent.getStringExtra("queue");
         destination = Queue.toLocation(location);
         TextView restaurantLabel = (TextView) findViewById(R.id.restaurantLabel);
         restaurantLabel.setText(name);
         TextView queueTimeDisplay = (TextView) findViewById(R.id.text_view_queueTime);
-        queueTimeDisplay.setText("Estimated Queue Time: " + queueTime);
+        queueTimeDisplay.setText("Estimated Queue Time: " + Queue.queueTime + " mins");
 
         radioGroup = findViewById(R.id.radioGroup);
         travelTimeTextView = findViewById(R.id.text_view_travelTimeLabel);
