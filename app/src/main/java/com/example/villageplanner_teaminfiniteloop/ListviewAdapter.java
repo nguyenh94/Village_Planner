@@ -9,15 +9,8 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
-
-import androidx.annotation.NonNull;
-
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.DocumentSnapshot;
-import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,25 +18,25 @@ import java.util.List;
 public class ListviewAdapter extends BaseAdapter {
 
     private Context context;
-    private List<Integer> hourList;
-    private List<Integer> minuteList;
+    private List<Integer> departureList;
+    private List<String> arrivalList;
     private List<String> reminderList;
     Button submitButton;
     String userEmail = "test1@gmail.com";
 
 
     LayoutInflater mInflater;
-    public ListviewAdapter(Context context, List hourList, List minuteList, List reminderList){
+    public ListviewAdapter(Context context, List departureList, List arrivalList, List reminderList){
         this.context = context;
-        this.hourList = hourList;
-        this.minuteList = minuteList;
+        this.departureList = departureList;
+        this.arrivalList = arrivalList;
         this.reminderList = reminderList;
     }
 
     @Override
     public int getCount() {
         // TODO Auto-generated method stub
-        return hourList.size();
+        return departureList.size();
     }
 
     @Override
@@ -58,12 +51,12 @@ public class ListviewAdapter extends BaseAdapter {
         return arg0;
     }
 
-//    public ArrayList<String> combineText(List<Integer> hourList, List<Integer> minuteList, List reminderList)
+//    public ArrayList<String> combineText(List<Integer> departureList, List<Integer> arrivalList, List reminderList)
 //    {
 //        ArrayList<String> remindersInString = new ArrayList<String>();
 //        for(Integer i=0;i<reminderList.size();i++)
 //        {
-//            remindersInString.add(reminderList.get(i) +"?"+String.valueOf(hourList.get(i)) +"?" + String.valueOf(minuteList.get(i)));
+//            remindersInString.add(reminderList.get(i) +"?"+String.valueOf(departureList.get(i)) +"?" + String.valueOf(arrivalList.get(i)));
 //        }
 //        return remindersInString;
 //    }
@@ -90,120 +83,120 @@ public class ListviewAdapter extends BaseAdapter {
     @Override
     public View getView(int position, View convertView, ViewGroup arg2) {
 
-        final ViewHolder holderHours;
-        final ViewHolder holderMinutes;
-        final ViewHolder holderReminders;
+        TextView holderArrival = null;
+        TextView holderDeparture = null;
+        TextView holderReminders = null;
         convertView=null;
         if (convertView == null) {
-            holderHours = new ViewHolder();
-            holderMinutes = new ViewHolder();
-            holderReminders = new ViewHolder();
+//            holderArrival = new ViewHolder();
+//            holderDeparture = new ViewHolder();
+//            holderReminders = new ViewHolder();
 
             mInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             convertView = mInflater.inflate(R.layout.listview_adapter, null);
-            holderHours.caption = (EditText) convertView
-                    .findViewById(R.id.editHours);
-            holderMinutes.caption = (EditText) convertView
-                    .findViewById(R.id.editMinutes);
-            holderReminders.caption = (EditText) convertView
+            holderArrival = (TextView) convertView
+                    .findViewById(R.id.editArrival);
+            holderDeparture = (TextView) convertView
+                    .findViewById(R.id.editDeparture);
+            holderReminders = (TextView) convertView
                     .findViewById(R.id.editReminderName);
 
-            holderHours.caption.setTag(position);
-            holderHours.caption.setText(hourList.get(position).toString());
-            holderMinutes.caption.setTag(position);
-            holderMinutes.caption.setText(minuteList.get(position).toString());
-            holderReminders.caption.setTag(position);
-            holderReminders.caption.setText(reminderList.get(position).toString());
+            holderArrival.setTag(position);
+            holderArrival.setText(String.valueOf(arrivalList.get(position)));
+            holderDeparture.setTag(position);
+            holderDeparture.setText(String.valueOf(departureList.get(position)));
+            holderReminders.setTag(position);
+            holderReminders.setText(String.valueOf(reminderList.get(position)));
 
-            convertView.setTag(holderHours);
-            convertView.setTag(holderMinutes);
+            convertView.setTag(holderArrival);
+            convertView.setTag(holderDeparture);
             convertView.setTag(holderReminders);
         }else {
-            holderHours = (ViewHolder) convertView.getTag();
-            holderMinutes = (ViewHolder) convertView.getTag();
-            holderReminders = (ViewHolder) convertView.getTag();
+//            holderArrival = (ViewHolder) convertView.getTag();
+//            holderDeparture = (ViewHolder) convertView.getTag();
+//            holderReminders = (ViewHolder) convertView.getTag();
 
         }
-        int hour_tag_position=(Integer) holderHours.caption.getTag();
-        holderHours.caption.setId(hour_tag_position);
-        int minute_tag_position=(Integer) holderMinutes.caption.getTag();
-        holderMinutes.caption.setId(minute_tag_position);
-        int reminder_tag_position=(Integer) holderReminders.caption.getTag();
-        holderReminders.caption.setId(minute_tag_position);
+        int holderArrival_tag_position=(Integer) holderArrival.getTag();
+        holderArrival.setId(holderArrival_tag_position);
+        int holderDeparture_tag_position=(Integer) holderDeparture.getTag();
+        holderDeparture.setId(holderDeparture_tag_position);
+        int reminder_tag_position=(Integer) holderReminders.getTag();
+        holderReminders.setId(reminder_tag_position);
 
-        holderHours.caption.addTextChangedListener(new TextWatcher() {
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before,
-                                      int count) {
-                final int position2 = holderHours.caption.getId();
-                final EditText Caption = (EditText) holderHours.caption;
-                if(Caption.getText().toString().length()>0){
-                    hourList.set(position2,Integer.parseInt(Caption.getText().toString()));
-
-                }else{
-                    Toast.makeText(context, "Please enter some value", Toast.LENGTH_SHORT).show();
-                }
-            }
-
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count,
-                                          int after) {
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-            }
-
-        });
-        holderMinutes.caption.addTextChangedListener(new TextWatcher() {
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before,
-                                      int count) {
-                final int position2 = holderMinutes.caption.getId();
-                final EditText Caption = (EditText) holderMinutes.caption;
-                if(Caption.getText().toString().length()>0){
-                    minuteList.set(position2,Integer.parseInt(Caption.getText().toString()));
-                }else{
-                    Toast.makeText(context, "Please enter some value", Toast.LENGTH_SHORT).show();
-                }
-            }
-
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count,
-                                          int after) {
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-            }
-
-        });
-        holderReminders.caption.addTextChangedListener(new TextWatcher() {
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before,
-                                      int count) {
-                final int position2 = holderReminders.caption.getId();
-                final EditText Caption = (EditText) holderReminders.caption;
-                if(Caption.getText().toString().length()>0){
-                    reminderList.set(position2,(Caption.getText().toString()));
-                }else{
-                    Toast.makeText(context, "Please enter some value", Toast.LENGTH_SHORT).show();
-                }
-            }
-
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count,
-                                          int after) {
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-            }
-
-        });
+//        holderArrival.addTextChangedListener(new TextWatcher() {
+//
+//            @Override
+//            public void onTextChanged(CharSequence s, int start, int before,
+//                                      int count) {
+//                final int position2 = holderArrival.caption.getId();
+//                final EditText Caption = (EditText) holderArrival.caption;
+//                if(Caption.getText().toString().length()>0){
+//                    departureList.set(position2,Integer.parseInt(Caption.getText().toString()));
+//
+//                }else{
+//                    Toast.makeText(context, "Please enter some value", Toast.LENGTH_SHORT).show();
+//                }
+//            }
+//
+//            @Override
+//            public void beforeTextChanged(CharSequence s, int start, int count,
+//                                          int after) {
+//            }
+//
+//            @Override
+//            public void afterTextChanged(Editable s) {
+//            }
+//
+//        });
+//        holderDeparture.caption.addTextChangedListener(new TextWatcher() {
+//
+//            @Override
+//            public void onTextChanged(CharSequence s, int start, int before,
+//                                      int count) {
+//                final int position2 = holderDeparture.caption.getId();
+//                final EditText Caption = (EditText) holderDeparture.caption;
+//                if(Caption.getText().toString().length()>0){
+//                    arrivalList.set(position2,Caption.getText().toString());
+//                }else{
+//                    Toast.makeText(context, "Please enter some value", Toast.LENGTH_SHORT).show();
+//                }
+//            }
+//
+//            @Override
+//            public void beforeTextChanged(CharSequence s, int start, int count,
+//                                          int after) {
+//            }
+//
+//            @Override
+//            public void afterTextChanged(Editable s) {
+//            }
+//
+//        });
+//        holderReminders.caption.addTextChangedListener(new TextWatcher() {
+//
+//            @Override
+//            public void onTextChanged(CharSequence s, int start, int before,
+//                                      int count) {
+//                final int position2 = holderReminders.caption.getId();
+//                final EditText Caption = (EditText) holderReminders.caption;
+//                if(Caption.getText().toString().length()>0){
+//                    reminderList.set(position2,(Caption.getText().toString()));
+//                }else{
+//                    Toast.makeText(context, "Please enter some value", Toast.LENGTH_SHORT).show();
+//                }
+//            }
+//
+//            @Override
+//            public void beforeTextChanged(CharSequence s, int start, int count,
+//                                          int after) {
+//            }
+//
+//            @Override
+//            public void afterTextChanged(Editable s) {
+//            }
+//
+//        });
 
         return convertView;
     }

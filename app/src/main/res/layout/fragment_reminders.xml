@@ -61,11 +61,41 @@
 <!--            android:layout_height="38dp"-->
 <!--            android:text="Submit" />-->
 <!--    </LinearLayout>-->
-    <Button
-        android:id="@+id/editAReminder"
-        android:layout_width="wrap_content"
-        android:layout_height="38dp"
-        android:text="Submit Change" />
+<!--    <Button-->
+<!--        android:id="@+id/editAReminder"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="38dp"-->
+<!--        android:text="Submit Change" />-->
+    <LinearLayout
+        android:id="@+id/text_layout"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="15dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginTop="5dp"
+        android:weightSum="2" >
+
+    <TextView
+        android:id="@+id/arrivalTitle"
+        android:layout_width="0dp"
+        android:layout_weight="1.6"
+        android:layout_height="wrap_content"
+        android:gravity="right"
+        android:textSize="14sp"
+        android:layout_marginRight="0dp"
+        android:text="Arrival" />
+
+    <TextView
+        android:id="@+id/departureTitle"
+        android:layout_width="0dp"
+        android:layout_weight="0.4"
+        android:textSize="14sp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_gravity="right"
+        android:text="Departure" />
+    </LinearLayout>
 
     <ListView
         android:id="@+id/listView1"
@@ -73,7 +103,8 @@
         android:layout_height="661dp"
         android:animationCache="false"
         android:scrollingCache="false"
-        android:smoothScrollbar="true"></ListView>
+        android:smoothScrollbar="true">
+    </ListView>
 
     </LinearLayout>
 
