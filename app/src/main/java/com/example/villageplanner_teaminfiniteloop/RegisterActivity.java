@@ -60,7 +60,7 @@ public class RegisterActivity extends AppCompatActivity {
 
             users.document(email).set(userInfo);
 
-            Intent intent = new Intent(this, MainMapActivity.class);
+            Intent intent = new Intent(this, TabBarActivity.class);
             startActivity(intent);
         } else {
             Toast.makeText(view.getContext(), "Email already registered.", Toast.LENGTH_LONG).show();
