@@ -22,7 +22,6 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.NotificationCompat;
 
-import com.example.villageplanner_teaminfiniteloop.databinding.FragmentRemindersBinding;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentReference;
@@ -35,7 +34,6 @@ import java.util.List;
 
 public class ReminderCreatorActivity extends AppCompatActivity {
 
-    private FragmentRemindersBinding binding;
     EditText textIn;
     Button buttonAdd;
     Button buttonCreateReminder;
@@ -53,8 +51,8 @@ public class ReminderCreatorActivity extends AppCompatActivity {
 
         Bundle bundle = getIntent().getExtras();
         String restaurantName = bundle.getString("restaurantName");
-        String travelTime = bundle.getString("travelTime");
-        String waitingTime = bundle.getString("waitingTime");
+        String travelTime = String.valueOf(bundle.getString("travelTime"));
+        String waitingTime = String.valueOf(bundle.getString("waitingTime"));
         ViewGroup finalContainer = container;
         restaurantNameTV.setText(restaurantName);
         buttonCreateReminder.setOnClickListener(new View.OnClickListener(){
@@ -63,11 +61,25 @@ public class ReminderCreatorActivity extends AppCompatActivity {
                 EditText title = (EditText) findViewById(R.id.reminderDescription);
                 String reminderTitle = title.getText().toString();
                 final TimePicker tp = (TimePicker) findViewById(R.id.reminderTimePicker);
-                ((EditText) findViewById(R.id.reminderDescription)).setText("");
                 Integer Hours = tp.getCurrentHour();
                 Integer Minutes = tp.getCurrentMinute();
-                String createdReminder = reminderTitle + "?" + Hours + "?" + Minutes;
+                String finalHours = "";
+                String finalMinutes = "";
+                if(String.valueOf(Hours).length()<2){
+                    finalHours = "0" + String.valueOf(Hours);
+                }
+                else {
+                    finalHours = String.valueOf(Hours);
+                }
+                if(String.valueOf(Minutes).length()<2){
+                    finalMinutes = "0" + String.valueOf(Minutes);
+                }
+                else {
+                    finalMinutes = String.valueOf(Minutes);
+                }
+                //notification time == departure time
                 String notificationTime = getCorrectNotificationTime(travelTime, waitingTime, Hours, Minutes);
+                String createdReminder = reminderTitle + "?" + finalHours + ":" + finalMinutes + "?" + notificationTime;
                 //TODO CREATE NOTIFICATION
                 reminderNotification();
                 FirebaseFirestore db = FirebaseFirestore.getInstance();
@@ -79,7 +91,7 @@ public class ReminderCreatorActivity extends AppCompatActivity {
                     public void onComplete(@NonNull Task<DocumentSnapshot> task) {
                         if (task.isSuccessful()) {
                             DocumentSnapshot document = task.getResult();
-                            if (document.exists()) {  // if email existss
+                            if (document.exists()) {  // if email exists
                                 docRef.update("reminders", FieldValue.arrayUnion(createdReminder));
                                 Toast.makeText(getApplicationContext(), "Reminder Creation Successful.", Toast.LENGTH_LONG).show();
                             } else {  // if email doesn't exists how are they logged in
@@ -99,6 +111,8 @@ public class ReminderCreatorActivity extends AppCompatActivity {
     public String getCorrectNotificationTime(String travelTime, String waitingTime, Integer reminderHours, Integer reminderMinutes) {
         Integer waitingTimeConverted = 0;
         Integer travelTimeConverted;
+        String finalHours = "";
+        String finalMinutes = "";
         try {
             waitingTime.split(" ");
         }
@@ -115,7 +129,13 @@ public class ReminderCreatorActivity extends AppCompatActivity {
         Integer notificationTimeinMinutes = (reminderHours * 60 + reminderMinutes) - travelTimeConverted - waitingTimeConverted;
         Integer notificationMinutes = notificationTimeinMinutes % 60;
         Integer notificationHours = notificationTimeinMinutes / 60;
-        return String.valueOf(notificationHours) + "?" + notificationMinutes;
+        if(String.valueOf(notificationHours).length()<2){
+            finalHours = "0" + String.valueOf(notificationHours);
+        }
+        if(String.valueOf(notificationMinutes).length()<2){
+            finalMinutes = "0" + String.valueOf(notificationHours);
+        }
+        return finalHours + ":" + finalMinutes;
     }
     public void reminderNotification()
     {

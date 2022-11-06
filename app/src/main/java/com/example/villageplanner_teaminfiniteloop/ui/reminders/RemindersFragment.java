@@ -54,8 +54,8 @@ public class RemindersFragment extends Fragment {
     private FragmentRemindersBinding binding;
     private static final String CHANNEL_ID = "channelID";
     private ListView listView;
-    private List hourList;
-    private List minuteList;
+    private List departureList;
+    private List arrivalList;
     private List reminderList;
     Button submitButton;
 
@@ -68,33 +68,33 @@ public class RemindersFragment extends Fragment {
         View root = binding.getRoot();
         listView = (ListView) root.findViewById(R.id.listView1);
         listView.setItemsCanFocus(true);
-        hourList = new ArrayList<Integer>();
-        minuteList = new ArrayList<Integer>();
+        departureList = new ArrayList<String>();
+        arrivalList = new ArrayList<Integer>();
         reminderList = new ArrayList<String>();
 
-        submitButton = (Button)root.findViewById(R.id.editAReminder);
+//        submitButton = (Button)root.findViewById(R.id.editAReminder);
         String userEmail = User.currentUserEmail;
-        submitButton.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View v) {
-                ArrayList<String> newReminders = combineText(hourList, minuteList, reminderList);
-                FirebaseFirestore db = FirebaseFirestore.getInstance();
-                DocumentReference docRef = db.collection("users").document(userEmail);
-                docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                        if (task.isSuccessful()) {
-                            DocumentSnapshot document = task.getResult();
-                            if (document.exists()) {  // if email exists
-                                docRef.update("reminders", newReminders);
-                            } else {  // if email doesn't exists how are they logged in
-
-                            }
-                        }
-                    }
-                });
-            }}
-        );
+//        submitButton.setOnClickListener(new View.OnClickListener(){
+//            @Override
+//            public void onClick(View v) {
+//                ArrayList<String> newReminders = combineText(hourList, minuteList, reminderList);
+//                FirebaseFirestore db = FirebaseFirestore.getInstance();
+//                DocumentReference docRef = db.collection("users").document(userEmail);
+//                docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+//                    @Override
+//                    public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+//                        if (task.isSuccessful()) {
+//                            DocumentSnapshot document = task.getResult();
+//                            if (document.exists()) {  // if email exists
+//                                docRef.update("reminders", newReminders);
+//                            } else {  // if email doesn't exists how are they logged in
+//
+//                            }
+//                        }
+//                    }
+//                });
+//            }}
+//        );
 
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         DocumentReference docRefSecond = db.collection("users").document(userEmail);
@@ -106,11 +106,11 @@ public class RemindersFragment extends Fragment {
                     if (document.exists()) {  // if email exists
                         User user = document.toObject(User.class);
 
-                        hourList = translateReminderHours(user.getReminders());
-                        minuteList = translateReminderMinutes(user.getReminders());
+                        departureList = translateReminderDeparture(user.getReminders());
+                        arrivalList = translateReminderArrival(user.getReminders());
                         reminderList = translateReminderTitles(user.getReminders());
 
-                        ListviewAdapter adpter = new ListviewAdapter(root.getContext(), hourList, minuteList, reminderList);
+                        ListviewAdapter adpter = new ListviewAdapter(root.getContext(), departureList, arrivalList, reminderList);
                         listView.setAdapter(adpter);
                     }
                 } else {
@@ -122,41 +122,41 @@ public class RemindersFragment extends Fragment {
     }
 
 
-    public ArrayList<String> combineText(List<Integer> hourList, List<Integer> minuteList, List reminderList)
+    public ArrayList<String> combineText(List<Integer> departureList, List<Integer> arrivalList, List reminderList)
     {
         ArrayList<String> remindersInString = new ArrayList<String>();
         for(Integer i=0;i<reminderList.size();i++)
         {
-            remindersInString.add(reminderList.get(i) +"?"+String.valueOf(hourList.get(i)) +"?" + String.valueOf(minuteList.get(i)));
+            remindersInString.add(reminderList.get(i) +"?"+String.valueOf(departureList.get(i)) +"?" + String.valueOf(arrivalList.get(i)));
         }
         return remindersInString;
     }
 
-    public List<Integer> translateReminderHours(List<String> reminders) {
-        ArrayList<Integer> usersHours = new ArrayList<Integer>();
+    public List<String> translateReminderDeparture(List<String> reminders) {
+        ArrayList<String> departure = new ArrayList<String>();
         try{
             for (String reminder : reminders) {
                 String[] reminderComponents = reminder.split("\\?");
-                usersHours.add(Integer.parseInt(reminderComponents[1]));
+                departure.add(reminderComponents[2]);
             }
         }
         catch (Exception e) {
-            return usersHours;
+            return departure;
         }
-        return usersHours;
+        return departure;
     }
-    public List<Integer> translateReminderMinutes(List<String> reminders) {
-        ArrayList<Integer> usersMinutes = new ArrayList<Integer>();
+    public List<String> translateReminderArrival(List<String> reminders) {
+        ArrayList<String> reminderArrivals = new ArrayList<String>();
         try {
             for (String reminder : reminders) {
                 String[] reminderComponents = reminder.split("\\?");
-                usersMinutes.add(Integer.parseInt(reminderComponents[2]));
+                reminderArrivals.add(reminderComponents[1]);
             }
         }
         catch (Exception e) {
-            return usersMinutes;
+            return reminderArrivals;
         }
-        return usersMinutes;
+        return reminderArrivals;
     }
     public List<String> translateReminderTitles(List<String> reminders) {
         ArrayList<String> usersReminders = new ArrayList<String>();
