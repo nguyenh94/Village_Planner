@@ -2,15 +2,9 @@ package com.example.villageplanner_teaminfiniteloop;
 
 import static com.google.android.gms.common.util.CollectionUtils.mapOf;
 
-import android.app.Activity;
-import android.app.NotificationChannel;
-import android.app.NotificationManager;
-import android.content.Context;
 import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -22,32 +16,16 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.NotificationCompat;
-import androidx.fragment.app.Fragment;
-import androidx.lifecycle.ViewModelProvider;
 
-import com.example.villageplanner_teaminfiniteloop.LoginActivity;
-import com.example.villageplanner_teaminfiniteloop.NotificationUtils;
-import com.example.villageplanner_teaminfiniteloop.R;
-import com.example.villageplanner_teaminfiniteloop.Reminder;
-import com.example.villageplanner_teaminfiniteloop.TabBarActivity;
-import com.example.villageplanner_teaminfiniteloop.User;
 import com.example.villageplanner_teaminfiniteloop.databinding.FragmentRemindersBinding;
-import com.example.villageplanner_teaminfiniteloop.ui.reminders.RemindersViewModel;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.Source;
 
-import java.sql.Array;
-import java.sql.Time;
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public class ReminderCreatorActivity extends AppCompatActivity {
 
@@ -56,6 +34,7 @@ public class ReminderCreatorActivity extends AppCompatActivity {
     Button buttonAdd;
     Button buttonCreateReminder;
     LinearLayout container;
+    TextView restaurantNameTV;
     private static final String CHANNEL_ID = "channelID";
 
     public void onCreate(Bundle savedInstanceState) {
@@ -64,9 +43,14 @@ public class ReminderCreatorActivity extends AppCompatActivity {
         textIn = (EditText)findViewById(R.id.reminderDescription);
         container = (LinearLayout)findViewById(R.id.container);
         buttonCreateReminder = (Button)findViewById(R.id.createReminder);
+        restaurantNameTV = (TextView) findViewById(R.id.restaurantName);
 
+        Bundle bundle = getIntent().getExtras();
+        String restaurantName = bundle.getString("restaurantName");
+        String travelTime = bundle.getString("travelTime");
+        String waitingTime = bundle.getString("waitingTime");
         ViewGroup finalContainer = container;
-
+        restaurantNameTV.setText(restaurantName);
         buttonCreateReminder.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View arg0) {
@@ -77,6 +61,8 @@ public class ReminderCreatorActivity extends AppCompatActivity {
                 Integer Hours = tp.getCurrentHour();
                 Integer Minutes = tp.getCurrentMinute();
                 String createdReminder = reminderTitle + "?" + Hours + "?" + Minutes;
+                String notificationTime = getCorrectNotificationTime(travelTime, waitingTime, Hours, Minutes);
+                //TODO CREATE NOTIFICATION
                 FirebaseFirestore db = FirebaseFirestore.getInstance();
                 String userEmail = User.currentUserEmail;
                 final List<String>[] usersReminders = new List[0];
@@ -86,7 +72,7 @@ public class ReminderCreatorActivity extends AppCompatActivity {
                     public void onComplete(@NonNull Task<DocumentSnapshot> task) {
                         if (task.isSuccessful()) {
                             DocumentSnapshot document = task.getResult();
-                            if (document.exists()) {  // if email exists
+                            if (document.exists()) {  // if email existss
                                 docRef.update("reminders", FieldValue.arrayUnion(createdReminder));
                                 Toast.makeText(getApplicationContext(), "Reminder Creation Successful.", Toast.LENGTH_LONG).show();
                             } else {  // if email doesn't exists how are they logged in
@@ -101,6 +87,28 @@ public class ReminderCreatorActivity extends AppCompatActivity {
                 Intent intent = new Intent(ReminderCreatorActivity.this, TabBarActivity.class);
                 startActivity(intent);
             }});
+    }
+
+    public String getCorrectNotificationTime(String travelTime, String waitingTime, Integer reminderHours, Integer reminderMinutes) {
+        Integer waitingTimeConverted = 0;
+        Integer travelTimeConverted;
+        try {
+            waitingTime.split(" ");
+        }
+        catch (Exception e) {
+            waitingTimeConverted = 0;
+        }
+        try {
+            String[] travelTimeList = travelTime.split(" ");
+            travelTimeConverted = Integer.parseInt(travelTimeList[0]) * 60 + Integer.parseInt(travelTimeList[2]);
+        }
+        catch (Exception e) {
+            travelTimeConverted = 0;
+        }
+        Integer notificationTimeinMinutes = (reminderHours * 60 + reminderMinutes) - travelTimeConverted - waitingTimeConverted;
+        Integer notificationMinutes = notificationTimeinMinutes % 60;
+        Integer notificationHours = notificationTimeinMinutes / 60;
+        return String.valueOf(notificationHours) + "?" + notificationMinutes;
     }
 
 }
