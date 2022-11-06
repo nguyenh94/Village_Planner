@@ -65,6 +65,14 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, GoogleM
     private LatLng currentLocation = new LatLng(User.currentLocation.getLatitude(), User.currentLocation.getLongitude());
     private LatLng destination;
     private String travelMode;
+    MyLocation.LocationResult locationResult = new MyLocation.LocationResult(){
+        @Override
+        public void gotLocation(Location location){
+            // store the user's location in the database
+            User.currentLocation = location;
+            currentLocation = new LatLng(location.getLatitude(), location.getLongitude());
+        }
+    };
 
     @Nullable
     @Override
@@ -72,6 +80,9 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, GoogleM
         View view = inflater.inflate(R.layout.fragment_map, container, false);
         mapView = (MapView) view.findViewById(R.id.mapView);
         initGoogleMap(savedInstanceState);
+
+        MyLocation myLocation = new MyLocation();
+        myLocation.getLocation(getActivity(), locationResult);
 
         if ( getArguments().getDouble("destinationLat") != 0.0) {    //returned from Get Direction
             double lat = getArguments().getDouble("destinationLat");
@@ -161,39 +172,54 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, GoogleM
 
         googleMap.setOnInfoWindowClickListener(this);
         googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(34.0256, -118.2850), 17.7f));
+        if (!checkAtLA()) {
+            showAlert();
+        }
 
+    }
+
+    private boolean checkAtLA(){
         //Detect city
+        MyLocation myLocation = new MyLocation();
+        myLocation.getLocation(getActivity(), locationResult);
+
         Geocoder geoCoder = new Geocoder(getActivity(), Locale.getDefault()); //it is Geocoder
         StringBuilder builder = new StringBuilder();
         try {
             List<Address> address = geoCoder.getFromLocation(currentLocation.latitude, currentLocation.longitude, 1);
             String city = address.get(0).getLocality();
-            if (city != "Los Angeles") {
-                AlertDialog.Builder alertBuilder = new AlertDialog.Builder(getActivity());
-                // Set the message show for the Alert time
-                alertBuilder.setMessage("Village Planner is built for Trojans at USC. Please go to Los Angeles to use Village Planner!");
-
-                // Set Alert Title
-                alertBuilder.setTitle("Ops! You are not at Los Angeles!");
-
-                // Set Cancelable false for when the user clicks on the outside the Dialog Box then it will remain show
-                alertBuilder.setCancelable(false);
-
-                // Set the positive button with yes name Lambda OnClickListener method is use of DialogInterface interface.
-                alertBuilder.setPositiveButton("Ok", (DialogInterface.OnClickListener) (dialog, which) -> {
-                    // When the user click yes button then app will close
-                    dialog.cancel();
-                });
-
-                // Create the Alert dialog
-                AlertDialog alertDialog = alertBuilder.create();
-                // Show the Alert Dialog box
-                alertDialog.show();
+            if (!city.equals("Los Angeles")) {
+                return false;
+            } else {
+                return true;
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
+        return false;
+    }
 
+    private void showAlert() {
+        AlertDialog.Builder alertBuilder = new AlertDialog.Builder(getActivity());
+        // Set the message show for the Alert time
+        alertBuilder.setMessage("Village Planner is built for Trojans at USC. Please go to Los Angeles to use Village Planner!");
+
+        // Set Alert Title
+        alertBuilder.setTitle("Ops! You are not at Los Angeles!");
+
+        // Set Cancelable false for when the user clicks on the outside the Dialog Box then it will remain show
+        alertBuilder.setCancelable(false);
+
+        // Set the positive button with yes name Lambda OnClickListener method is use of DialogInterface interface.
+        alertBuilder.setPositiveButton("Ok", (DialogInterface.OnClickListener) (dialog, which) -> {
+            // When the user click yes button then app will close
+            dialog.cancel();
+        });
+
+        // Create the Alert dialog
+        AlertDialog alertDialog = alertBuilder.create();
+        // Show the Alert Dialog box
+        alertDialog.show();
     }
 
     @Override
@@ -216,6 +242,10 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, GoogleM
 
     @Override
     public void onInfoWindowClick(@NonNull Marker marker) {
+        if (!checkAtLA()) {
+            showAlert();
+            return;
+        }
         Queue queueTime = new Queue();
         Restaurant r = (Restaurant) marker.getTag();
         // calculate the queue time for this restaurant
