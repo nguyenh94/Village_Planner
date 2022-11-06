@@ -1,9 +1,12 @@
 package com.example.villageplanner_teaminfiniteloop.ui.map;
 
 import android.Manifest;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
+import android.location.Address;
+import android.location.Geocoder;
 import android.location.Location;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -14,6 +17,7 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
 
@@ -50,6 +54,7 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 
 public class MapFragment extends Fragment implements OnMapReadyCallback, GoogleMap.OnInfoWindowClickListener {
     private static final String MAPVIEW_BUNDLE_KEY = "MapViewBundleKey";
@@ -156,6 +161,39 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, GoogleM
 
         googleMap.setOnInfoWindowClickListener(this);
         googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(34.0256, -118.2850), 17.7f));
+
+        //Detect city
+        Geocoder geoCoder = new Geocoder(getActivity(), Locale.getDefault()); //it is Geocoder
+        StringBuilder builder = new StringBuilder();
+        try {
+            List<Address> address = geoCoder.getFromLocation(currentLocation.latitude, currentLocation.longitude, 1);
+            String city = address.get(0).getLocality();
+            if (city != "Los Angeles") {
+                AlertDialog.Builder alertBuilder = new AlertDialog.Builder(getActivity());
+                // Set the message show for the Alert time
+                alertBuilder.setMessage("Village Planner is built for Trojans at USC. Please go to Los Angeles to use Village Planner!");
+
+                // Set Alert Title
+                alertBuilder.setTitle("Ops! You are not at Los Angeles!");
+
+                // Set Cancelable false for when the user clicks on the outside the Dialog Box then it will remain show
+                alertBuilder.setCancelable(false);
+
+                // Set the positive button with yes name Lambda OnClickListener method is use of DialogInterface interface.
+                alertBuilder.setPositiveButton("Ok", (DialogInterface.OnClickListener) (dialog, which) -> {
+                    // When the user click yes button then app will close
+                    dialog.cancel();
+                });
+
+                // Create the Alert dialog
+                AlertDialog alertDialog = alertBuilder.create();
+                // Show the Alert Dialog box
+                alertDialog.show();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
     }
 
     @Override
@@ -237,19 +275,6 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, GoogleM
     // MARK: Handle draw lines
     private class DownloadTask extends AsyncTask {
 
-//        @Override
-//        protected String doInBackground(String... url) {
-//
-//            String data = "";
-//
-//            try {
-//                data = downloadUrl(url[0]);
-//            } catch (Exception e) {
-//                Log.d("Background Task", e.toString());
-//            }
-//            return data;
-//        }
-
         @Override
         protected Object doInBackground(Object[] objects) {
             String data = "";
@@ -269,16 +294,6 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, GoogleM
             parserTask.execute((String) o);
         }
 
-//        @Override
-//        protected void onPostExecute(String result) {
-//            super.onPostExecute(result);
-//
-//            ParserTask parserTask = new ParserTask();
-//
-//
-//            parserTask.execute(result);
-//
-//        }
     }
 
     private class ParserTask extends AsyncTask<String, Integer, List<List<HashMap<String, String>>>> {
