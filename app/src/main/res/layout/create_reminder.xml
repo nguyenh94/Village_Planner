@@ -21,6 +21,13 @@
             android:orientation="vertical">
 
             <TextView
+                android:id="@+id/restaurantName"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="Restaurant Name"
+                android:textSize="20sp" />
+
+            <TextView
                 android:id="@+id/reminderTitleOfPage"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
