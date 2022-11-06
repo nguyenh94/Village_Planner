@@ -182,6 +182,8 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, GoogleM
         Restaurant r = (Restaurant) marker.getTag();
         // calculate the queue time for this restaurant
         Queue.resCoordinate = r.getLocation();
+        Queue.allUserLocation.clear();
+        Queue.userInRadius = 0;
         // get the user's location from the database
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         db.collection("users").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
@@ -192,14 +194,15 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, GoogleM
                         try {
                             User user = document.toObject(User.class);
                             String userLocation = user.getLocation();
-                            System.out.println("user location line 77 queue.java is " + userLocation);
+//                            System.out.println("user location line 77 queue.java is " + userLocation);
                             Queue.allUserLocation.add(userLocation);
-                            System.out.println("line79 allUserLocation is " + Queue.allUserLocation);
+//                            System.out.println("line79 allUserLocation is " + Queue.allUserLocation);
                         } catch (Exception e) {
-                            System.out.println("line81");
+//                            System.out.println("line81");
                             System.out.println(e);
                         }
                     }
+                    System.out.println("allUserLocation size is " + Queue.allUserLocation.size());
 //                    calculateQueueTimeCallBack();
                     // resCoordinate is retrieved in MapFragment when user chooses a restaurant
                     Location resLoc = Queue.toLocation(Queue.resCoordinate);
@@ -210,7 +213,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, GoogleM
                     for (int i=0; i<Queue.allUserLocation.size(); i++) {
                         // if within radius of .0000# (up to 5 decimal decisions) for
                         // both long and lat then in radius
-                        System.out.println(Queue.allUserLocation);
+//                        System.out.println(Queue.allUserLocation);
                         Location userLoc = Queue.toLocation(Queue.allUserLocation.get(i));
                         double userLat = userLoc.getLatitude();
                         double userLong = userLoc.getLongitude();
@@ -221,7 +224,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, GoogleM
                     }
 
                     // each user will take 2 minutes
-                    Queue.queueTime = 2 * Queue.userInRadius;
+                    Queue.queueTime = Queue.userInRadius;
                     Intent myIntent = new Intent(getActivity(), RestaurantDetail.class);
                     myIntent.putExtra("name", r.getName());
                     myIntent.putExtra("location", r.getLocation());
