@@ -2,7 +2,11 @@ package com.example.villageplanner_teaminfiniteloop;
 
 import static com.google.android.gms.common.util.CollectionUtils.mapOf;
 
+import android.app.Activity;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -16,6 +20,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.NotificationCompat;
 
 import com.example.villageplanner_teaminfiniteloop.databinding.FragmentRemindersBinding;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -25,6 +30,7 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
 
+import java.sql.Time;
 import java.util.List;
 
 public class ReminderCreatorActivity extends AppCompatActivity {
@@ -63,6 +69,7 @@ public class ReminderCreatorActivity extends AppCompatActivity {
                 String createdReminder = reminderTitle + "?" + Hours + "?" + Minutes;
                 String notificationTime = getCorrectNotificationTime(travelTime, waitingTime, Hours, Minutes);
                 //TODO CREATE NOTIFICATION
+                reminderNotification();
                 FirebaseFirestore db = FirebaseFirestore.getInstance();
                 String userEmail = User.currentUserEmail;
                 final List<String>[] usersReminders = new List[0];
@@ -109,6 +116,44 @@ public class ReminderCreatorActivity extends AppCompatActivity {
         Integer notificationMinutes = notificationTimeinMinutes % 60;
         Integer notificationHours = notificationTimeinMinutes / 60;
         return String.valueOf(notificationHours) + "?" + notificationMinutes;
+    }
+    public void reminderNotification()
+    {
+        NotificationUtils _notificationUtils = new NotificationUtils(this);
+        long _currentTime = System.currentTimeMillis();
+        long tenSeconds = 1000 * 10;
+        long _triggerReminder = _currentTime + tenSeconds; //triggers a reminder after 10 seconds.
+        _notificationUtils.setReminder(_triggerReminder);
+    }
+
+
+    public void edit(String title, String id, Time travelTime, Time queueTime)
+    {
+
+    }
+    private void createNotificationChannel() {
+        // Create the NotificationChannel, but only on API 26+ because
+        // the NotificationChannel class is new and not in the support library
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            CharSequence name = getString(R.string.channel_name);
+            String description = getString(R.string.channel_description);
+            int importance = NotificationManager.IMPORTANCE_DEFAULT;
+            NotificationChannel channel = new NotificationChannel(CHANNEL_ID, name, importance);
+            channel.setDescription(description);
+            // Register the channel with the system; you can't change the importance
+            // or other notification behaviors after this
+            NotificationManager notificationManager = getBaseContext().getSystemService(NotificationManager.class);
+            notificationManager.createNotificationChannel(channel);
+        }
+    }
+
+    public void registerNotification(String title, Time reminderTime, Activity activity)
+    {
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(activity, CHANNEL_ID)
+                .setSmallIcon(R.drawable.notification_icon)
+                .setContentTitle(title)
+                .setContentText("context text")
+                .setPriority(NotificationCompat.PRIORITY_DEFAULT);
     }
 
 }

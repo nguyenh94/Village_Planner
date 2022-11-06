@@ -64,7 +64,6 @@ public class RemindersFragment extends Fragment {
         //TODO Adapt this tutorial to our data
         RemindersViewModel dashboardViewModel =
                 new ViewModelProvider(this).get(RemindersViewModel.class);
-        reminderNotification();
         binding = FragmentRemindersBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
         listView = (ListView) root.findViewById(R.id.listView1);
@@ -171,45 +170,6 @@ public class RemindersFragment extends Fragment {
             return usersReminders;
         }
         return usersReminders;
-    }
-
-    public void reminderNotification()
-        {
-            NotificationUtils _notificationUtils = new NotificationUtils(getActivity());
-            long _currentTime = System.currentTimeMillis();
-            long tenSeconds = 1000 * 10;
-            long _triggerReminder = _currentTime + tenSeconds; //triggers a reminder after 10 seconds.
-            _notificationUtils.setReminder(_triggerReminder);
-        }
-
-
-    public void edit(String title, String id, Time travelTime, Time queueTime)
-    {
-
-    }
-    private void createNotificationChannel() {
-        // Create the NotificationChannel, but only on API 26+ because
-        // the NotificationChannel class is new and not in the support library
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            CharSequence name = getString(R.string.channel_name);
-            String description = getString(R.string.channel_description);
-            int importance = NotificationManager.IMPORTANCE_DEFAULT;
-            NotificationChannel channel = new NotificationChannel(CHANNEL_ID, name, importance);
-            channel.setDescription(description);
-            // Register the channel with the system; you can't change the importance
-            // or other notification behaviors after this
-            NotificationManager notificationManager = getActivity().getBaseContext().getSystemService(NotificationManager.class);
-            notificationManager.createNotificationChannel(channel);
-        }
-    }
-
-    public void registerNotification(String title, Time reminderTime, Activity activity)
-    {
-        NotificationCompat.Builder builder = new NotificationCompat.Builder(activity, CHANNEL_ID)
-                .setSmallIcon(R.drawable.notification_icon)
-                .setContentTitle(title)
-                .setContentText("context text")
-                .setPriority(NotificationCompat.PRIORITY_DEFAULT);
     }
 
     @Override
