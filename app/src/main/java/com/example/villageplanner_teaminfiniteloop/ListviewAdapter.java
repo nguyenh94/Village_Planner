@@ -1,6 +1,7 @@
 package com.example.villageplanner_teaminfiniteloop;
 
 import android.content.Context;
+import android.content.Intent;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
@@ -87,6 +88,16 @@ public class ListviewAdapter extends BaseAdapter {
         TextView holderDeparture = null;
         TextView holderReminders = null;
         convertView=null;
+
+        //TODO add on click listener to create intent with create reminder
+//        public void setReminderButtonClicked(View v) {
+//            Intent myIntent = new Intent(this, ReminderCreatorActivity.class);
+//            myIntent.putExtra("description", name);
+//            myIntent.putExtra("travelTime", travelTime);
+//            myIntent.putExtra("waitingTime", 0);
+//            this.startActivity(myIntent);
+//        }
+
         if (convertView == null) {
 //            holderArrival = new ViewHolder();
 //            holderDeparture = new ViewHolder();

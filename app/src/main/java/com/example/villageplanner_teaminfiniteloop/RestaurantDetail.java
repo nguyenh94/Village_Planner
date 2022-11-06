@@ -28,6 +28,7 @@ public class RestaurantDetail extends AppCompatActivity {
     Location currentLocation = User.currentLocation;
     Location destination;
     TravelMode travelMode = TravelMode.Drive;
+    Integer queueTime;
 
     RadioGroup radioGroup;
     RadioButton radioButton;
@@ -45,7 +46,7 @@ public class RestaurantDetail extends AppCompatActivity {
         restaurantLabel.setText(name);
         TextView queueTimeDisplay = (TextView) findViewById(R.id.text_view_queueTime);
         queueTimeDisplay.setText("Estimated Queue Time: " + Queue.queueTime + " mins");
-
+        queueTime = Queue.queueTime;
         radioGroup = findViewById(R.id.radioGroup);
         travelTimeTextView = findViewById(R.id.text_view_travelTimeLabel);
 
@@ -106,7 +107,7 @@ public class RestaurantDetail extends AppCompatActivity {
         Intent myIntent = new Intent(this, ReminderCreatorActivity.class);
         myIntent.putExtra("restaurantName", name);
         myIntent.putExtra("travelTime", travelTime);
-        myIntent.putExtra("waitingTime", 0);
+        myIntent.putExtra("waitingTime", queueTime);
         this.startActivity(myIntent);
     }
 
