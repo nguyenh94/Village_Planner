@@ -52,7 +52,8 @@ public class ReminderCreatorActivity extends AppCompatActivity {
         Bundle bundle = getIntent().getExtras();
         String restaurantName = bundle.getString("restaurantName");
         String travelTime = String.valueOf(bundle.getString("travelTime"));
-        String waitingTime = String.valueOf(bundle.getString("waitingTime"));
+        String waitingTime = String.valueOf(bundle.getInt("waitingTime"));
+
         ViewGroup finalContainer = container;
         restaurantNameTV.setText(restaurantName);
         buttonCreateReminder.setOnClickListener(new View.OnClickListener(){
@@ -114,14 +115,19 @@ public class ReminderCreatorActivity extends AppCompatActivity {
         String finalHours = "";
         String finalMinutes = "";
         try {
-            waitingTime.split(" ");
+            waitingTimeConverted = Integer.valueOf(waitingTime);
         }
         catch (Exception e) {
             waitingTimeConverted = 0;
         }
         try {
             String[] travelTimeList = travelTime.split(" ");
-            travelTimeConverted = Integer.parseInt(travelTimeList[0]) * 60 + Integer.parseInt(travelTimeList[2]);
+            if(travelTimeList.length > 2) {
+                travelTimeConverted = Integer.parseInt(travelTimeList[0]) * 60 + Integer.parseInt(travelTimeList[2]);
+            }
+            else {
+                travelTimeConverted = Integer.parseInt(travelTimeList[0]);
+            }
         }
         catch (Exception e) {
             travelTimeConverted = 0;
@@ -132,8 +138,17 @@ public class ReminderCreatorActivity extends AppCompatActivity {
         if(String.valueOf(notificationHours).length()<2){
             finalHours = "0" + String.valueOf(notificationHours);
         }
+        else{
+            finalHours = String.valueOf(notificationHours);
+        }
         if(String.valueOf(notificationMinutes).length()<2){
             finalMinutes = "0" + String.valueOf(notificationHours);
+        }
+        else{
+            finalMinutes = String.valueOf(notificationMinutes);
+        }
+        if(finalHours == "00") {
+            finalHours = "12";
         }
         return finalHours + ":" + finalMinutes;
     }
