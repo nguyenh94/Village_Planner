@@ -38,7 +38,6 @@ import com.example.villageplanner_teaminfiniteloop.R;
 import com.example.villageplanner_teaminfiniteloop.RestaurantDetail;
 import com.example.villageplanner_teaminfiniteloop.TabBarActivity;
 import com.example.villageplanner_teaminfiniteloop.User;
-import com.example.villageplanner_teaminfiniteloop.databinding.FragmentMeBinding;
 import com.google.android.gms.tasks.Continuation;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -72,6 +71,7 @@ public class MeFragment extends Fragment {
         //if it is DashboardFragment it should have R.layout.fragment_dashboard
 
         View view = inflater.inflate(R.layout.fragment_me, null);
+        Toast.makeText(view.getContext(), "Tap on your profile picture to update it", Toast.LENGTH_LONG).show();
         TextView userNameTextView = (TextView) view.findViewById(R.id.userName);
         TextView userEmailTextView = (TextView) view.findViewById(R.id.userEmail);
         Button logoutButton = (Button) view.findViewById(R.id.logout);
