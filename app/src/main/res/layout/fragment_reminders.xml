@@ -61,11 +61,11 @@
 <!--            android:layout_height="38dp"-->
 <!--            android:text="Submit" />-->
 <!--    </LinearLayout>-->
-<!--    <Button-->
-<!--        android:id="@+id/editAReminder"-->
-<!--        android:layout_width="wrap_content"-->
-<!--        android:layout_height="38dp"-->
-<!--        android:text="Submit Change" />-->
+    <Button
+        android:id="@+id/editAReminder"
+        android:layout_width="wrap_content"
+        android:layout_height="38dp"
+        android:text="Submit Change" />
     <LinearLayout
         android:id="@+id/text_layout"
         android:orientation="horizontal"
