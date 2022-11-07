@@ -6,6 +6,7 @@
     android:layout_height="match_parent"
     tools:context=".LoginActivity">
 
+
     <EditText
         android:id="@+id/email"
         android:layout_width="wrap_content"
@@ -13,11 +14,13 @@
         android:layout_marginStart="32dp"
         android:layout_marginTop="140dp"
         android:layout_marginEnd="32dp"
+        android:layout_marginBottom="7dp"
         android:gravity="center"
         android:hint="Email"
         android:textSize="30sp"
+        app:layout_constraintBottom_toTopOf="@+id/password"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.464"
+        app:layout_constraintHorizontal_bias="0.456"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -27,62 +30,51 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
-        android:layout_marginTop="228dp"
+        android:layout_marginTop="15dp"
         android:layout_marginEnd="32dp"
+        android:layout_marginBottom="20dp"
         android:gravity="center"
         android:hint="Password"
         android:inputType="textPassword"
         android:textSize="30sp"
+        app:layout_constraintBottom_toTopOf="@+id/login"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.427"
+        app:layout_constraintHorizontal_bias="0.446"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-
-    <TextView
-        android:id="@+id/newUser"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="14dp"
-        android:layout_marginEnd="32dp"
-        android:gravity="center"
-        android:text="New user?"
-        android:textSize="30sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.405"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/login" />
+        app:layout_constraintTop_toBottomOf="@+id/email" />
 
     <Button
         android:id="@+id/login"
         android:layout_width="145dp"
         android:layout_height="77dp"
         android:layout_marginStart="32dp"
-        android:layout_marginTop="38dp"
+        android:layout_marginTop="28dp"
         android:layout_marginEnd="32dp"
+        android:layout_marginBottom="5dp"
         android:onClick="loginButtonPressed"
         android:text="Log In"
         android:textSize="17sp"
+        app:layout_constraintBottom_toTopOf="@+id/register"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.435"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/password"
-        />
+        app:layout_constraintTop_toBottomOf="@+id/password" />
 
     <Button
         android:id="@+id/register"
         android:layout_width="145dp"
         android:layout_height="77dp"
         android:layout_marginStart="32dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="18dp"
         android:layout_marginEnd="32dp"
+        android:layout_marginBottom="150dp"
         android:onClick="goToRegisterActivity"
-        android:text="Sign Up"
-        android:textSize="17sp"
+        android:text="New user? Sign Up"
+        android:textSize="15sp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.415"
+        app:layout_constraintHorizontal_bias="0.435"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/newUser" />
+        app:layout_constraintTop_toBottomOf="@+id/login" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
