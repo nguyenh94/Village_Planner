@@ -20,7 +20,7 @@ A friendly advice: AVD Emulator is not very stable per se. During development, w
     Get Direction: you will be redirected to the map page with the routing line corresponding to your travel mode.
     Set Reminder: you will be redirected to the reminder creator page to set up your reminder title, and your desired arrival time.
 6. You can see all your reminders in the Reminders tab. Switching tabs will refresh the content automatically. You can change your reminder title and arrival time in this page as well. Please use the correct timing format like "11:45" or "18:50" when you change the arrival time.
-7. You can see your account information in the Me tab. Here you can view your profile information like email, name, and your photo. You can change your photo by clicking your photo view.
+7. You can see your account information in the Me tab. Please grant permission to access your photos and camera. You can select your profile picture from the Photos app or take new pictures using the Camera app and upload it to USC Village Planner once you're logged in. Here you can view your profile information like email, name, and your photo. You can change your photo by clicking your photo view. 
 
 Enjoy Village Planner and Fight On!
  
