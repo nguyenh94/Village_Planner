@@ -17,6 +17,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -31,7 +32,10 @@ import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.example.villageplanner_teaminfiniteloop.LoginActivity;
 import com.example.villageplanner_teaminfiniteloop.R;
+import com.example.villageplanner_teaminfiniteloop.RestaurantDetail;
+import com.example.villageplanner_teaminfiniteloop.TabBarActivity;
 import com.example.villageplanner_teaminfiniteloop.User;
 import com.example.villageplanner_teaminfiniteloop.databinding.FragmentMeBinding;
 import com.google.android.gms.tasks.Continuation;
@@ -70,6 +74,13 @@ public class MeFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_me, null);
         TextView userNameTextView = (TextView) view.findViewById(R.id.userName);
         TextView userEmailTextView = (TextView) view.findViewById(R.id.userEmail);
+        Button logoutButton = (Button) view.findViewById(R.id.logout);
+        logoutButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                logoutButtonPressed(view);
+            }
+        });
         profilePic = view.findViewById(R.id.profilePic);
 
         storage = FirebaseStorage.getInstance();
@@ -85,30 +96,6 @@ public class MeFragment extends Fragment {
         } catch (Exception e){
             System.out.println("Error");
         }
-
-//        Task<Uri> urlTask = uploadTask.continueWithTask(new Continuation<UploadTask.TaskSnapshot, Task<Uri>>() {
-//            @Override
-//            public Task<Uri> then(@NonNull Task<UploadTask.TaskSnapshot> task) throws Exception {
-//                if (!task.isSuccessful()) {
-//                    throw task.getException();
-//                }
-//
-//                // Continue with the task to get the download URL
-//                return imageRef.getDownloadUrl();
-//            }
-//        }).addOnCompleteListener(new OnCompleteListener<Uri>() {
-//            @Override
-//            public void onComplete(@NonNull Task<Uri> task) {
-//                if (task.isSuccessful()) {
-//                    Uri downloadUri = task.getResult();
-//                    profilePic.setImageURI(downloadUri);
-//                } else {
-//                    // Handle failures
-//                    // ...
-//                    System.out.println("Cannot retrieve image.");
-//                }
-//            }
-//        });
 
         profilePic.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -148,5 +135,11 @@ public class MeFragment extends Fragment {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         CollectionReference users = db.collection("users");
         users.document(User.currentUserEmail).update("photo", photoUri);
+    }
+
+    public void logoutButtonPressed(View view) {
+        //Move to home
+        Intent myIntent = new Intent(getActivity(), LoginActivity.class);
+        MeFragment.this.startActivity(myIntent);
     }
 }

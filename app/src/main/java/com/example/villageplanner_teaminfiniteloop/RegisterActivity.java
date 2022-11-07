@@ -61,6 +61,9 @@ public class RegisterActivity extends AppCompatActivity {
 
             users.document(email).set(userInfo);
 
+            User.currentUserEmail = email;
+            User.currentUserName = name;
+
             Intent intent = new Intent(this, TabBarActivity.class);
             startActivity(intent);
         } else {

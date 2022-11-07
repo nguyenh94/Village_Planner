@@ -141,7 +141,6 @@ public class LoginActivity extends AppCompatActivity {
                 }
             }
         });
-
     }
 
     public boolean checkLocationPermission() {
