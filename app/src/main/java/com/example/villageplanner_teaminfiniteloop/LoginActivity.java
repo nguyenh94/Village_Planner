@@ -95,7 +95,7 @@ public class LoginActivity extends AppCompatActivity {
                 Toast.makeText(view.getContext(), "Login Successful.", Toast.LENGTH_LONG).show();
                 User.currentUserEmail = email;
                 User.currentUserName = name;
-                User.currentUserPhoto = photo;
+//                User.currentUserPhoto = photo;
 
                 //Move to home
                 Intent intent = new Intent(LoginActivity.this, TabBarActivity.class);

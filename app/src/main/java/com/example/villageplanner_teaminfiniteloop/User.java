@@ -40,7 +40,7 @@ public class User {
     public static Location currentLocation;
     public static String currentUserEmail;
     public static String currentUserName;
-    public static String currentUserPhoto;
+    public static Uri currentUserPhoto;
 
     public User() {
         this.id = "";

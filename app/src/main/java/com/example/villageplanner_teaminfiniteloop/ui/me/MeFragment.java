@@ -91,8 +91,8 @@ public class MeFragment extends Fragment {
         userEmailTextView.setText(User.currentUserEmail);
 
         try {
-            Uri currentPhotoUri = Uri.parse(User.currentUserPhoto);
-            profilePic.setImageURI(currentPhotoUri);
+//            Uri currentPhotoUri = Uri.parse(User.currentUserPhoto);
+            profilePic.setImageURI(globalPhotoUri);
         } catch (Exception e){
             System.out.println("Error");
         }
