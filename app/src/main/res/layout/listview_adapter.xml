@@ -17,7 +17,7 @@
         android:id="@+id/editArrival"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:inputType="number"
+        android:inputType="text"
         android:layout_weight="1.5"
         android:ems="10" />
 

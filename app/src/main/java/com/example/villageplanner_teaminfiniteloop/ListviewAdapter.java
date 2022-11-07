@@ -121,6 +121,14 @@ public class ListviewAdapter extends BaseAdapter {
         Toast.makeText(context, "Reminder Edit Successful.", Toast.LENGTH_LONG).show();
     }
 
+    public boolean userInputValid(String userInput) {
+        if(userInput.length() == 5 && userInput.charAt(2)==':')
+        {
+            return true;
+        }
+        return false;
+    }
+
     @Override
     public View getView(int position, View convertView, ViewGroup arg2) {
         final ViewHolder holderArrival;
@@ -195,10 +203,11 @@ public class ListviewAdapter extends BaseAdapter {
                                       int count) {
                 final int position2 = holderArrival.caption.getId();
                 final EditText Caption = (EditText) holderArrival.caption;
-                if(Caption.getText().toString().length()>0){
+                String userInput = Caption.getText().toString();
+                if(userInput.length()>0 && userInputValid(userInput)){
                     arrivalList.set(position2,Caption.getText().toString());
                 }else{
-                    Toast.makeText(context, "Please enter some value", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(context, "Please enter a value in the same format", Toast.LENGTH_SHORT).show();
                 }
             }
 
