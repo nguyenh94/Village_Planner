@@ -57,6 +57,8 @@ public class RemindersFragment extends Fragment {
     private List departureList;
     private List arrivalList;
     private List reminderList;
+    private List queueAndTravelTime;
+
     Button submitButton;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -71,30 +73,32 @@ public class RemindersFragment extends Fragment {
         departureList = new ArrayList<String>();
         arrivalList = new ArrayList<Integer>();
         reminderList = new ArrayList<String>();
+        queueAndTravelTime = new ArrayList<String>();
 
-//        submitButton = (Button)root.findViewById(R.id.editAReminder);
+        submitButton = (Button)root.findViewById(R.id.editAReminder);
         String userEmail = User.currentUserEmail;
-//        submitButton.setOnClickListener(new View.OnClickListener(){
-//            @Override
-//            public void onClick(View v) {
-//                ArrayList<String> newReminders = combineText(hourList, minuteList, reminderList);
-//                FirebaseFirestore db = FirebaseFirestore.getInstance();
-//                DocumentReference docRef = db.collection("users").document(userEmail);
-//                docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-//                    @Override
-//                    public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-//                        if (task.isSuccessful()) {
-//                            DocumentSnapshot document = task.getResult();
-//                            if (document.exists()) {  // if email exists
-//                                docRef.update("reminders", newReminders);
-//                            } else {  // if email doesn't exists how are they logged in
-//
-//                            }
-//                        }
-//                    }
-//                });
-//            }}
-//        );
+        submitButton.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                ArrayList<String> newReminders = combineText(arrivalList, departureList, reminderList, queueAndTravelTime);
+                FirebaseFirestore db = FirebaseFirestore.getInstance();
+                DocumentReference docRef = db.collection("users").document(userEmail);
+                docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                        if (task.isSuccessful()) {
+                            DocumentSnapshot document = task.getResult();
+                            if (document.exists()) {  // if email exists
+                                docRef.update("reminders", newReminders);
+                                Toast.makeText(getContext(), "Reminder Edit Successful.", Toast.LENGTH_LONG).show();
+                            } else {  // if email doesn't exists how are they logged in
+
+                            }
+                        }
+                    }
+                });
+            }}
+        );
 
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         DocumentReference docRefSecond = db.collection("users").document(userEmail);
@@ -109,8 +113,9 @@ public class RemindersFragment extends Fragment {
                         departureList = translateReminderDeparture(user.getReminders());
                         arrivalList = translateReminderArrival(user.getReminders());
                         reminderList = translateReminderTitles(user.getReminders());
+                        queueAndTravelTime = translateWaitTimes(user.getReminders());
 
-                        ListviewAdapter adpter = new ListviewAdapter(root.getContext(), departureList, arrivalList, reminderList);
+                        ListviewAdapter adpter = new ListviewAdapter(root.getContext(), departureList, arrivalList, reminderList, queueAndTravelTime);
                         listView.setAdapter(adpter);
                     }
                 } else {
@@ -122,14 +127,53 @@ public class RemindersFragment extends Fragment {
     }
 
 
-    public ArrayList<String> combineText(List<Integer> departureList, List<Integer> arrivalList, List reminderList)
+//    public ArrayList<String> combineText(List<Integer> departureList, List<Integer> arrivalList, List reminderList)
+//    {
+//        ArrayList<String> remindersInString = new ArrayList<String>();
+//        for(Integer i=0;i<reminderList.size();i++)
+//        {
+//            remindersInString.add(reminderList.get(i) +"?"+String.valueOf(departureList.get(i)) +"?" + String.valueOf(arrivalList.get(i)));
+//        }
+//        return remindersInString;
+//    }
+
+    public ArrayList<String> combineText(List<String> arrivalList, List<String> departureList, List<String> reminderList, List<String> queueAndTravelTime)
     {
         ArrayList<String> remindersInString = new ArrayList<String>();
-        for(Integer i=0;i<reminderList.size();i++)
-        {
-            remindersInString.add(reminderList.get(i) +"?"+String.valueOf(departureList.get(i)) +"?" + String.valueOf(arrivalList.get(i)));
+        String departureFinalHoursString = "";
+        String departureFinalMinutesString = "";
+        try{
+            for(Integer i=0;i<reminderList.size();i++)
+            {
+                String[] arrivalComponents = arrivalList.get(i).split(":");
+                Integer arrivalInMinutes = 60*Integer.parseInt(arrivalComponents[0]) + Integer.parseInt(arrivalComponents[1]);
+                Integer wait = Integer.parseInt(queueAndTravelTime.get(i));
+                Integer departureMinutes = arrivalInMinutes - wait;
+                Integer departureFinalMinutes = departureMinutes % 60;
+                Integer departureFinalHours = departureMinutes / 60;
+                if(String.valueOf(departureFinalHours).length()<2){
+                    departureFinalHoursString = "0" + String.valueOf(departureFinalHours);
+                }
+                else{
+                    departureFinalHoursString = String.valueOf(departureFinalHours);
+                }
+                if(String.valueOf(departureFinalMinutes).length()<2){
+                    departureFinalMinutesString = "0" + String.valueOf(departureFinalMinutes);
+                }
+                else{
+                    departureFinalMinutesString = String.valueOf(departureFinalMinutes);
+                }
+                if(departureFinalHoursString == "00") {
+                    departureFinalHoursString = "12";
+                }
+                remindersInString.add(reminderList.get(i) +"?"+String.valueOf(arrivalList.get(i)) +"?" +
+                        departureFinalHoursString +":" + departureFinalMinutesString + "?"+queueAndTravelTime.get(i));
+            }
+            return remindersInString;
         }
-        return remindersInString;
+        catch (Exception e) {
+            return remindersInString;
+        }
     }
 
     public List<String> translateReminderDeparture(List<String> reminders) {
@@ -170,6 +214,20 @@ public class RemindersFragment extends Fragment {
             return usersReminders;
         }
         return usersReminders;
+    }
+
+    public List<String> translateWaitTimes(List<String> reminders) {
+        ArrayList<String> waitTimes = new ArrayList<String>();
+        try{
+            for (String reminder : reminders) {
+                String[] reminderComponents = reminder.split("\\?");
+                waitTimes.add(reminderComponents[3]);
+            }
+        }
+        catch(Exception e) {
+            return waitTimes;
+        }
+        return waitTimes;
     }
 
     @Override
