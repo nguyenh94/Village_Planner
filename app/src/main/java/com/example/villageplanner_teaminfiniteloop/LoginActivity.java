@@ -12,6 +12,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.media.Image;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -76,7 +77,7 @@ public class LoginActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-    public void loginCallBack(View view, boolean emailValid, String name, Image photo, String email, String password) {
+    public void loginCallBack(View view, boolean emailValid, String name, String photo, String email, String password) {
         TextView passwordEntered = (TextView) findViewById(R.id.password);
         String unhashedPass = passwordEntered.getText().toString();
 
@@ -94,7 +95,7 @@ public class LoginActivity extends AppCompatActivity {
                 Toast.makeText(view.getContext(), "Login Successful.", Toast.LENGTH_LONG).show();
                 User.currentUserEmail = email;
                 User.currentUserName = name;
-                User.currentUserPhoto = String.valueOf(photo);
+                User.currentUserPhoto = photo;
 
                 //Move to home
                 Intent intent = new Intent(LoginActivity.this, TabBarActivity.class);

@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.media.Image;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -35,7 +36,7 @@ public class RegisterActivity extends AppCompatActivity {
         setContentView(R.layout.activity_register);
     }
 
-    public void registerCallBack(View view, boolean validReg, String name, String email, String password, Image photo) {
+    public void registerCallBack(View view, boolean validReg, String name, String email, String password, String photo) {
         // if email has not been registered before
         if(validReg) {
             Login_Registration reg_helper = new Login_Registration();

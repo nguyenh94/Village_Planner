@@ -9,6 +9,7 @@ import android.content.pm.PackageManager;
 import android.location.Location;
 import android.location.LocationManager;
 import android.media.Image;
+import android.net.Uri;
 import android.os.Looper;
 import android.provider.Settings;
 import android.widget.Toast;
@@ -31,7 +32,7 @@ public class User {
     public static int PERMISSION_ID = 44;
     private String id;
     private String email;
-    private Image photo;
+    private String photo;
     private String name;
     private String password;
     public ArrayList<String> reminders;
@@ -51,7 +52,7 @@ public class User {
         this.location = "";
     }
 
-    public User(String id, String email, String name, Image photo, String password, String location, ArrayList<String> reminders) {
+    public User(String id, String email, String name, String photo, String password, String location, ArrayList<String> reminders) {
         this.id = id;
         this.email = email;
         this.photo = photo;
@@ -75,7 +76,7 @@ public class User {
 
     public String getPassword() { return this.password; }
 
-    public Image getPhoto() {
+    public String getPhoto() {
         return this.photo;
     }
 
@@ -94,7 +95,7 @@ public class User {
         this.password = newPassword;
     }
 
-    public void setPhoto(Image newPhoto) {
+    public void setPhoto(String newPhoto) {
         this.photo = newPhoto;
     }
 
