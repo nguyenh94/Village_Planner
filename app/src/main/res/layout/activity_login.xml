@@ -9,8 +9,8 @@
 
     <EditText
         android:id="@+id/email"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="300dp"
+        android:layout_height="60dp"
         android:layout_marginStart="32dp"
         android:layout_marginTop="140dp"
         android:layout_marginEnd="32dp"
@@ -27,8 +27,8 @@
 
     <EditText
         android:id="@+id/password"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="300dp"
+        android:layout_height="62dp"
         android:layout_marginStart="32dp"
         android:layout_marginTop="15dp"
         android:layout_marginEnd="32dp"
@@ -39,13 +39,13 @@
         android:textSize="30sp"
         app:layout_constraintBottom_toTopOf="@+id/login"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.446"
+        app:layout_constraintHorizontal_bias="0.468"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/email" />
 
     <Button
         android:id="@+id/login"
-        android:layout_width="145dp"
+        android:layout_width="300dp"
         android:layout_height="77dp"
         android:layout_marginStart="32dp"
         android:layout_marginTop="28dp"
@@ -62,7 +62,7 @@
 
     <Button
         android:id="@+id/register"
-        android:layout_width="145dp"
+        android:layout_width="303dp"
         android:layout_height="77dp"
         android:layout_marginStart="32dp"
         android:layout_marginTop="18dp"
@@ -70,7 +70,7 @@
         android:layout_marginBottom="150dp"
         android:onClick="goToRegisterActivity"
         android:text="New user? Sign Up"
-        android:textSize="15sp"
+        android:textSize="17sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.435"
