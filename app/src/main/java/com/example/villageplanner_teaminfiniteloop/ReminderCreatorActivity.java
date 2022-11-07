@@ -150,7 +150,7 @@ public class ReminderCreatorActivity extends AppCompatActivity {
         if(finalHours == "00") {
             finalHours = "12";
         }
-        return finalHours + ":" + finalMinutes;
+        return finalHours + ":" + finalMinutes + "?" + (travelTimeConverted + waitingTimeConverted);
     }
     public void reminderNotification()
     {
