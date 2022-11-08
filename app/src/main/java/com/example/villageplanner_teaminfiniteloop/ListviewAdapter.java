@@ -136,15 +136,6 @@ public class ListviewAdapter extends BaseAdapter {
         final ViewHolder holderReminders;
         convertView=null;
 
-        //TODO add on click listener to create intent with create reminder
-//        public void setReminderButtonClicked(View v) {
-//            Intent myIntent = new Intent(this, ReminderCreatorActivity.class);
-//            myIntent.putExtra("description", name);
-//            myIntent.putExtra("travelTime", travelTime);
-//            myIntent.putExtra("waitingTime", 0);
-//            this.startActivity(myIntent);
-//        }
-
         if (convertView == null) {
             holderArrival = new ViewHolder();
 //            holderDeparture = new ViewHolder();
@@ -158,20 +149,6 @@ public class ListviewAdapter extends BaseAdapter {
                     .findViewById(R.id.editDeparture);
             holderReminders.caption = (EditText) convertView
                     .findViewById(R.id.editReminderName);
-
-//            try {
-//                submitButton = (Button) convertView.findViewById(R.id.editAReminder);
-//                submitButton.setOnClickListener(new View.OnClickListener() {
-//                    @Override
-//                    public void onClick(View arg0) {
-//                        onSubmit();
-//                    }
-//                });
-//            }
-//            catch (Exception e){
-//
-//            }
-
 
             holderArrival.caption.setTag(position);
             holderArrival.caption.setText(String.valueOf(arrivalList.get(position)));
