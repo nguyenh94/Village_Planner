@@ -28,7 +28,6 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.example.villageplanner_teaminfiniteloop.ListviewAdapter;
 import com.example.villageplanner_teaminfiniteloop.LoginActivity;
-import com.example.villageplanner_teaminfiniteloop.NotificationUtils;
 import com.example.villageplanner_teaminfiniteloop.R;
 import com.example.villageplanner_teaminfiniteloop.Reminder;
 import com.example.villageplanner_teaminfiniteloop.TabBarActivity;
