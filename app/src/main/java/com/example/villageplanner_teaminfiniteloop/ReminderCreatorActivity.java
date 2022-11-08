@@ -95,7 +95,7 @@ public class ReminderCreatorActivity extends AppCompatActivity {
                 NotificationManager notif=(NotificationManager)getSystemService(Context.NOTIFICATION_SERVICE);
                 Notification notify=new Notification.Builder
                         (getApplicationContext()).setContentTitle("Reminder to go to " + restaurantName).setContentText(Body).
-                        setContentTitle("Reminder to go to " + restaurantName).setSmallIcon(R.drawable.app_logo).build();
+                        setContentTitle("Reminder to go to " + restaurantName).setSmallIcon(R.drawable.ic_baseline_local_dining_24).build();
 
                 notify.flags |= Notification.FLAG_AUTO_CANCEL;
                 notif.notify(0, notify);
