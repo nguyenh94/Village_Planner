@@ -16,9 +16,9 @@ A friendly advice: AVD Emulator is not very stable per se. During development, w
 2. Re-run the app again, now you can try basic login/register functionality. When you add your photo in the registration page, please choose the source "photo", not gallary. Upon serious testing we find no photo will be added to the gallary.
 3. After login, you will see "My Village" panel which shows all the restaurants on the map as annotations. You can click on one annotation and the restaurant name would pop up, say "CAVA."
 4. Click on the pop-up "CAVA" and you will be redirected to the restaurant detail page. Here you will see the estimated queue time, and you can choose your mode of transportation so Village Planner can estimate your travel time.
-5. You could either click 
+5. You could either click: 
     Get Direction: you will be redirected to the map page with the routing line corresponding to your travel mode.
-    Set Reminder: you will be redirected to the reminder creator page to set up your reminder title, and your desired arrival time.
+    Set Reminder: you will be redirected to the reminder creator page to set up your reminder title, and your desired arrival time. After you create the reminder, you will see a nitification banner in the Android notification channel (you hold on the upper edge of the screen and scroll down). 
 6. You can see all your reminders in the Reminders tab. Switching tabs will refresh the content automatically. You can change your reminder title and arrival time in this page as well. Please use the correct timing format like "11:45" or "18:50" when you change the arrival time.
 7. You can see your account information in the Me tab. Please grant permission to access your photos and camera. You can select your profile picture from the Photos app or take new pictures using the Camera app and upload it to USC Village Planner once you're logged in. Here you can view your profile information like email, name, and your photo. You can change your photo by clicking your photo view. 
 
