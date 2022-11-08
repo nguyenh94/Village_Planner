@@ -92,7 +92,11 @@ public class RegisterActivity extends AppCompatActivity {
             User.currentUserEmail = email;
             User.currentUserName = name;
             imageRef = storageReference.child("images/" + User.currentUserEmail);
-            uploadPicture(registerPhotoUri);
+            try {
+                uploadPicture(registerPhotoUri);
+            } catch (Exception e) {
+                System.out.println(e);
+            }
 
             Intent intent = new Intent(this, TabBarActivity.class);
             startActivity(intent);
@@ -132,7 +136,13 @@ public class RegisterActivity extends AppCompatActivity {
                         registerCallBack(view, false, userName, userEmail, password, null);
                     } else {
                         Log.d("getting user", "No such document");
-                        registerCallBack(view,true, userName, userEmail, password, null);
+                        if (password.equals("")) {
+                            Toast.makeText(view.getContext(), "Please enter a password", Toast.LENGTH_LONG).show();
+                        } else if (userName.equals("")) {
+                            Toast.makeText(view.getContext(), "Please enter your name", Toast.LENGTH_LONG).show();
+                        } else {
+                            registerCallBack(view,true, userName, userEmail, password, null);
+                        }
                     }
                 } else {
                     Log.d("getting user", "get failed with ", task.getException());
