@@ -10,8 +10,14 @@
         android:id="@+id/restaurantLabel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="108dp"
+        android:layout_marginTop="80dp"
+        android:layout_marginBottom="32dp"
+        android:gravity="center"
         android:text="TextView"
+        android:textColor="@color/cardinal"
+        android:textSize="30dp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/radioGroup"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -24,9 +30,10 @@
         android:orientation="horizontal"
         app:layout_constraintBottom_toTopOf="@+id/text_view_travelTimeLabel"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintHorizontal_bias="0.673"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/restaurantLabel">
+        app:layout_constraintTop_toBottomOf="@+id/restaurantLabel"
+        app:layout_constraintVertical_bias="0.298">
 
         <RadioButton
             android:id="@+id/radio_drive"
@@ -62,39 +69,41 @@
 
     <TextView
         android:id="@+id/text_view_queueTime"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_below="@+id/radioGroup"
         android:layout_centerHorizontal="true"
+        android:gravity="center"
         android:text="Estimated Queue Time:"
         android:textSize="20sp"
-        app:layout_constraintBottom_toTopOf="@+id/button_directionButton"
+        app:layout_constraintBottom_toTopOf="@+id/text_view_travelTimeLabel"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.507"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/radioGroup"
-        app:layout_constraintVertical_bias="0.133" />
+        app:layout_constraintTop_toBottomOf="@+id/radioGroup" />
 
     <TextView
         android:id="@+id/text_view_travelTimeLabel"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_below="@+id/radioGroup"
         android:layout_centerHorizontal="true"
+        android:gravity="center"
         android:text="Estimated Travel Time:"
         android:textSize="20sp"
         app:layout_constraintBottom_toTopOf="@+id/button_directionButton"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/radioGroup" />
+        app:layout_constraintTop_toBottomOf="@+id/text_view_queueTime" />
 
     <Button
         android:id="@+id/button_directionButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="300dp"
+        android:layout_height="70dp"
         android:layout_below="@+id/text_view_travelTimeLabel"
         android:layout_centerHorizontal="true"
+        android:layout_marginTop="50dp"
         android:onClick="getDirectionButtonClicked"
         android:text="Get Direction"
         app:layout_constraintBottom_toTopOf="@+id/button_setReminderButton"
@@ -105,11 +114,11 @@
 
     <Button
         android:id="@+id/button_setReminderButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="300dp"
+        android:layout_height="70dp"
         android:layout_below="@+id/text_view_travelTimeLabel"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="119dp"
+        android:layout_marginBottom="100dp"
         android:onClick="setReminderButtonClicked"
         android:text="Set Reminder"
         app:layout_constraintBottom_toBottomOf="parent"

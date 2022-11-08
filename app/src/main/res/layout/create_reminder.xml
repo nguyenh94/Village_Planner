@@ -23,33 +23,38 @@
             <TextView
                 android:id="@+id/restaurantName"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="51dp"
+                android:gravity="center"
                 android:text="Restaurant Name"
-                android:textSize="20sp" />
+                android:textColor="@color/cardinal"
+                android:textSize="25sp"
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/reminderTitleOfPage"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:text="Enter your reminder description and pick a time "
+                android:text="Enter your reminder title and pick a time you'd want to dine at!"
                 android:textSize="20sp" />
 
             <EditText
                 android:id="@+id/reminderDescription"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:text=""
                 android:textSize="20sp" />
 
             <TimePicker
                 android:id="@+id/reminderTimePicker"
+                android:layout_gravity="center"
+                android:textAlignment="center"
                 android:layout_width="match_parent"
-                android:layout_height="351dp" />
+                android:layout_height="371dp" />
 
             <Button
                 android:id="@+id/createReminder"
-                android:layout_width="wrap_content"
-                android:layout_height="38dp"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
                 android:text="Submit" />
         </LinearLayout>
 
