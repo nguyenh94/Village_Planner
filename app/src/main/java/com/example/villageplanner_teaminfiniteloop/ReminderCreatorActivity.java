@@ -63,6 +63,9 @@ public class ReminderCreatorActivity extends AppCompatActivity {
                 String reminderTitle = title.getText().toString();
                 final TimePicker tp = (TimePicker) findViewById(R.id.reminderTimePicker);
                 Integer Hours = tp.getCurrentHour();
+                if(Hours == 0) {
+                    Hours = 12;
+                }
                 Integer Minutes = tp.getCurrentMinute();
                 String finalHours = "";
                 String finalMinutes = "";
