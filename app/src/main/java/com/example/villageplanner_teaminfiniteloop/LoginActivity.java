@@ -77,15 +77,6 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
-        // TODO: Danial
-        NotificationManager notif=(NotificationManager)getSystemService(Context.NOTIFICATION_SERVICE);
-        Notification notify=new Notification.Builder
-                (getApplicationContext()).setContentTitle("tittle").setContentText("body").
-                setContentTitle("subject").setSmallIcon(R.drawable.notification_icon).build();
-
-        notify.flags |= Notification.FLAG_AUTO_CANCEL;
-        notif.notify(0, notify);
-        // TODO: Danial End
     }
 
     public void goToRegisterActivity(View view) {

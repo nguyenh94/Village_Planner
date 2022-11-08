@@ -4,9 +4,11 @@ import static com.google.android.gms.common.util.CollectionUtils.mapOf;
 
 import android.app.Activity;
 import android.app.AlarmManager;
+import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
@@ -73,9 +75,6 @@ public class ReminderCreatorActivity extends AppCompatActivity {
                 Integer Minutes = tp.getCurrentMinute();
                 String finalHours = "";
                 String finalMinutes = "";
-                if(Hours == 0) {
-                    Hours = 12;
-                }
                 finalHours = String.valueOf(Hours);
                 finalMinutes = String.valueOf(Minutes);
 
@@ -84,7 +83,23 @@ public class ReminderCreatorActivity extends AppCompatActivity {
                 String createdReminder = reminderTitle + "?" + finalHours + ":" + finalMinutes + "?" + notificationTime;
                 //TODO CREATE NOTIFICATION
 //                reminderNotification();
-                triggerNoticication();
+
+                // TODO: Danial
+                String[] notificationComponents = notificationTime.split("\\?");
+                String notificationBodyTime = "";
+                for(Integer i=0;i<notificationComponents.length-1;i++)
+                {
+                    notificationBodyTime += notificationComponents[i];
+                }
+                String Body = "Please depart at " + notificationBodyTime;
+                NotificationManager notif=(NotificationManager)getSystemService(Context.NOTIFICATION_SERVICE);
+                Notification notify=new Notification.Builder
+                        (getApplicationContext()).setContentTitle("Reminder to go to " + restaurantName).setContentText(Body).
+                        setContentTitle("Reminder to go to " + restaurantName).setSmallIcon(R.drawable.app_logo).build();
+
+                notify.flags |= Notification.FLAG_AUTO_CANCEL;
+                notif.notify(0, notify);
+                // TODO: Danial End
 
 
 
