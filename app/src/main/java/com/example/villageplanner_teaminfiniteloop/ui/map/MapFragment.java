@@ -173,8 +173,8 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, GoogleM
             LatLng latLng = new LatLng(la, lo);
             Marker newMarker = googleMap.addMarker(new MarkerOptions()
                     .position(latLng)
-                    .title(r.getName()));
-                    //.icon(BitmapDescriptorFactory.fromResource(R.drawable.tableware_64)));
+                    .title(r.getName())
+                    .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ORANGE)));
             newMarker.setTag(r);
         }
 
@@ -387,7 +387,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, GoogleM
 
                 lineOptions.addAll(points);
                 lineOptions.width(12);
-                lineOptions.color(Color.RED);
+                lineOptions.color(Color.rgb(196,30,58));
                 lineOptions.geodesic(true);
 
             }

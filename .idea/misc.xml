@@ -4,8 +4,16 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/Users/nguye/Documents/USC/Fall22/cs310/VillagePlannerTeamInfiniteLoop/app/src/main/res/layout/activity_main.xml" value="0.2682291666666667" />
+        <entry key="app/src/debug/res/drawable/ic_launcher_background.xml" value="0.1355" />
+        <entry key="app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.1355" />
+        <entry key="app/src/main/res/drawable/ic_baseline_format_list_bulleted_24.xml" value="0.1355" />
         <entry key="app/src/main/res/drawable/ic_baseline_local_dining_24.xml" value="0.1355" />
         <entry key="app/src/main/res/drawable/ic_baseline_person_24.xml" value="0.1955" />
+        <entry key="app/src/main/res/drawable/ic_launcher_background.xml" value="0.1355" />
+        <entry key="app/src/main/res/drawable/ic_notifications_black_24dp.xml" value="0.1355" />
+        <entry key="app/src/main/res/drawable/my_image.xml" value="0.1355" />
+        <entry key="app/src/main/res/drawable/noti_icon.xml" value="0.1355" />
+        <entry key="app/src/main/res/drawable/notification_icon.xml" value="0.1355" />
         <entry key="app/src/main/res/layout/activity_login.xml" value="0.21822916666666667" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.4036458333333333" />
         <entry key="app/src/main/res/layout/activity_main_map.xml" value="0.4036458333333333" />
