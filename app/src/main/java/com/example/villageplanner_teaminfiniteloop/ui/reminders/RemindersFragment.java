@@ -126,17 +126,6 @@ public class RemindersFragment extends Fragment {
         return root;
     }
 
-
-//    public ArrayList<String> combineText(List<Integer> departureList, List<Integer> arrivalList, List reminderList)
-//    {
-//        ArrayList<String> remindersInString = new ArrayList<String>();
-//        for(Integer i=0;i<reminderList.size();i++)
-//        {
-//            remindersInString.add(reminderList.get(i) +"?"+String.valueOf(departureList.get(i)) +"?" + String.valueOf(arrivalList.get(i)));
-//        }
-//        return remindersInString;
-//    }
-
     public ArrayList<String> combineText(List<String> arrivalList, List<String> departureList, List<String> reminderList, List<String> queueAndTravelTime)
     {
         ArrayList<String> remindersInString = new ArrayList<String>();

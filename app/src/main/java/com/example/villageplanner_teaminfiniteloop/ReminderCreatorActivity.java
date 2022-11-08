@@ -3,11 +3,14 @@ package com.example.villageplanner_teaminfiniteloop;
 import static com.google.android.gms.common.util.CollectionUtils.mapOf;
 
 import android.app.Activity;
+import android.app.AlarmManager;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.SystemClock;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
@@ -30,6 +33,7 @@ import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.sql.Time;
+import java.util.GregorianCalendar;
 import java.util.List;
 
 public class ReminderCreatorActivity extends AppCompatActivity {
@@ -63,26 +67,27 @@ public class ReminderCreatorActivity extends AppCompatActivity {
                 String reminderTitle = title.getText().toString();
                 final TimePicker tp = (TimePicker) findViewById(R.id.reminderTimePicker);
                 Integer Hours = tp.getCurrentHour();
+                if(Hours == 0) {
+                    Hours = 12;
+                }
                 Integer Minutes = tp.getCurrentMinute();
                 String finalHours = "";
                 String finalMinutes = "";
-                if(String.valueOf(Hours).length()<2){
-                    finalHours = "0" + String.valueOf(Hours);
+                if(Hours == 0) {
+                    Hours = 12;
                 }
-                else {
-                    finalHours = String.valueOf(Hours);
-                }
-                if(String.valueOf(Minutes).length()<2){
-                    finalMinutes = "0" + String.valueOf(Minutes);
-                }
-                else {
-                    finalMinutes = String.valueOf(Minutes);
-                }
+                finalHours = String.valueOf(Hours);
+                finalMinutes = String.valueOf(Minutes);
+
                 //notification time == departure time
                 String notificationTime = getCorrectNotificationTime(travelTime, waitingTime, Hours, Minutes);
                 String createdReminder = reminderTitle + "?" + finalHours + ":" + finalMinutes + "?" + notificationTime;
                 //TODO CREATE NOTIFICATION
-                reminderNotification();
+//                reminderNotification();
+                triggerNoticication();
+
+
+
                 FirebaseFirestore db = FirebaseFirestore.getInstance();
                 String userEmail = User.currentUserEmail;
                 final List<String>[] usersReminders = new List[0];
@@ -161,34 +166,39 @@ public class ReminderCreatorActivity extends AppCompatActivity {
         _notificationUtils.setReminder(_triggerReminder);
     }
 
-
-    public void edit(String title, String id, Time travelTime, Time queueTime)
-    {
-
+    public void triggerNoticication() {
+        long time = new GregorianCalendar().getTimeInMillis() + 8 * 1000;
+        Log.d( "alarm", "started "+ Long.toString( time ) );
+        Intent NotificationAlert = new Intent( getApplicationContext(), AlertNotification.class );
+        AlarmManager alarmManager = ( AlarmManager ) getApplicationContext().getSystemService( getApplicationContext().ALARM_SERVICE );
+        alarmManager.set(AlarmManager.ELAPSED_REALTIME_WAKEUP,
+                SystemClock.elapsedRealtime() +
+                        8 * 1000, PendingIntent.getBroadcast( getApplicationContext(), 0, NotificationAlert, PendingIntent.FLAG_UPDATE_CURRENT )
+        );
     }
-    private void createNotificationChannel() {
-        // Create the NotificationChannel, but only on API 26+ because
-        // the NotificationChannel class is new and not in the support library
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            CharSequence name = getString(R.string.channel_name);
-            String description = getString(R.string.channel_description);
-            int importance = NotificationManager.IMPORTANCE_DEFAULT;
-            NotificationChannel channel = new NotificationChannel(CHANNEL_ID, name, importance);
-            channel.setDescription(description);
-            // Register the channel with the system; you can't change the importance
-            // or other notification behaviors after this
-            NotificationManager notificationManager = getBaseContext().getSystemService(NotificationManager.class);
-            notificationManager.createNotificationChannel(channel);
-        }
-    }
-
-    public void registerNotification(String title, Time reminderTime, Activity activity)
-    {
-        NotificationCompat.Builder builder = new NotificationCompat.Builder(activity, CHANNEL_ID)
-                .setSmallIcon(R.drawable.notification_icon)
-                .setContentTitle(title)
-                .setContentText("context text")
-                .setPriority(NotificationCompat.PRIORITY_DEFAULT);
-    }
+//    private void createNotificationChannel() {
+//        // Create the NotificationChannel, but only on API 26+ because
+//        // the NotificationChannel class is new and not in the support library
+//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+//            CharSequence name = getString(R.string.channel_name);
+//            String description = getString(R.string.channel_description);
+//            int importance = NotificationManager.IMPORTANCE_DEFAULT;
+//            NotificationChannel channel = new NotificationChannel(CHANNEL_ID, name, importance);
+//            channel.setDescription(description);
+//            // Register the channel with the system; you can't change the importance
+//            // or other notification behaviors after this
+//            NotificationManager notificationManager = getBaseContext().getSystemService(NotificationManager.class);
+//            notificationManager.createNotificationChannel(channel);
+//        }
+//    }
+//
+//    public void registerNotification(String title, Time reminderTime, Activity activity)
+//    {
+//        NotificationCompat.Builder builder = new NotificationCompat.Builder(activity, CHANNEL_ID)
+//                .setSmallIcon(R.drawable.notification_icon)
+//                .setContentTitle(title)
+//                .setContentText("context text")
+//                .setPriority(NotificationCompat.PRIORITY_DEFAULT);
+//    }
 
 }
