@@ -19,6 +19,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.example.villageplanner_teaminfiniteloop.ui.me.MeFragment;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.CollectionReference;
@@ -95,7 +97,7 @@ public class LoginActivity extends AppCompatActivity {
                 Toast.makeText(view.getContext(), "Login Successful.", Toast.LENGTH_LONG).show();
                 User.currentUserEmail = email;
                 User.currentUserName = name;
-                User.currentUserPhoto = photo;
+//                User.currentUserPhoto = photo;
 
                 //Move to home
                 Intent intent = new Intent(LoginActivity.this, TabBarActivity.class);
@@ -141,7 +143,6 @@ public class LoginActivity extends AppCompatActivity {
                 }
             }
         });
-
     }
 
     public boolean checkLocationPermission() {
@@ -181,6 +182,11 @@ public class LoginActivity extends AppCompatActivity {
         } else {
             return true;
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+        return;
     }
 
     @Override

@@ -17,6 +17,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -31,9 +32,12 @@ import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.bumptech.glide.Glide;
+import com.example.villageplanner_teaminfiniteloop.LoginActivity;
 import com.example.villageplanner_teaminfiniteloop.R;
+import com.example.villageplanner_teaminfiniteloop.RestaurantDetail;
+import com.example.villageplanner_teaminfiniteloop.TabBarActivity;
 import com.example.villageplanner_teaminfiniteloop.User;
-import com.example.villageplanner_teaminfiniteloop.databinding.FragmentMeBinding;
 import com.google.android.gms.tasks.Continuation;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -48,6 +52,7 @@ import com.google.firebase.storage.UploadTask;
 
 import org.w3c.dom.Text;
 
+import java.net.URL;
 import java.util.HashMap;
 import java.util.UUID;
 
@@ -56,8 +61,6 @@ public class MeFragment extends Fragment {
     private FirebaseStorage storage;
     private StorageReference storageReference;
     private StorageReference imageRef;
-    private UploadTask uploadTask;
-    static Uri globalPhotoUri;
 
     @Nullable
     @Override
@@ -68,8 +71,16 @@ public class MeFragment extends Fragment {
         //if it is DashboardFragment it should have R.layout.fragment_dashboard
 
         View view = inflater.inflate(R.layout.fragment_me, null);
+        Toast.makeText(view.getContext(), "Tap on your profile picture to update it", Toast.LENGTH_LONG).show();
         TextView userNameTextView = (TextView) view.findViewById(R.id.userName);
         TextView userEmailTextView = (TextView) view.findViewById(R.id.userEmail);
+        Button logoutButton = (Button) view.findViewById(R.id.logout);
+        logoutButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                logoutButtonPressed(view);
+            }
+        });
         profilePic = view.findViewById(R.id.profilePic);
 
         storage = FirebaseStorage.getInstance();
@@ -79,36 +90,16 @@ public class MeFragment extends Fragment {
         userNameTextView.setText(User.currentUserName);
         userEmailTextView.setText(User.currentUserEmail);
 
-        try {
-            Uri currentPhotoUri = Uri.parse(User.currentUserPhoto);
-            profilePic.setImageURI(currentPhotoUri);
-        } catch (Exception e){
-            System.out.println("Error");
-        }
-
-//        Task<Uri> urlTask = uploadTask.continueWithTask(new Continuation<UploadTask.TaskSnapshot, Task<Uri>>() {
-//            @Override
-//            public Task<Uri> then(@NonNull Task<UploadTask.TaskSnapshot> task) throws Exception {
-//                if (!task.isSuccessful()) {
-//                    throw task.getException();
-//                }
-//
-//                // Continue with the task to get the download URL
-//                return imageRef.getDownloadUrl();
-//            }
-//        }).addOnCompleteListener(new OnCompleteListener<Uri>() {
-//            @Override
-//            public void onComplete(@NonNull Task<Uri> task) {
-//                if (task.isSuccessful()) {
-//                    Uri downloadUri = task.getResult();
-//                    profilePic.setImageURI(downloadUri);
-//                } else {
-//                    // Handle failures
-//                    // ...
-//                    System.out.println("Cannot retrieve image.");
-//                }
-//            }
-//        });
+        imageRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+            @Override
+            public void onSuccess(Uri uri) {
+                try {
+                    Glide.with(MeFragment.this).load(uri).into(profilePic);
+                } catch (Exception e){
+                    System.out.println(e);
+                }
+            }
+        });
 
         profilePic.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -135,18 +126,20 @@ public class MeFragment extends Fragment {
     );
 
     private void uploadPicture(Uri photoUri) {
-        final String randomKey = UUID.randomUUID().toString();
-        // Create a reference to "mountains.jpg"
-
         // While the file names are the same, the references point to different files
         imageRef.getName().equals(imageRef.getName());    // true
         imageRef.getPath().equals(imageRef.getPath());    // false
-        uploadTask = imageRef.putFile(photoUri);
-        globalPhotoUri = photoUri;
+        imageRef.putFile(photoUri);
 
         // store the user's photo uri in firestore
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         CollectionReference users = db.collection("users");
         users.document(User.currentUserEmail).update("photo", photoUri);
+    }
+
+    public void logoutButtonPressed(View view) {
+        // Log user out and move to login page
+        Intent myIntent = new Intent(getActivity(), LoginActivity.class);
+        MeFragment.this.startActivity(myIntent);
     }
 }

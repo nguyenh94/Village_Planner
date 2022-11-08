@@ -45,8 +45,8 @@ public class RestaurantDetail extends AppCompatActivity {
         TextView restaurantLabel = (TextView) findViewById(R.id.restaurantLabel);
         restaurantLabel.setText(name);
         TextView queueTimeDisplay = (TextView) findViewById(R.id.text_view_queueTime);
-        queueTimeDisplay.setText("Estimated Queue Time: " + Queue.queueTime + " mins");
-        queueTime = Queue.queueTime;
+        queueTime = Math.toIntExact(Math.round(Queue.queueTime * 0.5));
+        queueTimeDisplay.setText("Estimated Queue Time: " + queueTime + " mins");
         radioGroup = findViewById(R.id.radioGroup);
         travelTimeTextView = findViewById(R.id.text_view_travelTimeLabel);
 

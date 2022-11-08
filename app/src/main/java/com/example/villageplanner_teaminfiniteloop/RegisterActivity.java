@@ -1,25 +1,35 @@
 package com.example.villageplanner_teaminfiniteloop;
 
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.media.Image;
 import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
+import com.example.villageplanner_teaminfiniteloop.ui.me.MeFragment;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
 import org.w3c.dom.Text;
 
@@ -29,11 +39,29 @@ import java.util.Map;
 import java.util.UUID;
 
 public class RegisterActivity extends AppCompatActivity {
+    private ImageView profilePic;
+    private FirebaseStorage storage;
+    private StorageReference storageReference;
+    private StorageReference imageRef;
+    private Uri registerPhotoUri;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
+
+        profilePic = (ImageView) findViewById(R.id.profilePic);
+
+        storage = FirebaseStorage.getInstance();
+        storageReference = storage.getReference();
+
+        profilePic.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                launcher.launch(intent);
+            }
+        });
     }
 
     public void registerCallBack(View view, boolean validReg, String name, String email, String password, String photo) {
@@ -60,6 +88,11 @@ public class RegisterActivity extends AppCompatActivity {
             userInfo.put("location", LoginActivity.coordinate);
 
             users.document(email).set(userInfo);
+
+            User.currentUserEmail = email;
+            User.currentUserName = name;
+            imageRef = storageReference.child("images/" + User.currentUserEmail);
+            uploadPicture(registerPhotoUri);
 
             Intent intent = new Intent(this, TabBarActivity.class);
             startActivity(intent);
@@ -106,5 +139,35 @@ public class RegisterActivity extends AppCompatActivity {
                 }
             }
         });
+    }
+
+    private final ActivityResultLauncher<Intent> launcher = registerForActivityResult(
+            new ActivityResultContracts.StartActivityForResult(),
+            result -> {
+                if (result.getResultCode() == Activity.RESULT_OK
+                        && result.getData() != null) {
+                    Uri photoUri = result.getData().getData();
+                    //use photoUri here
+                    profilePic.setImageURI(photoUri);
+                    registerPhotoUri = photoUri;
+                }
+            }
+    );
+
+    private void uploadPicture(Uri photoUri) {
+        // While the file names are the same, the references point to different files
+        imageRef.getName().equals(imageRef.getName());    // true
+        imageRef.getPath().equals(imageRef.getPath());    // false
+        imageRef.putFile(photoUri);
+
+        // store the user's photo uri in firestore
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        CollectionReference users = db.collection("users");
+        users.document(User.currentUserEmail).update("photo", photoUri);
+    }
+
+    public void backToLogin(View view) {
+        Intent intent = new Intent(this, LoginActivity.class);
+        startActivity(intent);
     }
 }

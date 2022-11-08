@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:backgroundTint="?android:attr/colorPressedHighlight"
     tools:context=".ui.me.MeFragment">
 
     <ImageView
@@ -11,7 +12,7 @@
         android:layout_width="185dp"
         android:layout_height="149dp"
         android:layout_marginStart="113dp"
-        android:layout_marginTop="176dp"
+        android:layout_marginTop="50dp"
         android:layout_marginEnd="113dp"
         android:layout_marginBottom="25dp"
         android:background="@drawable/ic_baseline_person_24"
@@ -31,13 +32,13 @@
         android:layout_width="393dp"
         android:layout_height="57dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="24dp"
+        android:layout_marginTop="5dp"
         android:layout_marginEnd="8dp"
-        android:layout_marginBottom="118dp"
+        android:layout_marginBottom="10dp"
         android:text="Name"
         android:textAlignment="center"
-        android:textSize="20sp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:textSize="30sp"
+        app:layout_constraintBottom_toTopOf="@+id/logout"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
@@ -49,15 +50,31 @@
         android:layout_height="57dp"
         android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp"
-        android:layout_marginBottom="30dp"
+        android:layout_marginBottom="5dp"
         android:text="Email"
         android:textAlignment="center"
-        android:textSize="20sp"
+        android:textSize="30sp"
         app:layout_constraintBottom_toTopOf="@+id/userName"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.4"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/profilePic"
         app:layout_constraintVertical_bias="0.736" />
+
+    <Button
+        android:id="@+id/logout"
+        android:layout_width="145dp"
+        android:layout_height="77dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="32dp"
+        android:layout_marginBottom="91dp"
+        android:onClick="logoutButtonPressed"
+        android:text="Log Out"
+        android:textSize="17sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/userName" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
