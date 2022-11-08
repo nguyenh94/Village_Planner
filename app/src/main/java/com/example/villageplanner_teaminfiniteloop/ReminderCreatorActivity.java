@@ -81,10 +81,8 @@ public class ReminderCreatorActivity extends AppCompatActivity {
                 //notification time == departure time
                 String notificationTime = getCorrectNotificationTime(travelTime, waitingTime, Hours, Minutes);
                 String createdReminder = reminderTitle + "?" + finalHours + ":" + finalMinutes + "?" + notificationTime;
-                //TODO CREATE NOTIFICATION
-//                reminderNotification();
 
-                // TODO: Danial
+                // Notification Implementation
                 String[] notificationComponents = notificationTime.split("\\?");
                 String notificationBodyTime = "";
                 for(Integer i=0;i<notificationComponents.length-1;i++)
@@ -99,8 +97,6 @@ public class ReminderCreatorActivity extends AppCompatActivity {
 
                 notify.flags |= Notification.FLAG_AUTO_CANCEL;
                 notif.notify(0, notify);
-                // TODO: Danial End
-
 
 
                 FirebaseFirestore db = FirebaseFirestore.getInstance();
@@ -172,48 +168,5 @@ public class ReminderCreatorActivity extends AppCompatActivity {
         }
         return finalHours + ":" + finalMinutes + "?" + (travelTimeConverted + waitingTimeConverted);
     }
-    public void reminderNotification()
-    {
-        NotificationUtils _notificationUtils = new NotificationUtils(this);
-        long _currentTime = System.currentTimeMillis();
-        long tenSeconds = 1000 * 10;
-        long _triggerReminder = _currentTime + tenSeconds; //triggers a reminder after 10 seconds.
-        _notificationUtils.setReminder(_triggerReminder);
-    }
-
-    public void triggerNoticication() {
-        long time = new GregorianCalendar().getTimeInMillis() + 8 * 1000;
-        Log.d( "alarm", "started "+ Long.toString( time ) );
-        Intent NotificationAlert = new Intent( getApplicationContext(), AlertNotification.class );
-        AlarmManager alarmManager = ( AlarmManager ) getApplicationContext().getSystemService( getApplicationContext().ALARM_SERVICE );
-        alarmManager.set(AlarmManager.ELAPSED_REALTIME_WAKEUP,
-                SystemClock.elapsedRealtime() +
-                        8 * 1000, PendingIntent.getBroadcast( getApplicationContext(), 0, NotificationAlert, PendingIntent.FLAG_UPDATE_CURRENT )
-        );
-    }
-//    private void createNotificationChannel() {
-//        // Create the NotificationChannel, but only on API 26+ because
-//        // the NotificationChannel class is new and not in the support library
-//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-//            CharSequence name = getString(R.string.channel_name);
-//            String description = getString(R.string.channel_description);
-//            int importance = NotificationManager.IMPORTANCE_DEFAULT;
-//            NotificationChannel channel = new NotificationChannel(CHANNEL_ID, name, importance);
-//            channel.setDescription(description);
-//            // Register the channel with the system; you can't change the importance
-//            // or other notification behaviors after this
-//            NotificationManager notificationManager = getBaseContext().getSystemService(NotificationManager.class);
-//            notificationManager.createNotificationChannel(channel);
-//        }
-//    }
-//
-//    public void registerNotification(String title, Time reminderTime, Activity activity)
-//    {
-//        NotificationCompat.Builder builder = new NotificationCompat.Builder(activity, CHANNEL_ID)
-//                .setSmallIcon(R.drawable.notification_icon)
-//                .setContentTitle(title)
-//                .setContentText("context text")
-//                .setPriority(NotificationCompat.PRIORITY_DEFAULT);
-//    }
 
 }

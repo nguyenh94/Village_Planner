@@ -17,6 +17,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
@@ -28,7 +29,6 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.example.villageplanner_teaminfiniteloop.ListviewAdapter;
 import com.example.villageplanner_teaminfiniteloop.LoginActivity;
-import com.example.villageplanner_teaminfiniteloop.NotificationUtils;
 import com.example.villageplanner_teaminfiniteloop.R;
 import com.example.villageplanner_teaminfiniteloop.Reminder;
 import com.example.villageplanner_teaminfiniteloop.TabBarActivity;
@@ -60,6 +60,7 @@ public class RemindersFragment extends Fragment {
     private List queueAndTravelTime;
 
     Button submitButton;
+    ScrollView scrollView;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -69,6 +70,7 @@ public class RemindersFragment extends Fragment {
         binding = FragmentRemindersBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
         listView = (ListView) root.findViewById(R.id.listView1);
+        scrollView = (ScrollView) root.findViewById(R.id.scrollView);
         listView.setItemsCanFocus(true);
         departureList = new ArrayList<String>();
         arrivalList = new ArrayList<Integer>();
@@ -77,6 +79,8 @@ public class RemindersFragment extends Fragment {
 
         submitButton = (Button)root.findViewById(R.id.editAReminder);
         String userEmail = User.currentUserEmail;
+        listView.setFocusable(false);
+        scrollView.smoothScrollTo(0,0);
         submitButton.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
