@@ -1,9 +1,9 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/scrollView"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent">
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<LinearLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:paddingBottom="@dimen/activity_vertical_margin"
@@ -68,50 +68,68 @@
 <!--    <ScrollView-->
 <!--        android:layout_width="match_parent"-->
 <!--        android:layout_height="match_parent" >-->
-    <Button
-        android:id="@+id/editAReminder"
-        android:layout_width="wrap_content"
-        android:layout_height="38dp"
-        android:text="Submit Change" />
+
     <LinearLayout
         android:id="@+id/text_layout"
-        android:orientation="horizontal"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginRight="15dp"
+        android:layout_width="380dp"
+        android:layout_height="50dp"
+        android:layout_gravity="center"
         android:layout_marginLeft="15dp"
         android:layout_marginTop="5dp"
-        android:weightSum="2" >
+        android:layout_marginRight="15dp"
+        android:orientation="horizontal"
+        android:weightSum="3">
 
-    <TextView
-        android:id="@+id/arrivalTitle"
-        android:layout_width="0dp"
-        android:layout_weight="1.6"
-        android:layout_height="wrap_content"
-        android:gravity="right"
-        android:textSize="14sp"
-        android:layout_marginRight="0dp"
-        android:text="Arrival" />
+        <TextView
+            android:id="@+id/reminderTitle"
+            android:layout_width="192dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="left"
+            android:layout_marginLeft="10dp"
+            android:layout_weight="0.4"
+            android:text="Reminder Title"
+            android:textColor="@color/cardinal"
+            android:textSize="14sp"
+            android:textStyle="bold" />
 
-    <TextView
-        android:id="@+id/departureTitle"
-        android:layout_width="0dp"
-        android:layout_weight="0.4"
-        android:textSize="14sp"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="10dp"
-        android:layout_gravity="right"
-        android:text="Departure" />
+        <TextView
+            android:id="@+id/arrivalTitle"
+            android:layout_width="70dp"
+            android:layout_height="31dp"
+            android:layout_marginRight="0dp"
+            android:layout_weight="1.6"
+            android:gravity="right"
+            android:text="Arrival"
+            android:textColor="@color/cardinal"
+            android:textSize="14sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/departureTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="36dp"
+            android:layout_gravity="right"
+            android:layout_marginLeft="10dp"
+            android:layout_weight="0.4"
+            android:text="Departure"
+            android:textColor="@color/cardinal"
+            android:textSize="14sp"
+            android:textStyle="bold" />
     </LinearLayout>
 
     <ListView
         android:id="@+id/listView1"
         android:layout_width="match_parent"
-        android:layout_height="661dp"
+        android:layout_height="550dp"
         android:animationCache="false"
         android:scrollingCache="false"
-        android:smoothScrollbar="true">
-    </ListView>
+        android:smoothScrollbar="true"></ListView>
+
+    <Button
+        android:id="@+id/editAReminder"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:text="Submit Change" />
 <!--    </ScrollView>-->
     </LinearLayout>
 </ScrollView>
