@@ -25,7 +25,7 @@ public class Queue {
     static public int queueTime;
 
     public static double convertToRad(double deg) {
-        return (deg * Math.PI) / 1800;
+        return (deg * Math.PI) / 180;
     }
 
     // helper function to calculate the distance between 2 coordinates
