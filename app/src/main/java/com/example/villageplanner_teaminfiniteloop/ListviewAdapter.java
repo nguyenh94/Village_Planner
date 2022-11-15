@@ -7,6 +7,8 @@ import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Adapter;
+import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -70,12 +72,12 @@ public class ListviewAdapter extends BaseAdapter {
         try{
             for(Integer i=0;i<reminderList.size();i++)
             {
-                String[] arrivalComponents = reminderList.get(i).split(":");
+                String[] arrivalComponents = arrivalList.get(i).split(":");
                 Integer arrivalInMinutes = 60*Integer.parseInt(arrivalComponents[0]) + Integer.parseInt(arrivalComponents[1]);
                 Integer wait = Integer.parseInt(queueAndTravelTime.get(i));
                 Integer departureMinutes = arrivalInMinutes - wait;
-                Integer departureFinalHours = departureMinutes % 60;
-                Integer departureFinalMinutes = departureMinutes / 60;
+                Integer departureFinalHours = departureMinutes / 60;
+                Integer departureFinalMinutes = departureMinutes % 60;
                 if(String.valueOf(departureFinalHours).length()<2){
                     departureFinalHoursString = "0" + String.valueOf(departureFinalHours);
                 }
@@ -92,7 +94,7 @@ public class ListviewAdapter extends BaseAdapter {
                     departureFinalHoursString = "12";
                 }
                 remindersInString.add(reminderList.get(i) +"?"+String.valueOf(arrivalList.get(i)) +"?" +
-                        departureFinalHoursString +":" + departureFinalMinutesString + "?"+queueAndTravelTime);
+                        departureFinalHoursString +":" + departureFinalMinutesString + "?"+queueAndTravelTime.get(i));
             }
             return remindersInString;
         }
@@ -149,7 +151,22 @@ public class ListviewAdapter extends BaseAdapter {
                     .findViewById(R.id.editDeparture);
             holderReminders.caption = (EditText) convertView
                     .findViewById(R.id.editReminderName);
-
+            Button deleteButton = (Button) convertView
+                    .findViewById(R.id.deleteAReminder);
+            deleteButton.setOnClickListener(new View.OnClickListener()
+            {
+                @Override
+                public void onClick(View v){
+                    final int reminderPosition = holderArrival.caption.getId();
+                    reminderList.remove(reminderPosition);
+                    arrivalList.remove(reminderPosition);
+                    departureList.remove(reminderPosition);
+                    queueAndTravelTime.remove(reminderPosition);
+                    onSubmit();
+                    ArrayAdapter<String> itemsAdapter =
+                            new ArrayAdapter<String>(context, R.layout.listview_adapter);
+                }
+            });
             holderArrival.caption.setTag(position);
             holderArrival.caption.setText(String.valueOf(arrivalList.get(position)));
             holderDeparture.setTag(position);
