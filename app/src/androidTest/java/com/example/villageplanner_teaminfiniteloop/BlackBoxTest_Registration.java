@@ -19,9 +19,11 @@ import static androidx.test.espresso.action.ViewActions.click;
 import static androidx.test.espresso.action.ViewActions.closeSoftKeyboard;
 import static androidx.test.espresso.action.ViewActions.typeText;
 import static androidx.test.espresso.assertion.ViewAssertions.matches;
+import static androidx.test.espresso.matcher.ViewMatchers.assertThat;
 import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
 import static androidx.test.espresso.matcher.ViewMatchers.withText;
+
 
 @RunWith(AndroidJUnit4.class)
 @LargeTest
@@ -44,6 +46,50 @@ public class BlackBoxTest_Registration {
         Thread.sleep(2000);
         // Check that the text was changed.
         onView(withId(R.id.nav_view)).check(matches(isDisplayed()));
+
+        // TODO CLEAR THE TEST USER CREATED IN DATABASE
     }
 
+    @Test
+    public void Test_Missing_Name() throws InterruptedException {
+        onView(withId(R.id.register)).perform(click());
+        Thread.sleep(2000);
+        onView(withId(R.id.email))
+                .perform(typeText("unittest@gmail.com"), closeSoftKeyboard());
+        onView(withId(R.id.password))
+                .perform(typeText("123"), closeSoftKeyboard());
+        onView(withId(R.id.button2)).perform(click());
+        Thread.sleep(2000);
+        // Check that the user will not be logged in by still showing the sign up page.
+        onView(withId(R.id.button2)).check(matches(isDisplayed()));
+    }
+
+    @Test
+    public void Test_Missing_Password() throws InterruptedException {
+        onView(withId(R.id.register)).perform(click());
+        Thread.sleep(2000);
+        onView(withId(R.id.name))
+                .perform(typeText("Tester"), closeSoftKeyboard());
+        onView(withId(R.id.email))
+                .perform(typeText("unittest@gmail.com"), closeSoftKeyboard());
+        onView(withId(R.id.button2)).perform(click());
+        Thread.sleep(2000);
+        // Check that the user will not be logged in by still showing the sign up page.
+        onView(withId(R.id.button2)).check(matches(isDisplayed()));
+    }
+
+    @Test
+    public void Test_Missing_Email() throws InterruptedException {
+        // Type text and then press the button.
+        onView(withId(R.id.register)).perform(click());
+        Thread.sleep(2000);
+        onView(withId(R.id.name))
+                .perform(typeText("Tester"), closeSoftKeyboard());
+        onView(withId(R.id.password))
+                .perform(typeText("123"), closeSoftKeyboard());
+        onView(withId(R.id.button2)).perform(click());
+        Thread.sleep(2000);
+        // Check that the text was changed.
+        onView(withId(R.id.button2)).check(matches(isDisplayed()));
+    }
 }
