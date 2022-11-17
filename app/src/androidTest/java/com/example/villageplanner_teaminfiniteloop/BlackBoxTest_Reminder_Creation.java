@@ -59,6 +59,15 @@ public class BlackBoxTest_Reminder_Creation{
     @Test
     public void Test_Reminder_Creation() throws InterruptedException {
         // Type text and then press the button.
+        onView(withId(R.id.email))
+                .perform(typeText("jack@usc.edu"), closeSoftKeyboard());
+        onView(withId(R.id.password))
+                .perform(typeText("123"), closeSoftKeyboard());
+        onView(withId(R.id.login)).perform(click());
+        Thread.sleep(2000);
+
+
+
         onView(withId(R.id.reminderDescription))
                 .perform(typeText(STRING_TO_BE_TYPED_GO_TO_CAVA), closeSoftKeyboard());
         onView(withId(R.id.reminderTimePicker))
