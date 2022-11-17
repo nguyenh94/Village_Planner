@@ -13,7 +13,6 @@ public class WhiteBoxTest_Queue {
         // test from cava restaurant to cava1 user
         // cava: 34.02507542003946, -118.28452602789426
         // cava1: 34.025084271502244, -118.28453136955459
-        // distance: 0.0011 km or 5.905330181121826E-5 mile
         assertEquals(0.0007, tester.calculateDistance(34.02507542003946, -118.28452602789426, 34.025084271502244, -118.28453136955459), 0.0002);
 
         // test from cava to dulce1
