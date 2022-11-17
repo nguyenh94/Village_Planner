@@ -158,7 +158,7 @@ public class ReminderCreatorActivity extends AppCompatActivity {
             finalHours = String.valueOf(notificationHours);
         }
         if(String.valueOf(notificationMinutes).length()<2){
-            finalMinutes = "0" + String.valueOf(notificationHours);
+            finalMinutes = "0" + String.valueOf(notificationMinutes);
         }
         else{
             finalMinutes = String.valueOf(notificationMinutes);
