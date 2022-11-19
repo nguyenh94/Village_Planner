@@ -21,14 +21,18 @@ import androidx.test.ext.junit.rules.ActivityScenarioRule;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 import androidx.test.filters.LargeTest;
 
+import static androidx.test.espresso.Espresso.onData;
 import static androidx.test.espresso.Espresso.onView;
 import static androidx.test.espresso.action.ViewActions.click;
 import static androidx.test.espresso.action.ViewActions.closeSoftKeyboard;
 import static androidx.test.espresso.action.ViewActions.typeText;
 import static androidx.test.espresso.assertion.ViewAssertions.matches;
+import static androidx.test.espresso.matcher.ViewMatchers.isDescendantOfA;
 import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
 import static androidx.test.espresso.matcher.ViewMatchers.withText;
+import static org.hamcrest.CoreMatchers.anything;
+import static java.util.EnumSet.allOf;
 
 /**
  * Basic tests showcasing simple view matchers and actions like {@link ViewMatchers#withId},
@@ -39,7 +43,7 @@ import static androidx.test.espresso.matcher.ViewMatchers.withText;
 
 @RunWith(AndroidJUnit4.class)
 @LargeTest
-public class BlackBoxTest_Reminder_Creation{
+public class BlackBoxTest_Reminder_Edit{
 
     public static final String STRING_TO_BE_TYPED_GO_TO_CAVA = "go to cava";
     public static final int HOUR = 11;
@@ -54,34 +58,34 @@ public class BlackBoxTest_Reminder_Creation{
     public ActivityScenarioRule<LoginActivity> activityScenarioRule
             = new ActivityScenarioRule<>(LoginActivity.class);
 
-//    @Before
+    //    @Before
 //    public void stubAllExternalIntents() {
 //        // By default Espresso Intents does not stub any Intents. Stubbing needs to be setup before
 //        // every test run. In this case all external Intents will be blocked.
 //        intending(not(isInternal())).respondWith(new ActivityResult(Activity.RESULT_OK, null));
 //    }
-public static ViewAction clickXY(final int x, final int y){
-    return new GeneralClickAction(
-            Tap.SINGLE,
-            new CoordinatesProvider() {
-                @Override
-                public float[] calculateCoordinates(View view) {
+    public static ViewAction clickXY(final int x, final int y){
+        return new GeneralClickAction(
+                Tap.SINGLE,
+                new CoordinatesProvider() {
+                    @Override
+                    public float[] calculateCoordinates(View view) {
 
-                    final int[] screenPos = new int[2];
-                    view.getLocationOnScreen(screenPos);
+                        final int[] screenPos = new int[2];
+                        view.getLocationOnScreen(screenPos);
 
-                    final float screenX = screenPos[0] + x;
-                    final float screenY = screenPos[1] + y;
-                    float[] coordinates = {screenX, screenY};
+                        final float screenX = screenPos[0] + x;
+                        final float screenY = screenPos[1] + y;
+                        float[] coordinates = {screenX, screenY};
 
-                    return coordinates;
-                }
-            },
-            Press.FINGER);
-}
+                        return coordinates;
+                    }
+                },
+                Press.FINGER);
+    }
 
     @Test
-    public void Test_Reminder_Creation() throws InterruptedException {
+    public void Test_Reminder_Edit() throws InterruptedException {
         // Type text and then press the button.
         onView(withId(R.id.email))
                 .perform(typeText("jack@usc.edu"), closeSoftKeyboard());
@@ -90,30 +94,45 @@ public static ViewAction clickXY(final int x, final int y){
         onView(withId(R.id.login)).perform(click());
         Thread.sleep(2000);
 
-        // Check map annotation works
-        // Max X: 1080, Max Y: 1794, click on one restaurant
-        onView(withId(R.id.mapView)).perform(clickXY(280, 1120));
+//        // Check map annotation works
+//        // Max X: 1080, Max Y: 1794, click on one restaurant
+//        onView(withId(R.id.mapView)).perform(clickXY(280, 1120));
+//        Thread.sleep(2000);
+
+//        //Click on Annotation
+//        onView(withId(R.id.mapView)).perform(clickXY(530, 500));
+//        Thread.sleep(2000);
+//
+//        //Click Set a Reminder Button
+//        onView(withId(R.id.button_setReminderButton)).perform(click());
+//        Thread.sleep(2000);
+//
+//        //Enter reminder information
+//        onView(withId(R.id.reminderDescription))
+//                .perform(typeText(STRING_TO_BE_TYPED_GO_TO_CAVA), closeSoftKeyboard());
+//        onView(withId(R.id.reminderTimePicker))
+//                .perform(setTime());
+//        onView(withId(R.id.createReminder)).perform(click());
+//        Thread.sleep(2000);
+
+        //Switch to the reminder page
+        onView(withId(R.id.navigation_dashboard)).perform(click());
         Thread.sleep(2000);
 
-        //Click on Annotation
-        onView(withId(R.id.mapView)).perform(clickXY(530, 500));
-        Thread.sleep(2000);
-
-        //Click Set a Reminder Button
-        onView(withId(R.id.button_setReminderButton)).perform(click());
-        Thread.sleep(2000);
-
-        //Enter reminder information
-        onView(withId(R.id.reminderDescription))
+        //Edit Reminder Name
+//        onView(withId(R.id.editReminderName))
+//                .perform(typeText(STRING_TO_BE_TYPED_GO_TO_CAVA), closeSoftKeyboard());
+        onData(anything()).inAdapterView(withId(R.id.listView)).atPosition(0)
                 .perform(typeText(STRING_TO_BE_TYPED_GO_TO_CAVA), closeSoftKeyboard());
-        onView(withId(R.id.reminderTimePicker))
-                .perform(setTime());
-        onView(withId(R.id.createReminder)).perform(click());
+
+        //Click Sumbit Change
+        onView(withId(R.id.editAReminder)).perform(click());
         Thread.sleep(2000);
 
         // Check that the text was changed.
         onView(withId(R.id.nav_view)).check(matches(isDisplayed()));
     }
+
     public static ViewAction setTime() {
         return new ViewAction() {
             @Override

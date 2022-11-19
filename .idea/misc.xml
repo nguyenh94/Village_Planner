@@ -27,6 +27,7 @@
         <entry key="app/src/main/res/layout/fragment_me.xml" value="0.1" />
         <entry key="app/src/main/res/layout/fragment_reminders.xml" value="0.18070068359375002" />
         <entry key="app/src/main/res/layout/listview_adapter.xml" value="0.196875" />
+        <entry key="app/src/main/res/layout/row.xml" value="0.3302083333333333" />
         <entry key="app/src/main/res/menu/bottom_nav_menu.xml" value="0.21822916666666667" />
       </map>
     </option>
