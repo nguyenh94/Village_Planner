@@ -21,18 +21,14 @@ import androidx.test.ext.junit.rules.ActivityScenarioRule;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 import androidx.test.filters.LargeTest;
 
-import static androidx.test.espresso.Espresso.onData;
 import static androidx.test.espresso.Espresso.onView;
 import static androidx.test.espresso.action.ViewActions.click;
 import static androidx.test.espresso.action.ViewActions.closeSoftKeyboard;
 import static androidx.test.espresso.action.ViewActions.typeText;
 import static androidx.test.espresso.assertion.ViewAssertions.matches;
-import static androidx.test.espresso.matcher.ViewMatchers.isDescendantOfA;
 import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
 import static androidx.test.espresso.matcher.ViewMatchers.withText;
-import static org.hamcrest.CoreMatchers.anything;
-import static java.util.EnumSet.allOf;
 
 /**
  * Basic tests showcasing simple view matchers and actions like {@link ViewMatchers#withId},
@@ -43,9 +39,9 @@ import static java.util.EnumSet.allOf;
 
 @RunWith(AndroidJUnit4.class)
 @LargeTest
-public class BlackBoxTest_Reminder_Edit{
+public class BlackBoxTest_Reminder_Creation_Empty_Title{
 
-    public static final String STRING_TO_BE_TYPED_GO_TO_CAVA = "go to cava";
+    public static final String STRING_TO_BE_TYPED_EMPTY = "";
     public static final int HOUR = 11;
     public static final int MINUTE = 15;
 
@@ -85,7 +81,7 @@ public class BlackBoxTest_Reminder_Edit{
     }
 
     @Test
-    public void Test_Reminder_Edit() throws InterruptedException {
+    public void Test_Reminder_Creation() throws InterruptedException {
         // Type text and then press the button.
         onView(withId(R.id.email))
                 .perform(typeText("jack@usc.edu"), closeSoftKeyboard());
@@ -94,24 +90,30 @@ public class BlackBoxTest_Reminder_Edit{
         onView(withId(R.id.login)).perform(click());
         Thread.sleep(2000);
 
-        //Switch to the reminder page
-        onView(withId(R.id.navigation_dashboard)).perform(click());
+        // Check map annotation works
+        // Max X: 1080, Max Y: 1794, click on one restaurant
+        onView(withId(R.id.mapView)).perform(clickXY(280, 1120));
         Thread.sleep(2000);
 
-        //Edit Reminder Name
-//        onView(withId(R.id.editReminderName))
-//                .perform(typeText(STRING_TO_BE_TYPED_GO_TO_CAVA), closeSoftKeyboard());
-        onData(anything()).inAdapterView(withId(R.id.listViewReminders)).atPosition(0).onChildView(withId(R.id.editReminderName))
-                .perform(typeText(STRING_TO_BE_TYPED_GO_TO_CAVA), closeSoftKeyboard());
+        //Click on Annotation
+        onView(withId(R.id.mapView)).perform(clickXY(530, 500));
+        Thread.sleep(2000);
 
-        //Click Sumbit Change
-        onView(withId(R.id.editAReminder)).perform(click());
+        //Click Set a Reminder Button
+        onView(withId(R.id.button_setReminderButton)).perform(click());
+        Thread.sleep(2000);
+
+        //Enter reminder information
+        onView(withId(R.id.reminderDescription))
+                .perform(typeText(STRING_TO_BE_TYPED_EMPTY), closeSoftKeyboard());
+        onView(withId(R.id.reminderTimePicker))
+                .perform(setTime());
+        onView(withId(R.id.createReminder)).perform(click());
         Thread.sleep(2000);
 
         // Check that the text was changed.
         onView(withId(R.id.nav_view)).check(matches(isDisplayed()));
     }
-
     public static ViewAction setTime() {
         return new ViewAction() {
             @Override

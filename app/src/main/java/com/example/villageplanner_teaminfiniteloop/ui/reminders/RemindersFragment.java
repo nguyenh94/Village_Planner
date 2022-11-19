@@ -69,7 +69,7 @@ public class RemindersFragment extends Fragment {
                 new ViewModelProvider(this).get(RemindersViewModel.class);
         binding = FragmentRemindersBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
-        listView = (ListView) root.findViewById(R.id.listView1);
+        listView = (ListView) root.findViewById(R.id.listViewReminders);
         scrollView = (ScrollView) root.findViewById(R.id.scrollView);
         listView.setItemsCanFocus(true);
         departureList = new ArrayList<String>();
