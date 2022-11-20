@@ -1,5 +1,13 @@
 package com.example.villageplanner_teaminfiniteloop;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.util.List;
+import java.util.Locale;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -7,12 +15,25 @@ import android.Manifest;
 import android.app.Activity;
 import android.content.Context;
 import android.content.pm.PackageManager;
+import android.location.Address;
+import android.location.Geocoder;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
+import android.util.Log;
 
 import androidx.core.app.ActivityCompat;
+
+import com.androidnetworking.AndroidNetworking;
+import com.androidnetworking.common.Priority;
+import com.androidnetworking.error.ANError;
+import com.androidnetworking.interfaces.JSONObjectRequestListener;
+import com.google.android.gms.maps.model.LatLng;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 public class MyLocation {
     Timer timer1;
@@ -20,6 +41,118 @@ public class MyLocation {
     LocationResult locationResult;
     boolean gps_enabled = false;
     boolean network_enabled = false;
+
+    public String getDirectionsUrl(LatLng origin, LatLng dest) {
+
+        // Origin of route
+        String str_origin = "origin=" + origin.latitude + "," + origin.longitude;
+
+        // Destination of route
+        String str_dest = "destination=" + dest.latitude + "," + dest.longitude;
+
+        // Sensor enabled
+        String sensor = "sensor=false";
+
+        // Building the parameters to the web service
+        String parameters = str_origin + "&" + str_dest + "&" + sensor + "&" + "key=AIzaSyAk2zt_F2hY2v76do6CwRUvjA_RZhHpM1Q";
+
+        // Output format
+        String output = "json";
+
+        // Building the url to the web service
+        String url = "https://maps.googleapis.com/maps/api/directions/" + output + "?" + parameters;
+
+
+        return url;
+    }
+
+    public String downloadUrl(String strUrl) throws IOException {
+        String data = "";
+        InputStream iStream = null;
+        HttpURLConnection urlConnection = null;
+        try {
+            URL url = new URL(strUrl);
+
+            urlConnection = (HttpURLConnection) url.openConnection();
+
+            urlConnection.connect();
+
+            iStream = urlConnection.getInputStream();
+
+            BufferedReader br = new BufferedReader(new InputStreamReader(iStream));
+
+            StringBuffer sb = new StringBuffer();
+
+            String line = "";
+            while ((line = br.readLine()) != null) {
+                sb.append(line);
+            }
+
+            data = sb.toString();
+
+            br.close();
+
+        } catch (Exception e) {
+            Log.d("Exception", e.toString());
+        } finally {
+            iStream.close();
+            urlConnection.disconnect();
+        }
+        return data;
+    }
+
+    public String getEstimatedTravelTime(LatLng currentLocation, LatLng destination){
+        String mode = "driving";
+        String origin = currentLocation.latitude + "%2C" + currentLocation.longitude;
+        String dest = destination.latitude + "%2C" + destination.longitude;
+        final String[] travelTime = new String[1];
+        AndroidNetworking.get("https://maps.googleapis.com/maps/api/distancematrix/json?origins=" + origin +"&destinations="+dest)
+                .addQueryParameter("mode", mode)
+                .addQueryParameter("key", "AIzaSyAk2zt_F2hY2v76do6CwRUvjA_RZhHpM1Q")
+                .setPriority(Priority.LOW)
+                .build()
+                .getAsJSONObject(new JSONObjectRequestListener() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        System.out.println(response);
+                        try {
+                            JSONArray a = response.getJSONArray("rows");
+                            JSONObject b = a.getJSONObject(0);
+                            JSONArray c = b.getJSONArray("elements");
+                            JSONObject d = c.getJSONObject(0);
+                            JSONObject e = d.getJSONObject("duration");
+                            travelTime[0] = e.getString("text");
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+
+                    }
+
+                    @Override
+                    public void onError(ANError anError) {
+                        anError.printStackTrace();
+                    }
+                });
+        travelTime[0] = "10 min";
+        return travelTime[0];
+    }
+
+    public boolean checkAtLA(LatLng currentLocation){
+        //Detect city
+        String geoCoder = ""; //it is Geocoder
+        StringBuilder builder = new StringBuilder();
+        try {
+            String city = "Las Vegas";
+            if (!city.equals("Los Angeles")) {
+                return false;
+            } else {
+                return true;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
 
     public boolean getLocation(Context context, LocationResult result) {
         //I use LocationResult callback class to pass location value from MyLocation to user code.
