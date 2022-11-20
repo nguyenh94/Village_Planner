@@ -98,11 +98,18 @@ public class BlackBoxTest_Reminder_Edit{
         onView(withId(R.id.navigation_dashboard)).perform(click());
         Thread.sleep(2000);
 
-        //Edit Reminder Name
 //        onView(withId(R.id.editReminderName))
 //                .perform(typeText(STRING_TO_BE_TYPED_GO_TO_CAVA), closeSoftKeyboard());
-        onData(anything()).inAdapterView(withId(R.id.listViewReminders)).atPosition(0).onChildView(withId(R.id.editReminderName))
-                .perform(typeText(STRING_TO_BE_TYPED_GO_TO_CAVA), closeSoftKeyboard());
+//        onData(anything()).inAdapterView(withId(R.id.listViewReminders)).atPosition(0).onChildView(withId(R.id.editReminderName))
+//                .perform(typeText(STRING_TO_BE_TYPED_GO_TO_CAVA), closeSoftKeyboard());
+
+        //Select title description
+        onView(withId(R.id.editAReminder)).perform(clickXY(700, 400));
+        Thread.sleep(2000);
+
+        //Tyoe in new change
+        onView(withId(R.id.editAReminder)).perform(clickXY(330, 200));
+        Thread.sleep(2000);
 
         //Click Sumbit Change
         onView(withId(R.id.editAReminder)).perform(click());
