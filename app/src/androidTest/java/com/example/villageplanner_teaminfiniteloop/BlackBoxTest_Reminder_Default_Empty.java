@@ -39,11 +39,8 @@ import static androidx.test.espresso.matcher.ViewMatchers.withText;
 
 @RunWith(AndroidJUnit4.class)
 @LargeTest
-public class BlackBoxTest_Reminder_Creation{
+public class BlackBoxTest_Reminder_Default_Empty {
 
-    public static final String STRING_TO_BE_TYPED_GO_TO_CAVA = "go to cava";
-    public static final int HOUR = 11;
-    public static final int MINUTE = 15;
 
 
     /**
@@ -54,31 +51,31 @@ public class BlackBoxTest_Reminder_Creation{
     public ActivityScenarioRule<LoginActivity> activityScenarioRule
             = new ActivityScenarioRule<>(LoginActivity.class);
 
-//    @Before
+    //    @Before
 //    public void stubAllExternalIntents() {
 //        // By default Espresso Intents does not stub any Intents. Stubbing needs to be setup before
 //        // every test run. In this case all external Intents will be blocked.
 //        intending(not(isInternal())).respondWith(new ActivityResult(Activity.RESULT_OK, null));
 //    }
-public static ViewAction clickXY(final int x, final int y){
-    return new GeneralClickAction(
-            Tap.SINGLE,
-            new CoordinatesProvider() {
-                @Override
-                public float[] calculateCoordinates(View view) {
+    public static ViewAction clickXY(final int x, final int y){
+        return new GeneralClickAction(
+                Tap.SINGLE,
+                new CoordinatesProvider() {
+                    @Override
+                    public float[] calculateCoordinates(View view) {
 
-                    final int[] screenPos = new int[2];
-                    view.getLocationOnScreen(screenPos);
+                        final int[] screenPos = new int[2];
+                        view.getLocationOnScreen(screenPos);
 
-                    final float screenX = screenPos[0] + x;
-                    final float screenY = screenPos[1] + y;
-                    float[] coordinates = {screenX, screenY};
+                        final float screenX = screenPos[0] + x;
+                        final float screenY = screenPos[1] + y;
+                        float[] coordinates = {screenX, screenY};
 
-                    return coordinates;
-                }
-            },
-            Press.FINGER);
-}
+                        return coordinates;
+                    }
+                },
+                Press.FINGER);
+    }
 
     @Test
     public void Test_Reminder_Creation() throws InterruptedException {
@@ -104,32 +101,10 @@ public static ViewAction clickXY(final int x, final int y){
         Thread.sleep(2000);
 
         //Enter reminder information
-        onView(withId(R.id.reminderDescription))
-                .perform(typeText(STRING_TO_BE_TYPED_GO_TO_CAVA), closeSoftKeyboard());
-        onView(withId(R.id.reminderTimePicker))
-                .perform(setTime());
         onView(withId(R.id.createReminder)).perform(click());
         Thread.sleep(2000);
 
         // Check that the text was changed.
         onView(withId(R.id.nav_view)).check(matches(isDisplayed()));
-    }
-    public static ViewAction setTime() {
-        return new ViewAction() {
-            @Override
-            public void perform(UiController uiController, View view) {
-                TimePicker tp = (TimePicker) view;
-                tp.setCurrentHour(HOUR);
-                tp.setCurrentMinute(MINUTE);
-            }
-            @Override
-            public String getDescription() {
-                return "Set the passed time into the TimePicker";
-            }
-            @Override
-            public Matcher<View> getConstraints() {
-                return ViewMatchers.isAssignableFrom(TimePicker.class);
-            }
-        };
     }
 }

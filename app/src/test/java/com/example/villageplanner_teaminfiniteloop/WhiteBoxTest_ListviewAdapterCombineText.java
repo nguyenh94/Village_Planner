@@ -1,27 +1,28 @@
 package com.example.villageplanner_teaminfiniteloop;
 
-        import static org.junit.Assert.assertTrue;
-        import org.junit.Test;
-        import static org.junit.Assert.*;
+import static org.junit.Assert.assertTrue;
+import org.junit.Test;
+import static org.junit.Assert.*;
 
-        import com.example.villageplanner_teaminfiniteloop.ui.reminders.RemindersFragment;
+import android.content.Context;
 
-        import java.util.ArrayList;
-        import java.util.List;
-        import java.util.Arrays;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
-public class WhiteBoxTest_ReminderCombineText {
+public class WhiteBoxTest_ListviewAdapterCombineText {
     @Test
-    public void testNotificationTime() {
-        RemindersFragment tester = new RemindersFragment();
+    public void testCombineText() {
         List<String> arrivalList = Arrays.asList("18:10", "12:20");
         List<String> departureList = Arrays.asList("18:01", "12:10");
         List<String> reminderList = Arrays.asList("go to cava", "eat greenleaf");
         List<String> queueAndTravelTime = Arrays.asList("9", "10");
+        Context context = null;
+        ListviewAdapter lv = new ListviewAdapter(context, departureList, arrivalList, reminderList, queueAndTravelTime);
         ArrayList<String> remindersInString = new ArrayList<String>();
         remindersInString.add("go to cava?18:10?18:01?9");
         remindersInString.add("eat greenleaf?12:20?12:10?10");
-        assertTrue(isEqual(tester.combineText(arrivalList, departureList, reminderList, queueAndTravelTime),remindersInString));
+        assertTrue(isEqual(lv.combineText(arrivalList, departureList, reminderList, queueAndTravelTime),remindersInString));
     }
     public boolean isEqual(ArrayList<String> list1, ArrayList<String> list2)
     {

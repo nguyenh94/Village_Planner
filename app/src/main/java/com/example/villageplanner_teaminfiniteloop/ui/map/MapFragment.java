@@ -331,6 +331,8 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, GoogleM
             String data = "";
 
             try {
+                String temp = (String) objects[0];
+                System.out.println(temp);
                 data = downloadUrl((String) objects[0]);
             } catch (Exception e) {
                 Log.d("Background Task", e.toString());
