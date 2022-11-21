@@ -33,8 +33,11 @@ public class WhiteBoxTest_Queue {
     public void testConvertToRad() {
         assertEquals(3.14159, tester.convertToRad(180), 0.00001);
     }
-//    @Test
-//    public void testToLocation() {
-//        assertEquals(0, tester.toLocation("0.345, 0.345"));
-//    }
+
+    @Test
+    public void testQueueTimeCalc() {
+        assertEquals(5, tester.mockQueueTimeCalc(10));
+        assertEquals(6, tester.mockQueueTimeCalc(11));
+    }
+
 }

@@ -60,4 +60,10 @@ public class Queue {
         result.setLongitude(lo);
         return result;
     }
+
+    // mock function to test queue time calculation
+    public int mockQueueTimeCalc(int peopleInRadius) {
+        int mockQueueTime = Math.toIntExact(Math.round(peopleInRadius * 0.5));
+        return mockQueueTime;
+    }
 }
