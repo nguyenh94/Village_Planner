@@ -6,6 +6,7 @@ import android.location.Location;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
@@ -24,6 +25,8 @@ import org.w3c.dom.Text;
 public class RestaurantDetail extends AppCompatActivity {
     String name;
     String location;
+    String imageUrl;
+    int rating;
     String travelTime;
     Location currentLocation = User.currentLocation;
     Location destination;
@@ -41,6 +44,21 @@ public class RestaurantDetail extends AppCompatActivity {
         Intent intent = getIntent();
         name = intent.getStringExtra("name");
         location = intent.getStringExtra("location");
+
+        // parse and display image
+        imageUrl = intent.getStringExtra("imageUrl");
+        ImageView restaurantImageView = (ImageView) findViewById(R.id.restaurantImageView);
+        new ImageLoadTask(imageUrl, restaurantImageView).execute();
+
+        // Parse and display rating
+        rating = intent.getIntExtra("rating", 0);
+        TextView ratingLabel = (TextView) findViewById(R.id.ratingTextView);
+        String stars = "";
+        for (int i = 0; i < rating; i++) {
+            stars += "⭐️";
+        }
+        ratingLabel.setText(stars);
+
         destination = Queue.toLocation(location);
         TextView restaurantLabel = (TextView) findViewById(R.id.restaurantLabel);
         restaurantLabel.setText(name);

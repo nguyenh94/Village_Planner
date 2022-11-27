@@ -21,17 +21,23 @@ public class Restaurant {
 //    private String id;
     private String location;
     private String name;
+    private String image;
+    private Integer rating;
 
     public Restaurant(){
         this.location = "";
         this.name = "";
+        this.image = "";
+        this.rating = null;
     }
 
-    public Restaurant(String name, String coordinate)
+    public Restaurant(String name, String coordinate, String image, Integer rating)
     {
 //        this.id = resId;
         this.location = coordinate;
         this.name = name;
+        this.image = image;
+        this.rating = rating;
     }
 
     public void findDirectionToStore(Location userLocation, Location resLocation)
@@ -51,6 +57,10 @@ public class Restaurant {
 
     public String getLocation() { return this.location; }
 
+    public String getImage() {return this.image;}
+
+    public Integer getRating() { return this.rating;}
+
     public void setLocation(String location) {
         this.location = location;
     }
@@ -59,7 +69,15 @@ public class Restaurant {
         this.name = name;
     }
 
-//    public static void getAllResLocation()
+    public void setImage(String image) {
+        this.image = image;
+    }
+
+    public void setRating(Integer rating) {
+        this.rating = rating;
+    }
+
+    //    public static void getAllResLocation()
 //    {
 //        FirebaseFirestore db = FirebaseFirestore.getInstance();
 //        db.collection("restaurants").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
