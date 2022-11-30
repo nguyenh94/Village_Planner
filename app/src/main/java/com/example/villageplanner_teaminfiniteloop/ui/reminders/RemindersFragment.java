@@ -1,5 +1,12 @@
 package com.example.villageplanner_teaminfiniteloop.ui.reminders;
 
+import static androidx.test.espresso.Espresso.onView;
+import static androidx.test.espresso.action.ViewActions.click;
+import static androidx.test.espresso.action.ViewActions.closeSoftKeyboard;
+import static androidx.test.espresso.action.ViewActions.typeText;
+import static androidx.test.espresso.assertion.ViewAssertions.matches;
+import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
+import static androidx.test.espresso.matcher.ViewMatchers.withId;
 import static com.google.android.gms.common.util.CollectionUtils.mapOf;
 
 import android.app.Activity;
@@ -25,12 +32,22 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.core.app.NotificationCompat;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.test.espresso.ViewAction;
+import androidx.test.espresso.action.CoordinatesProvider;
+import androidx.test.espresso.action.GeneralClickAction;
+import androidx.test.espresso.action.Press;
+import androidx.test.espresso.action.Tap;
+import androidx.test.filters.LargeTest;
+import androidx.test.runner.AndroidJUnit4;
+
 
 import com.example.villageplanner_teaminfiniteloop.ListviewAdapter;
 import com.example.villageplanner_teaminfiniteloop.LoginActivity;
 import com.example.villageplanner_teaminfiniteloop.R;
 import com.example.villageplanner_teaminfiniteloop.Reminder;
+import com.example.villageplanner_teaminfiniteloop.ReminderCreatorActivity;
 import com.example.villageplanner_teaminfiniteloop.TabBarActivity;
 import com.example.villageplanner_teaminfiniteloop.User;
 import com.example.villageplanner_teaminfiniteloop.databinding.FragmentRemindersBinding;
@@ -41,6 +58,10 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Source;
+
+import org.junit.Rule;
+import org.junit.Test;
+import org.junit.runner.RunWith;
 
 import java.sql.Array;
 import java.sql.Time;
@@ -100,7 +121,18 @@ public class RemindersFragment extends Fragment {
                             }
                         }
                     }
+                    //Switch to the reminder page
                 });
+                try {
+                    Thread.sleep(1000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                try {
+                    listView.invalidateViews();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
             }}
         );
 
@@ -222,6 +254,10 @@ public class RemindersFragment extends Fragment {
         }
         return waitTimes;
     }
+
+
+
+
 
     @Override
     public void onDestroyView() {
