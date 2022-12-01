@@ -121,6 +121,16 @@ public class RegisterActivity extends AppCompatActivity {
             return;
         }
 
+        // check if password meets the strength
+        boolean strongPass = Login_Registration.checkPasswordStrength(password);
+        if (!strongPass) {
+            Toast.makeText(view.getContext(), "Password must meet these requirements:" +
+                    "\n1) Must have at least 1 uppercase character" +
+                    "\n2) Must have at least 1 lowercase character" +
+                    "\n3) Must have at least 1 digit", Toast.LENGTH_LONG).show();
+            return;
+        }
+
         // check if email is already registered
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         DocumentReference docRef = db.collection("users").document(userEmail);

@@ -59,4 +59,28 @@ public class Login_Registration {
         }
         return false;
     }
+
+    static public Boolean checkPasswordStrength(String pass) {
+        int upChar = 0;
+        int loChar = 0;
+        int num = 0;
+
+        if (pass.length() <= 8) {
+            return false;
+        }
+        for (int i=0; i<pass.length(); i++) {
+            char ch = pass.charAt(i);
+            if (Character.isUpperCase(ch)) {
+                upChar++;
+            } else if (Character.isLowerCase(ch)) {
+                loChar++;
+            } else if (Character.isDigit(ch)) {
+                num++;
+            }
+        }
+        if (upChar < 1 && loChar < 1 && num < 1) {
+            return false;
+        }
+        return true;
+    }
 }

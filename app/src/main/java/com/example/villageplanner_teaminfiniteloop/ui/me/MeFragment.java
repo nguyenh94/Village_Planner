@@ -2,6 +2,8 @@ package com.example.villageplanner_teaminfiniteloop.ui.me;
 
 import static android.app.Activity.RESULT_OK;
 
+import static com.example.villageplanner_teaminfiniteloop.Login_Registration.checkEmailFormat;
+
 import android.Manifest;
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -18,6 +20,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -81,6 +84,11 @@ public class MeFragment extends Fragment {
                 logoutButtonPressed(view);
             }
         });
+        Button submitChangesButton = (Button) view.findViewById(R.id.submitChanges);
+        submitChangesButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) { changedProfilePressed(view, userNameTextView);}
+        });
         profilePic = view.findViewById(R.id.profilePic);
 
         storage = FirebaseStorage.getInstance();
@@ -124,6 +132,24 @@ public class MeFragment extends Fragment {
                 }
             }
     );
+
+    public void changedProfilePressed(View view, TextView userNameEntered) {
+        // save the new edited user info to the database
+//        TextView userNameEntered = (TextView) view.findViewById(R.id.userName);
+//        TextView emailEntered = (TextView) view.findViewById(R.id.userEmail);
+
+        String userName = userNameEntered.getText().toString();
+
+        // check if email is valid
+        try {
+            FirebaseFirestore db = FirebaseFirestore.getInstance();
+            CollectionReference users = db.collection("users");
+            users.document(User.currentUserEmail).update("name", userName);
+            User.currentUserName = userName;
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+    }
 
     private void uploadPicture(Uri photoUri) {
         // While the file names are the same, the references point to different files
