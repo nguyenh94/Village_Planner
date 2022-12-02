@@ -134,13 +134,8 @@ public class MeFragment extends Fragment {
     );
 
     public void changedProfilePressed(View view, TextView userNameEntered) {
-        // save the new edited user info to the database
-//        TextView userNameEntered = (TextView) view.findViewById(R.id.userName);
-//        TextView emailEntered = (TextView) view.findViewById(R.id.userEmail);
-
         String userName = userNameEntered.getText().toString();
 
-        // check if email is valid
         try {
             FirebaseFirestore db = FirebaseFirestore.getInstance();
             CollectionReference users = db.collection("users");
@@ -148,6 +143,7 @@ public class MeFragment extends Fragment {
             User.currentUserName = userName;
         } catch (Exception e) {
             System.out.println(e);
+            Toast.makeText(view.getContext(), "Please enter enter a valid name", Toast.LENGTH_LONG).show();
         }
     }
 
