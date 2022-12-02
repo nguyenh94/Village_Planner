@@ -41,7 +41,7 @@ public class BlackBoxTest_Registration {
         onView(withId(R.id.email))
                 .perform(typeText("unittest@gmail.com"), closeSoftKeyboard());
         onView(withId(R.id.password))
-                .perform(typeText("123"), closeSoftKeyboard());
+                .perform(typeText("judwE123biefbiwef"), closeSoftKeyboard());
         onView(withId(R.id.button2)).perform(click());
         Thread.sleep(2000);
         // Check that the text was changed.

@@ -12,6 +12,7 @@
                   <entry key="Google&#10; Android SDK built for arm64" value="120" />
                   <entry key="Tests" value="360" />
                   <entry key="emulator-5554" value="120" />
+                  <entry key="emulator-5556" value="120" />
                 </map>
               </option>
             </AndroidTestResultsTableState>
@@ -116,6 +117,7 @@
                   <entry key="Pixel_2_API_24" value="120" />
                   <entry key="Tests" value="360" />
                   <entry key="emulator-5554" value="120" />
+                  <entry key="emulator-5556" value="120" />
                 </map>
               </option>
             </AndroidTestResultsTableState>
@@ -144,6 +146,7 @@
                   <entry key="Pixel_2_API_24" value="120" />
                   <entry key="Tests" value="360" />
                   <entry key="emulator-5554" value="120" />
+                  <entry key="emulator-5556" value="120" />
                 </map>
               </option>
             </AndroidTestResultsTableState>
@@ -158,6 +161,7 @@
                   <entry key="Google&#10; Android SDK built for arm64" value="120" />
                   <entry key="Tests" value="360" />
                   <entry key="emulator-5554" value="120" />
+                  <entry key="emulator-5556" value="120" />
                 </map>
               </option>
             </AndroidTestResultsTableState>
@@ -183,8 +187,10 @@
               <option name="preferredColumnWidths">
                 <map>
                   <entry key="Duration" value="90" />
+                  <entry key="Google&#10; Android SDK built for arm64" value="120" />
                   <entry key="Pixel_2_API_24" value="120" />
                   <entry key="Tests" value="360" />
+                  <entry key="emulator-5556" value="120" />
                 </map>
               </option>
             </AndroidTestResultsTableState>
@@ -214,6 +220,7 @@
                   <entry key="Google&#10; Android SDK built for arm64" value="120" />
                   <entry key="Tests" value="360" />
                   <entry key="emulator-5554" value="120" />
+                  <entry key="emulator-5556" value="120" />
                 </map>
               </option>
             </AndroidTestResultsTableState>
@@ -228,6 +235,7 @@
                   <entry key="Google&#10; Android SDK built for arm64" value="120" />
                   <entry key="Tests" value="360" />
                   <entry key="emulator-5554" value="120" />
+                  <entry key="emulator-5556" value="120" />
                 </map>
               </option>
             </AndroidTestResultsTableState>
@@ -242,6 +250,7 @@
                   <entry key="Google&#10; Android SDK built for arm64" value="120" />
                   <entry key="Tests" value="360" />
                   <entry key="emulator-5554" value="120" />
+                  <entry key="emulator-5556" value="120" />
                 </map>
               </option>
             </AndroidTestResultsTableState>
